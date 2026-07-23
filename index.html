@@ -481,11 +481,10 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
         </div>
     </div>
 
-    <!-- VIEW 2: DYNAMIC REELS CONFIGURATION DASHBOARD (EXACT SCREENSHOT LAYOUT) -->
+    <!-- VIEW 2: DYNAMIC REELS CONFIGURATION DASHBOARD -->
     <div id="config-view" class="view">
         <div class="config-container">
             
-            <!-- Passer à Premium Box Row -->
             <div class="banner-passer-premium">
                 <div class="left-side">
                     <div class="star-badge-icon"><i class="fa-solid fa-star"></i></div>
@@ -494,7 +493,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                 <i class="fa-solid fa-chevron-right chevron-right-element"></i>
             </div>
 
-            <!-- Analyse Premium Banner Row -->
             <div class="banner-analyse-premium">
                 <div class="left-content">
                     <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
@@ -641,7 +639,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 </div>
 
 <script>
-// Lisitry ny klioba 20 feno tsy misy nesorina
+// Lisitry ny klioba 20 (Nesorina i Ghana sy Cap-Vert, nosoloina Sudan sy Benin)
 const africaTeams = [
     { name: "Ouganda", flag: "🇺🇬" }, { name: "Égypte", flag: "🇪🇬" },
     { name: "Mozambique", flag: "🇲🇿" }, { name: "Gabon", flag: "🇬🇦" },
@@ -650,15 +648,17 @@ const africaTeams = [
     { name: "Botswana", flag: "🇧🇼" }, { name: "RD Congo", flag: "🇨🇩" },
     { name: "Sénégal", flag: "🇸🇳" }, { name: "Maroc", flag: "🇲🇦" },
     { name: "Nigeria", flag: "🇳🇬" }, { name: "Cameroun", flag: "🇨🇲" },
-    { name: "Côte d'Ivoire", flag: "🇨🇮" }, { name: "Ghana", flag: "🇬🇭" },
+    { name: "Côte d'Ivoire", flag: "🇨🇮" }, { name: "Sudan", flag: "🇸🇩" },
     { name: "Mali", flag: "🇲🇱" }, { name: "Burkina Faso", flag: "🇧🇫" },
-    { name: "Afrique du Sud", flag: "🇿🇦" }, { name: "Cap-Vert", flag: "🇨🇻" }
+    { name: "Afrique du Sud", flag: "🇿🇦" }, { name: "Benin", flag: "🇧🇯" }
 ];
 
 let activeSubPanel = 'matchs';
 let activeMarket = '1X2';
 let countdownSeconds = 120; // 2 minitra raikitra
 let currentMatches = [];
+let pastResults = [];
+let globalStandings = [];
 
 function switchView(viewId) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -685,6 +685,18 @@ function switchMarket(marketCode) {
     activeMarket = marketCode;
     document.querySelectorAll('.market-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`m-${marketCode}`).classList.add('active');
+    
+    // Ovaona ny lohateniny arakaraky ny market voafidy
+    const labelsRow = document.getElementById('market-labels-row');
+    if (labelsRow) {
+        if (marketCode === '1X2') {
+            labelsRow.innerHTML = '<span class="lbl-box">1</span><span class="lbl-box">X</span><span class="lbl-box">2</span>';
+        } else if (marketCode === 'DC') {
+            labelsRow.innerHTML = '<span class="lbl-box">1X</span><span class="lbl-box">12</span><span class="lbl-box">X2</span>';
+        } else if (marketCode === 'OU') {
+            labelsRow.innerHTML = '<span class="lbl-box">U2.5</span><span class="lbl-box">O2.5</span><span class="lbl-box">O3.5</span>';
+        }
+    }
     renderMatchesList();
 }
 
@@ -702,11 +714,52 @@ function updateRoundTimeSlots() {
     }
 }
 
+// Fitatanana ny Classement voalohany
+function initStandings() {
+    globalStandings = africaTeams.map(team => ({
+        team: team,
+        played: 0,
+        won: 0,
+        drawn: 0,
+        lost: 0,
+        points: 0
+    }));
+}
+
 function generateMatchesData() {
+    // Tehirizina ho lasa tantara/résultats ny lalao teo aloha raha nisy
+    if (currentMatches.length > 0) {
+        pastResults = [...currentMatches, ...pastResults].slice(0, 30); // Tazomina 30 farany
+        
+        // Havaozina ny Classement amin'ny alalan'ny fahombiazana teo
+        currentMatches.forEach(m => {
+            let hHome = globalStandings.find(s => s.team.name === m.home.name);
+            let hAway = globalStandings.find(s => s.team.name === m.away.name);
+            
+            if (hHome && hAway) {
+                hHome.played++;
+                hAway.played++;
+                if (m.liveScore.home > m.liveScore.away) {
+                    hHome.won++; hHome.points += 3;
+                    hAway.lost++;
+                } else if (m.liveScore.home < m.liveScore.away) {
+                    hAway.won++; hAway.points += 3;
+                    hHome.lost++;
+                } else {
+                    hHome.drawn++; hHome.points += 1;
+                    hAway.drawn++; hAway.points += 1;
+                }
+            }
+        });
+        
+        // Sombintsombin'ny filaharana (Sort points)
+        globalStandings.sort((a, b) => b.points - a.points);
+    }
+
     currentMatches = [];
     let paired = [...africaTeams];
     
-    // Shuffle an'ireo klioba mba hifandanja ny fizarana lalao
+    // Shuffle
     for (let i = paired.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [paired[i], paired[j]] = [paired[j], paired[i]];
@@ -715,18 +768,28 @@ function generateMatchesData() {
     let now = new Date();
     let currentStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
     
-    // Mamorona lalao 10 avy amin'ny klioba 20
     for(let i = 0; i < paired.length; i += 2) {
         let home = paired[i];
         let away = paired[i+1];
         let gHome = Math.floor(Math.random() * 4);
         let gAway = Math.floor(Math.random() * 4);
         
+        // Famoronana Odds arakaraka ny market rehetra
+        let odd1 = (1.4 + Math.random()*1.6).toFixed(2);
+        let oddX = (3.1 + Math.random()*0.9).toFixed(2);
+        let odd2 = (2.1 + Math.random()*2.2).toFixed(2);
+        
+        let oddsObj = {
+            '1X2': [odd1, oddX, odd2],
+            'DC': [(1.1 + Math.random()*0.2).toFixed(2), (1.2 + Math.random()*0.2).toFixed(2), (1.3 + Math.random()*0.3).toFixed(2)],
+            'OU': [(1.5 + Math.random()*0.5).toFixed(2), (1.6 + Math.random()*0.6).toFixed(2), (2.1 + Math.random()*0.9).toFixed(2)]
+        };
+        
         currentMatches.push({
             home, away,
             liveScore: { home: gHome, away: gAway },
             liveTimeStr: `${currentStr} • LIVE 90'`,
-            odds: { 1: (1.5 + Math.random()*1.5).toFixed(2), X: (3.0 + Math.random()*1).toFixed(2), 2: (2.0 + Math.random()*2).toFixed(2) },
+            odds: oddsObj,
             probs: { 1: 45, X: 25, 2: 30 },
             score: `${gHome}-${gAway}`,
             conf: Math.floor(60 + Math.random()*30),
@@ -734,11 +797,12 @@ function generateMatchesData() {
         });
     }
     
-    // Fanavaozana ny soratra lohateny hifanaraka amin'ny lalao 20 (ho an'ny klioba 20)
     const headerCount = document.getElementById('matches-header-count');
     if(headerCount) headerCount.innerText = `${currentMatches.length} MATCHS`;
 
     renderMatchesList();
+    renderResultsList();
+    renderRankingTable();
 }
 
 function renderMatchesList() {
@@ -747,6 +811,7 @@ function renderMatchesList() {
     container.innerHTML = '';
     
     currentMatches.forEach((match, idx) => {
+        let activeOdds = match.odds[activeMarket] || match.odds['1X2'];
         let row = document.createElement('div');
         row.className = 'match-item-row';
         row.onclick = () => openModal(idx);
@@ -766,9 +831,9 @@ function renderMatchesList() {
                 </div>
             </div>
             <div class="odds-values-block">
-                <div class="odd-cell-box">${match.odds[1]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
-                <div class="odd-cell-box">${match.odds['X']}<i class="fa-solid fa-lock lock-icon-small"></i></div>
-                <div class="odd-cell-box">${match.odds[2]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${activeOdds[0]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${activeOdds[1]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${activeOdds[2]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
             </div>
             <div class="predicted-score-cell">
                 <span class="score-badge">${match.score}</span>
@@ -776,6 +841,48 @@ function renderMatchesList() {
             </div>
         `;
         container.appendChild(row);
+    });
+}
+
+function renderResultsList() {
+    const container = document.getElementById('results-container-rows');
+    if(!container) return;
+    container.innerHTML = '';
+    
+    if (pastResults.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding: 20px; color:#718096; font-size:9pt;">Aucun résultat disponible. Attendez le prochain round.</div>';
+        return;
+    }
+    
+    pastResults.forEach(match => {
+        let row = document.createElement('div');
+        row.className = 'result-row';
+        row.innerHTML = `
+            <div class="res-team-side"><span>${match.home.flag}</span> <b>${match.home.name}</b></div>
+            <div class="res-score-center">${match.score}</div>
+            <div class="res-team-side away"><b>${match.away.name}</b> <span>${match.away.flag}</span></div>
+        `;
+        container.appendChild(row);
+    });
+}
+
+function renderRankingTable() {
+    const container = document.getElementById('ranking-container-rows');
+    if(!container) return;
+    container.innerHTML = '';
+    
+    globalStandings.forEach((rowObj, index) => {
+        let tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td class="team-cell"><span>${rowObj.team.flag}</span> <span>${rowObj.team.name}</span></td>
+            <td>${rowObj.played}</td>
+            <td>${rowObj.won}</td>
+            <td>${rowObj.drawn}</td>
+            <td>${rowObj.lost}</td>
+            <td style="font-weight:bold; color:#0e4f2f;">${rowObj.points}</td>
+        `;
+        container.appendChild(tr);
     });
 }
 
@@ -810,6 +917,7 @@ function startCountdownTimer() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    initStandings();
     updateRoundTimeSlots();
     generateMatchesData();
     startCountdownTimer();
