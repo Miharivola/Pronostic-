@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pronostic Vital - Virtuel Football Bet261</title>
+<title>Pronostic Vital - Virtuel Football Premium</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* Global Reset & Base Style */
@@ -63,6 +63,7 @@ body {
     padding: 5px 10px;
     border-radius: 12px;
     cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .search-bar-container {
@@ -517,6 +518,44 @@ body {
 .ranking-table th { background-color: #f7faf8; color: #718096; }
 .ranking-table td.team-cell { text-align: left; font-weight: 700; display: flex; align-items: center; gap: 4px;}
 
+/* PREMIUM COMPONENT & VIEWS */
+.premium-overlay-card {
+    background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%);
+    border: 1px dashed #d97706;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+    text-align: center;
+}
+.btn-unlock-premium {
+    background: linear-gradient(45deg, #d97706, #b45309);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 8.5pt;
+    margin-top: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(180,83,9,0.3);
+}
+
+.h2h-badge {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    color: white;
+    font-size: 7pt;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    margin: 0 2px;
+}
+.bg-win { background-color: #38a169; }
+.bg-draw { background-color: #718096; }
+.bg-loss { background-color: #e53e3e; }
+
 /* Modal Structure */
 .modal-overlay {
     display: none;
@@ -537,10 +576,13 @@ body {
 .modal-card {
     background-color: #ffffff;
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-header {
@@ -554,7 +596,7 @@ body {
 
 .modal-header h3 { font-size: 11pt; font-weight: 700; }
 .close-modal-btn { background: none; border: none; color: #ffffff; font-size: 18pt; cursor: pointer; }
-.modal-body { padding: 16px; }
+.modal-body { padding: 16px; overflow-y: auto; flex: 1; }
 
 .progress-triple {
     display: flex;
@@ -576,9 +618,9 @@ body {
 .stat-row {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 8px 0;
     font-size: 8.5pt;
-    border-bottom: 1px solid #f7faf8;
+    border-bottom: 1px solid #edf2f0;
 }
 
 /* Sticky Bottom Bar */
@@ -622,7 +664,7 @@ body {
     <div class="header-banner">
         <div class="header-top">
             <span class="logo"><i class="fa-solid fa-bolt"></i> PRONOSTIC VITAL</span>
-            <span class="badge premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</span>
+            <span class="badge premium-badge" onclick="openPremiumDashboard()"><i class="fa-solid fa-crown"></i> PREMIUM VIP</span>
         </div>
         <div class="search-bar-container">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -632,8 +674,8 @@ body {
 
     <!-- Notification Header Card info -->
     <div class="info-card">
-        <h3>STRUCTURE POUR TOUTES LES COMPÉTITIONS</h3>
-        <p>Le même design et la même structure sont utilisés pour toutes les compétitions. La seule différence est le nom de la compétition.</p>
+        <h3>ANALYSE ALGORITHMIQUE AVANCÉE</h3>
+        <p>Bahoaka mivantana avy amin'ny fitantaran'ny AI ny tondro sy ny antontan'isa Premium ho an'ny match rehetra.</p>
     </div>
 
     <!-- Leagues Menu Scrolling Filter Selector -->
@@ -717,13 +759,13 @@ body {
     </div>
 </div>
 
-<!-- Modal Overlay View Sheet Analytics Detail Panel -->
+<!-- Modal Overlay View Sheet Analytics Detail Panel (NOW INTEGRATED WITH PREMIUM ANALYTICS) -->
 <div id="analysis-modal" class="modal-overlay">
     <div class="modal-card">
         <div class="modal-header">
             <div>
                 <h3>ANALYSE PRÉDICTIVE SIMULATION IA</h3>
-                <p style="font-size:7.5pt; color:#a3e635; margin-top:2px;">COUPE D'AFRIQUE — STATS LIVE</p>
+                <p style="font-size:7.5pt; color:#a3e635; margin-top:2px;">📊 METRICS & PREMIER TRENDS VIP</p>
             </div>
             <button class="close-modal-btn" onclick="closeModal()">&times;</button>
         </div>
@@ -732,32 +774,51 @@ body {
                 <div style="width:45%;">
                     <span id="mdl-home-flag" style="font-size:24pt;"></span>
                     <h4 id="mdl-home-name" style="font-size:9.5pt; font-weight:700; margin-top:4px;"></h4>
+                    <div id="mdl-home-form" style="margin-top:4px;"></div>
                 </div>
                 <div style="font-weight:800; align-self:center; color:#0e4f2f;">VS</div>
                 <div style="width:45%;">
                     <span id="mdl-away-flag" style="font-size:24pt;"></span>
                     <h4 id="mdl-away-name" style="font-size:9.5pt; font-weight:700; margin-top:4px;"></h4>
+                    <div id="mdl-away-form" style="margin-top:4px;"></div>
                 </div>
             </div>
+
             <div class="probability-section">
-                <h5 style="font-size:8pt; font-weight:700; color:#718096;">PROBABILITÉS 1X2</h5>
+                <h5 style="font-size:8pt; font-weight:700; color:#718096; margin-bottom:4px;">PROBABILITÉS ALGORITHME 1X2</h5>
                 <div class="progress-triple">
                     <div class="bar bar-1" id="mdl-bar-1">1</div>
                     <div class="bar bar-x" id="mdl-bar-x">X</div>
                     <div class="bar bar-2" id="mdl-bar-2">2</div>
                 </div>
             </div>
-            <div class="stat-row"><span>Buts attendus (xG)</span><strong id="mdl-xg"></strong></div>
-            <div class="stat-row"><span>Confiance IA</span><strong style="color:#38a169;" id="mdl-conf"></strong></div>
+
+            <div class="stat-row"><span>Buts attendus (xG Simulation)</span><strong id="mdl-xg"></strong></div>
+            <div class="stat-row"><span>Taux de confiance de l'IA</span><strong style="color:#38a169;" id="mdl-conf"></strong></div>
+            
+            <!-- --- PREMIUM VIP INSIGHTS SECTION --- -->
+            <div style="margin-top:14px; border-top: 2px dashed #e2e8f0; padding-top:12px;">
+                <h5 style="font-size:8.5pt; font-weight:700; color:#d97706;"><i class="fa-solid fa-crown"></i> ANALYSE PREMIUM EXCLUSIVE</h5>
+                
+                <div class="stat-row"><span>Tendance Cycle Prochain</span><strong id="mdl-premium-trend" style="color:#2b6cb0;">Hausse Domination</strong></div>
+                <div class="stat-row"><span>Pourcentage Over 1.5 Match</span><strong id="mdl-premium-o15">84%</strong></div>
+                <div class="stat-row"><span>Pourcentage Over 2.5 Match</span><strong id="mdl-premium-o25">56%</strong></div>
+                <div class="stat-row"><span>Indice Fiabilité Fixture (Seed)</span><strong id="mdl-premium-seed" style="font-family:monospace; color:#4a5568;">#B261-7F9X</strong></div>
+                
+                <div class="premium-overlay-card">
+                    <p style="font-size:7.5pt; color:#92400e; font-weight:600;">Ce pronostic fait partie des signaux à haute probabilité (Hot Cycle).</p>
+                    <button class="btn-unlock-premium"><i class="fa-solid fa-bolt"></i> Suivre ce Signal VIP</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Persistent Global Bottom Navigation Toolbar Footers -->
 <div class="bottom-nav-bar">
-    <div class="nav-item active"><i class="fa-solid fa-house"></i><span>Matchs</span></div>
-    <div class="nav-item"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
-    <div class="nav-item"><i class="fa-solid fa-crown"></i><span>Premium</span></div>
+    <div class="nav-item active" onclick="switchSubPanel('matchs')"><i class="fa-solid fa-house"></i><span>Matchs</span></div>
+    <div class="nav-item" onclick="openPremiumDashboard()"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
+    <div class="nav-item" onclick="openPremiumDashboard()"><i class="fa-solid fa-crown"></i><span>Premium</span></div>
     <div class="nav-item"><i class="fa-solid fa-gear"></i><span>Configuration</span></div>
 </div>
 </div>
@@ -800,8 +861,10 @@ function switchSubPanel(panelId) {
     document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('active'));
     
-    document.getElementById(`tab-btn-${panelId}`).classList.add('active');
-    document.getElementById(`panel-${panelId}`).classList.add('active');
+    const targetTab = document.getElementById(`tab-btn-${panelId}`);
+    const targetPanel = document.getElementById(`panel-${panelId}`);
+    if(targetTab) targetTab.classList.add('active');
+    if(targetPanel) targetPanel.classList.add('active');
     
     if (panelId === 'results') renderResultsPanel();
     if (panelId === 'ranking') renderRankingPanel();
@@ -861,7 +924,6 @@ function generateMatchesData() {
         let pX = Math.floor(20 + Math.random()*20);
         let p2 = 100 - (p1 + pX);
         
-        // Goals live dynamic generation (ohtran'ny sary)
         let gHome = Math.floor(Math.random() * 3);
         let gAway = Math.floor(Math.random() * 3);
         
@@ -873,7 +935,12 @@ function generateMatchesData() {
             probs: { 1: p1, X: pX, 2: p2 },
             score: `${gHome}-${gAway}`,
             conf: Math.floor(40 + Math.random()*50),
-            fav: false
+            fav: false,
+            // Premium Fields Added
+            premiumTrend: Math.random() > 0.5 ? "Cycle Chaud (Over)" : "Cycle Froid (Under/X)",
+            o15: Math.floor(70 + Math.random()*25),
+            o25: Math.floor(40 + Math.random()*45),
+            seed: "HZ-" + Math.floor(1000 + Math.random()*9000)
         });
     }
     renderMatchesList();
@@ -997,6 +1064,18 @@ function openModal(idx) {
     document.getElementById('mdl-away-name').innerText = match.away.name.toUpperCase();
     document.getElementById('mdl-away-flag').innerText = match.away.flag;
     
+    // H2H / Form Blocks Random Generation
+    document.getElementById('mdl-home-form').innerHTML = `
+        <span class="h2h-badge bg-win">G</span>
+        <span class="h2h-badge bg-win">G</span>
+        <span class="h2h-badge bg-draw">N</span>
+    `;
+    document.getElementById('mdl-away-form').innerHTML = `
+        <span class="h2h-badge bg-loss">P</span>
+        <span class="h2h-badge bg-draw">N</span>
+        <span class="h2h-badge bg-win">G</span>
+    `;
+
     document.getElementById('mdl-bar-1').style.width = `${match.probs[1]}%`;
     document.getElementById('mdl-bar-1').innerText = `1 (${match.probs[1]}%)`;
     document.getElementById('mdl-bar-x').style.width = `${match.probs['X']}%`;
@@ -1007,7 +1086,18 @@ function openModal(idx) {
     document.getElementById('mdl-xg').innerText = `${(0.9 + Math.random()*1.5).toFixed(2)} - ${(0.4 + Math.random()*1.2).toFixed(2)}`;
     document.getElementById('mdl-conf').innerText = `${match.conf}%`;
     
+    // Inject Premium Data into Modal
+    document.getElementById('mdl-premium-trend').innerText = match.premiumTrend;
+    document.getElementById('mdl-premium-o15').innerText = `${match.o15}%`;
+    document.getElementById('mdl-premium-o25').innerText = `${match.o25}%`;
+    document.getElementById('mdl-premium-seed').innerText = match.seed;
+    
     document.getElementById('analysis-modal').classList.add('active');
+}
+
+function openPremiumDashboard() {
+    // Manokatra mivantana ny match voalohany ho ohatra amin'ny Premium Panel
+    if(currentMatches.length > 0) openModal(0);
 }
 
 function closeModal() {
