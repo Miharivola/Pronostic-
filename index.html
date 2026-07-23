@@ -224,15 +224,12 @@ body {
 .ranking-table th { background-color: #f7faf8; color: #718096; }
 .ranking-table td.team-cell { text-align: left; font-weight: 700; display: flex; align-items: center; gap: 4px;}
 
-/* -----------------------------------------
-   NEW SCREEN DYNAMICS FROM IMAGE (CONFIG/MENU)
------------------------------------------ */
+/* CONFIGURATION DASHBOARD STYLE */
 .config-container {
     padding: 14px;
     background-color: #f8fafc;
 }
 
-/* Banner Premium Top */
 .banner-passer-premium {
     background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
     border: 1px solid #fde68a;
@@ -267,7 +264,6 @@ body {
     letter-spacing: 0.3px;
 }
 
-/* Banner Analyse Premium */
 .banner-analyse-premium {
     background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     border-radius: 12px;
@@ -291,7 +287,6 @@ body {
 .banner-analyse-premium h4 { font-size: 10.5pt; font-weight: 700; letter-spacing: 0.5px; }
 .banner-analyse-premium p { font-size: 7.5pt; color: #94a3b8; margin-top: 2px; }
 
-/* Grid Sections */
 .section-title-lbl {
     font-size: 8.5pt;
     font-weight: 700;
@@ -333,7 +328,6 @@ body {
 .menu-grid-card i.main-icon { font-size: 13pt; color: #64748b; }
 .menu-grid-card span.card-label-str { font-size: 9pt; font-weight: 700; color: #1e293b; }
 
-/* Settings List Rows */
 .settings-list-group {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
@@ -358,7 +352,6 @@ body {
 .settings-list-item.disconnect-btn { color: #ef4444; }
 .settings-list-item.disconnect-btn i { color: #ef4444; }
 
-/* Chevron style universal global color */
 i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 
 /* Modal Detail Analysis */
@@ -395,6 +388,226 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 .nav-item i { font-size: 13pt; margin-bottom: 3px; }
 .nav-item span { font-size: 7.5pt; font-weight: 600; }
 .nav-item.active { color: #0e4f2f; }
+
+/* -----------------------------------------
+    NEW PREMIUM WORKFLOW INTERFACE STYLING
+----------------------------------------- */
+.step-nav-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    justify-content: center;
+}
+.step-nav-btn {
+    flex: 1;
+    background-color: #e2e8f0;
+    color: #475569;
+    border: none;
+    padding: 10px 6px;
+    border-radius: 8px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.step-nav-btn.active {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+.step-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.premium-panel {
+    display: none;
+}
+.premium-panel.active {
+    display: block;
+}
+
+/* Upload Box Dropzone */
+.file-upload-dropzone {
+    background-color: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    margin-bottom: 14px;
+}
+.file-upload-dropzone:hover, .file-upload-dropzone.dragover {
+    border-color: #4f46e5;
+    background-color: #f8fafc;
+}
+.file-upload-dropzone .icon-container {
+    font-size: 26pt;
+    color: #6366f1;
+    margin-bottom: 8px;
+}
+.file-upload-dropzone h4 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #1e293b;
+    text-transform: uppercase;
+}
+.file-upload-dropzone p.desc {
+    font-size: 7.5pt;
+    color: #64748b;
+    margin-top: 3px;
+    line-height: 1.3;
+}
+.file-upload-dropzone .click-hint {
+    font-size: 7pt;
+    color: #4f46e5;
+    font-weight: 700;
+    margin-top: 10px;
+    background-color: #e0e7ff;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+/* File Listing Queue */
+.file-queue-list {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 14px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+.file-queue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 8pt;
+    color: #334155;
+}
+.file-queue-item:last-child { border-bottom: none; }
+.file-queue-item .file-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.file-queue-item i { color: #64748b; }
+.file-queue-item .remove-file-btn {
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 9pt;
+    padding: 0 4px;
+}
+
+/* Clear all row */
+.queue-control-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+.clear-all-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 8pt;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Action Trigger Button */
+.action-process-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+.action-process-btn.success-green {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+}
+
+/* Dynamic Extraction Process Status Box */
+.extraction-status-panel {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 16px;
+    color: #f8fafc;
+    margin-bottom: 14px;
+}
+.extraction-status-panel .panel-top-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.extraction-status-panel h3 {
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #e2e8f0;
+}
+.extraction-status-panel p.sub {
+    font-size: 7.5pt;
+    color: #94a3b8;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+.progress-bar-track {
+    width: 100%;
+    background-color: #1e293b;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+.progress-bar-fill {
+    width: 0%;
+    background: linear-gradient(90deg, #6366f1 0%, #10b981 100%);
+    height: 100%;
+    transition: width 0.3s;
+}
+.extraction-tasks-list {
+    list-style: none;
+    font-size: 8pt;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.extraction-tasks-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #cbd5e1;
+}
+.extraction-tasks-list li.done { color: #f8fafc; }
+.extraction-tasks-list li .status-indicator { font-weight: 700; }
+.extraction-tasks-list li .status-indicator.check { color: #10b981; }
+.extraction-tasks-list li .status-indicator.spin { color: #6366f1; animation: spin 1s linear infinite; display: inline-block; }
+.extraction-tasks-list li .status-indicator.wait { color: #475569; }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 </style>
 </head>
 <body>
@@ -406,7 +619,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
         <div class="header-banner">
             <div class="header-top">
                 <span class="logo"><i class="fa-solid fa-bolt"></i> PRONOSTIC VITAL</span>
-                <span class="badge premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</span>
+                <span class="badge premium-badge" onclick="switchView('premium')"><i class="fa-solid fa-crown"></i> PREMIUM</span>
             </div>
             <div class="search-bar-container">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -485,7 +698,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     <div id="config-view" class="view">
         <div class="config-container">
             
-            <div class="banner-passer-premium">
+            <div class="banner-passer-premium" onclick="switchView('premium')">
                 <div class="left-side">
                     <div class="star-badge-icon"><i class="fa-solid fa-star"></i></div>
                     <span class="txt">PASSER À PREMIUM</span>
@@ -493,7 +706,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                 <i class="fa-solid fa-chevron-right chevron-right-element"></i>
             </div>
 
-            <div class="banner-analyse-premium">
+            <div class="banner-analyse-premium" onclick="switchView('premium')">
                 <div class="left-content">
                     <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                     <div>
@@ -605,6 +818,111 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
         </div>
     </div>
 
+    <!-- VIEW 3: NEW PREMIUM MULTI-STEP ANALYSIS PIPELINE VIEW -->
+    <div id="premium-view" class="view">
+        <div class="header-banner">
+            <div class="header-top">
+                <span class="logo"><i class="fa-solid fa-wand-magic-sparkles"></i> ANALYSE PREMIUM</span>
+                <span class="badge premium-badge" style="background: #ffffff; color: #4f46e5;"><i class="fa-solid fa-brain"></i> AI MODE</span>
+            </div>
+        </div>
+        
+        <div class="config-container">
+            <!-- Stepper Navigation Headers -->
+            <div class="step-nav-bar">
+                <button class="step-nav-btn active" id="step-nav-1" onclick="jumpToStep(1)">1. Base Historique</button>
+                <button class="step-nav-btn" id="step-nav-2" onclick="jumpToStep(2)" disabled>2. Matchs & Pronostics</button>
+            </div>
+
+            <!-- STEP 1 PANEL: BASE HISTORIQUE DOCK -->
+            <div id="premium-panel-1" class="premium-panel active">
+                
+                <!-- Extraction Running Progress State Block -->
+                <div id="extraction-status-card" style="display: none;" class="extraction-status-panel">
+                    <div class="panel-top-title">
+                        <h3 id="extraction-headline">Extraction Historique</h3>
+                        <i class="fa-solid fa-circle-notch spin status-indicator" style="font-size: 10pt;"></i>
+                    </div>
+                    <p class="sub">Veuillez patienter pendant que le moteur d'analyse statistique compile vos documents...</p>
+                    <div class="progress-bar-track">
+                        <div id="extraction-progress-fill" class="progress-bar-fill"></div>
+                    </div>
+                    <ul class="extraction-tasks-list" id="extraction-tasks-box">
+                        <li id="task-1"><span>Extraction des historiques</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-2"><span>Extraction des scores</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-3"><span>Reconstruction des journées</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-4"><span>Analyse offensive & défensive</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-5"><span>Détection des cycles</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-6"><span>Consultation de la base statistique</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-7"><span>Vérification finale</span><span class="status-indicator wait">⏳</span></li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Upload Target Area Box Dropzone -->
+                <div class="file-upload-dropzone" id="dropzone-hist" onclick="triggerFileInput('file-input-hist')">
+                    <div class="icon-container"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <h4>Charger la Base Historique</h4>
+                    <p class="desc">Déposez les données historiques des championnats récents (images, pdf, txt) ho an'ny motor statistics.</p>
+                    <div class="click-hint">Glissez-déposez ou cliquez pour ajouter</div>
+                    <input type="file" id="file-input-hist" multiple accept="image/*,.pdf,.txt" style="display: none;" onchange="handleFileSelection(this, 'hist')">
+                </div>
+
+                <!-- Queue Files Container Elements Grid List -->
+                <div id="queue-box-hist" style="display: none;">
+                    <div class="queue-control-row">
+                        <button class="clear-all-btn" onclick="clearQueue('hist')"><i class="fa-solid fa-trash-can"></i> Tout effacer</button>
+                    </div>
+                    <div class="file-queue-list" id="file-list-hist"></div>
+                </div>
+
+                <!-- Run Command Trigger Actions Button Elements -->
+                <button id="action-btn-hist" class="action-process-btn" onclick="startHistoricalExtractionPipeline()" style="margin-top: 6px;">
+                    <i class="fa-solid fa-bolt"></i> Analyser l'historique
+                </button>
+            </div>
+
+            <!-- STEP 2 PANEL: LIVE TARGET RUN CHANNELS MATCHS -->
+            <div id="premium-panel-2" class="premium-panel">
+                
+                <!-- Live Analytical Computation Task Running Panel Block -->
+                <div id="compute-status-card" style="display: none;" class="extraction-status-panel">
+                    <div class="panel-top-title">
+                        <h3>Analyse Premium en Cours</h3>
+                        <i class="fa-solid fa-circle-notch spin status-indicator" style="font-size: 10pt;"></i>
+                    </div>
+                    <p class="sub">Le moteur multimodal fusionne l'historique extrait avec les cotes en temps réel...</p>
+                    <div class="progress-bar-track">
+                        <div id="compute-progress-fill" class="progress-bar-fill"></div>
+                    </div>
+                    <ul class="extraction-tasks-list">
+                        <li id="cmp-task-1"><span>Lecture des nouveaux matchs du jour</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="cmp-task-2"><span>Application des lois de probabilités</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="cmp-task-3"><span>Génération des scores exacts premium</span><span class="status-indicator wait">⏳</span></li>
+                    </ul>
+                </div>
+
+                <div class="file-upload-dropzone" id="dropzone-match" onclick="triggerFileInput('file-input-match')">
+                    <div class="icon-container"><i class="fa-solid fa-file-invoice"></i></div>
+                    <h4>Charger les Matchs du Jour</h4>
+                    <p class="desc">Glissez-déposez ici la capture d'écran ou le fichier contenant les prochains matchs à pronostiquer.</p>
+                    <div class="click-hint" style="background-color: #ecfdf5; color: #10b981;">Insérer les captures d'écran</div>
+                    <input type="file" id="file-input-match" multiple accept="image/*,.pdf,.txt" style="display: none;" onchange="handleFileSelection(this, 'match')">
+                </div>
+
+                <div id="queue-box-match" style="display: none;">
+                    <div class="queue-control-row">
+                        <button class="clear-all-btn" onclick="clearQueue('match')"><i class="fa-solid fa-trash-can"></i> Tout effacer</button>
+                    </div>
+                    <div class="file-queue-list" id="file-list-match"></div>
+                </div>
+
+                <button id="action-btn-match" class="action-process-btn" onclick="startPremiumPredictionsCompute()" style="margin-top: 6px;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Lancer Analyse Premium
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- AI Analytics Modal View Sheet -->
     <div id="analysis-modal" class="modal-overlay">
         <div class="modal-card">
@@ -631,8 +949,8 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     <!-- Sticky Bottom Navigation Bar Footer Toolbar -->
     <div class="bottom-nav-bar">
         <div class="nav-item active" id="nav-home" onclick="switchView('main')"><i class="fa-solid fa-house"></i><span>Matchs</span></div>
-        <div class="nav-item" onclick="switchView('config')"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
-        <div class="nav-item" onclick="switchView('config')"><i class="fa-solid fa-crown"></i><span>Premium</span></div>
+        <div class="nav-item" onclick="switchView('premium')"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
+        <div class="nav-item" onclick="switchView('premium')"><i class="fa-solid fa-crown"></i><span>Premium</span></div>
         <div class="nav-item" id="nav-config" onclick="switchView('config')"><i class="fa-solid fa-gear"></i><span>Configuration</span></div>
     </div>
 
@@ -662,6 +980,11 @@ let currentMatches = [];
 let pastResults = [];
 let globalStandings = [];
 
+// Storage matrices for new premium dynamic file management pipelines
+let historicalUploadedFilesList = [];
+let matchdayUploadedFilesList = [];
+let activeWorkflowStep = 1;
+
 function switchView(viewId) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -672,6 +995,8 @@ function switchView(viewId) {
     } else if(viewId === 'config') {
         document.getElementById('config-view').classList.add('active');
         document.getElementById('nav-config').classList.add('active');
+    } else if(viewId === 'premium') {
+        document.getElementById('premium-view').classList.add('active');
     }
 }
 
@@ -688,7 +1013,6 @@ function switchMarket(marketCode) {
     document.querySelectorAll('.market-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`m-${marketCode}`).classList.add('active');
     
-    // Ovaona ny lohateniny arakaraky ny market voafidy
     const labelsRow = document.getElementById('market-labels-row');
     if (labelsRow) {
         if (marketCode === '1X2') {
@@ -716,7 +1040,6 @@ function updateRoundTimeSlots() {
     }
 }
 
-// Fitatanana ny Classement voalohany
 function initStandings() {
     globalStandings = africaTeams.map(team => ({
         team: team,
@@ -728,12 +1051,252 @@ function initStandings() {
     }));
 }
 
-function generateMatchesData() {
-    // Tehirizina ho lasa tantara/résultats ny lalao teo aloha raha nisy
-    if (currentMatches.length > 0) {
-        pastResults = [...currentMatches, ...pastResults].slice(0, 30); // Tazomina 30 farany
+// -------------------------------------------------------------
+// NEW PREMIUM FLOW UTILITY ACTIONS & DRAG AND DROP HANDLERS
+// -------------------------------------------------------------
+function triggerFileInput(inputId) {
+    document.getElementById(inputId).click();
+}
+
+function handleFileSelection(inputElement, contextNamespace) {
+    const chosenFiles = Array.from(inputElement.files);
+    if(contextNamespace === 'hist') {
+        historicalUploadedFilesList = [...historicalUploadedFilesList, ...chosenFiles].slice(0, 20);
+    } else {
+        matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...chosenFiles].slice(0, 20);
+    }
+    refreshFilesQueueDisplay(contextNamespace);
+    inputElement.value = ''; 
+}
+
+function setupDragAndDropListeners() {
+    ['hist', 'match'].forEach(context => {
+        const zone = document.getElementById(`dropzone-${context}`);
+        if(!zone) return;
         
-        // Havaozina ny Classement amin'ny alalan'ny fahombiazana teo
+        ['dragenter', 'dragover'].forEach(eventName => {
+            zone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            zone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+            }, false);
+        });
+
+        zone.addEventListener('drop', (e) => {
+            const transfer = e.dataTransfer;
+            const droppedFiles = Array.from(transfer.files);
+            if(context === 'hist') {
+                historicalUploadedFilesList = [...historicalUploadedFilesList, ...droppedFiles].slice(0, 20);
+            } else {
+                matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...droppedFiles].slice(0, 20);
+            }
+            refreshFilesQueueDisplay(context);
+        }, false);
+    });
+}
+
+function refreshFilesQueueDisplay(context) {
+    const listContainer = document.getElementById(`file-list-${context}`);
+    const queueWrapper = document.getElementById(`queue-box-${context}`);
+    const filesArr = (context === 'hist') ? historicalUploadedFilesList : matchdayUploadedFilesList;
+    
+    if(!listContainer || !queueWrapper) return;
+    listContainer.innerHTML = '';
+    
+    if(filesArr.length === 0) {
+        queueWrapper.style.display = 'none';
+        return;
+    }
+    
+    queueWrapper.style.display = 'block';
+    filesArr.forEach((file, index) => {
+        const itemRow = document.createElement('div');
+        itemRow.className = 'file-queue-item';
+        itemRow.innerHTML = `
+            <div class="file-meta">
+                <i class="fa-regular fa-file-image"></i>
+                <span>${file.name} (${(file.size / 1024).toFixed(1)} KB)</span>
+            </div>
+            <i class="fa-solid fa-xmark remove-file-btn" onclick="removeSingleFile('${context}', ${index})"></i>
+        `;
+        listContainer.appendChild(itemRow);
+    });
+}
+
+function removeSingleFile(context, fileIndex) {
+    if(context === 'hist') {
+        historicalUploadedFilesList.splice(fileIndex, 1);
+    } else {
+        matchdayUploadedFilesList.splice(fileIndex, 1);
+    }
+    refreshFilesQueueDisplay(context);
+}
+
+function clearQueue(context) {
+    if(context === 'hist') {
+        historicalUploadedFilesList = [];
+    } else {
+        matchdayUploadedFilesList = [];
+    }
+    refreshFilesQueueDisplay(context);
+}
+
+function jumpToStep(stepNumber) {
+    if(stepNumber === 2 && document.getElementById('step-nav-2').disabled) return;
+    
+    activeWorkflowStep = stepNumber;
+    document.querySelectorAll('.step-nav-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.premium-panel').forEach(panel => panel.classList.remove('active'));
+    
+    document.getElementById(`step-nav-${stepNumber}`).classList.add('active');
+    document.getElementById(`premium-panel-${stepNumber}`).classList.add('active');
+}
+
+// PIPELINE STEP 1: ASYNCHRONOUS EXTRACTION SCHEDULER ANIMATION
+function startHistoricalExtractionPipeline() {
+    if(historicalUploadedFilesList.length === 0) {
+        alert("Mba ampidiro ireo fichiers misy base historique azafady !");
+        return;
+    }
+    
+    const statusCard = document.getElementById('extraction-status-card');
+    const progressBar = document.getElementById('extraction-progress-fill');
+    const mainActionBtn = document.getElementById('action-btn-hist');
+    
+    statusCard.style.display = 'block';
+    mainActionBtn.disabled = true;
+    progressBar.style.width = '0%';
+    
+    // Reset indicators
+    for(let i=1; i<=7; i++) {
+        const t = document.getElementById(`task-${i}`);
+        t.className = '';
+        t.querySelector('.status-indicator').className = 'status-indicator wait';
+        t.querySelector('.status-indicator').innerHTML = '⏳';
+    }
+    
+    const tasksConfig = [
+        { id: 'task-1', duration: 1200 },
+        { id: 'task-2', duration: 1000 },
+        { id: 'task-3', duration: 1400 },
+        { id: 'task-4', duration: 1100 },
+        { id: 'task-5', duration: 1500 },
+        { id: 'task-6', duration: 1300 },
+        { id: 'task-7', duration: 900 }
+    ];
+    
+    let totalTime = tasksConfig.reduce((acc, t) => acc + t.duration, 0);
+    let cumulativeTime = 0;
+    
+    tasksConfig.forEach((task, idx) => {
+        // Set spinner active state trigger sequence loop
+        setTimeout(() => {
+            const currentItem = document.getElementById(task.id);
+            currentItem.querySelector('.status-indicator').className = 'status-indicator fa-solid fa-circle-notch spin';
+            currentItem.querySelector('.status-indicator').innerHTML = '';
+        }, cumulativeTime);
+        
+        cumulativeTime += task.duration;
+        
+        // Convert to checked checkmark complete states sequentially
+        setTimeout(() => {
+            const currentItem = document.getElementById(task.id);
+            currentItem.className = 'done';
+            currentItem.querySelector('.status-indicator').className = 'status-indicator check';
+            currentItem.querySelector('.status-indicator').innerHTML = '✔️';
+            
+            let percentProgress = Math.round(((idx + 1) / tasksConfig.length) * 100);
+            progressBar.style.width = `${percentProgress}%`;
+            
+            // Reached boundary execution step target point
+            if(idx === tasksConfig.length - 1) {
+                setTimeout(() => {
+                    mainActionBtn.innerHTML = '<i class="fa-solid fa-check"></i> Analyse Historique Calibrée';
+                    mainActionBtn.className = 'action-process-btn success-green';
+                    mainActionBtn.disabled = false;
+                    
+                    // Enable next workflow target pipeline phase channel route
+                    document.getElementById('step-nav-2').disabled = false;
+                    setTimeout(() => {
+                        jumpToStep(2);
+                    }, 800);
+                }, 500);
+            }
+        }, cumulativeTime);
+    });
+}
+
+// PIPELINE STEP 2: SIMULATED CALCULATIONS COMPUTE PREDICTIONS
+function startPremiumPredictionsCompute() {
+    if(matchdayUploadedFilesList.length === 0) {
+        alert("Ampidiro ny rakitra na screenshot misy ny lalao anio azafady !");
+        return;
+    }
+    
+    const statusCard = document.getElementById('compute-status-card');
+    const progressBar = document.getElementById('compute-progress-fill');
+    const runBtn = document.getElementById('action-btn-match');
+    
+    statusCard.style.display = 'block';
+    runBtn.disabled = true;
+    progressBar.style.width = '0%';
+    
+    // Reset tasks indicators
+    for(let i=1; i<=3; i++) {
+        const t = document.getElementById(`cmp-task-${i}`);
+        t.querySelector('.status-indicator').className = 'status-indicator wait';
+        t.querySelector('.status-indicator').innerHTML = '⏳';
+    }
+    
+    const subTimings = [1500, 1800, 1500];
+    let cumulative = 0;
+    
+    subTimings.forEach((delay, index) => {
+        let taskNum = index + 1;
+        setTimeout(() => {
+            const target = document.getElementById(`cmp-task-${taskNum}`);
+            target.querySelector('.status-indicator').className = 'status-indicator fa-solid fa-circle-notch spin';
+            target.querySelector('.status-indicator').innerHTML = '';
+        }, cumulative);
+        
+        cumulative += delay;
+        
+        setTimeout(() => {
+            const target = document.getElementById(`cmp-task-${taskNum}`);
+            target.querySelector('.status-indicator').className = 'status-indicator check';
+            target.querySelector('.status-indicator').innerHTML = '✔️';
+            
+            let progressPercent = Math.round((taskNum / 3) * 100);
+            progressBar.style.width = `${progressPercent}%`;
+            
+            if(taskNum === 3) {
+                setTimeout(() => {
+                    runBtn.innerHTML = '<i class="fa-solid fa-square-poll-vertical"></i> Pronostics Premium Générés !';
+                    runBtn.className = 'action-process-btn success-green';
+                    runBtn.disabled = false;
+                    
+                    // Trigger match recalculation logic and drop down views update data streams redirection path
+                    generateMatchesData();
+                    setTimeout(() => {
+                        switchView('main');
+                        switchSubPanel('matchs');
+                    }, 1000);
+                }, 400);
+            }
+        }, cumulative);
+    });
+}
+
+function generateMatchesData() {
+    if (currentMatches.length > 0) {
+        pastResults = [...currentMatches, ...pastResults].slice(0, 30);
+        
         currentMatches.forEach(m => {
             let hHome = globalStandings.find(s => s.team.name === m.home.name);
             let hAway = globalStandings.find(s => s.team.name === m.away.name);
@@ -754,92 +1317,101 @@ function generateMatchesData() {
             }
         });
         
-        // Sombintsombin'ny filaharana (Sort points)
         globalStandings.sort((a, b) => b.points - a.points);
+        renderRankingTable();
+        renderResultsList();
     }
 
+    let pool = [...africaTeams];
+    let shuffled = pool.sort(() => 0.5 - Math.random());
     currentMatches = [];
-    let paired = [...africaTeams];
-    
-    // Shuffle
-    for (let i = paired.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [paired[i], paired[j]] = [paired[j], paired[i]];
-    }
 
-    let now = new Date();
-    let currentStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-    
-    for(let i = 0; i < paired.length; i += 2) {
-        let home = paired[i];
-        let away = paired[i+1];
-        let gHome = Math.floor(Math.random() * 4);
-        let gAway = Math.floor(Math.random() * 4);
-        
-        // Famoronana Odds arakaraka ny market rehetra
-        let odd1 = (1.4 + Math.random()*1.6).toFixed(2);
-        let oddX = (3.1 + Math.random()*0.9).toFixed(2);
-        let odd2 = (2.1 + Math.random()*2.2).toFixed(2);
-        
-        let oddsObj = {
-            '1X2': [odd1, oddX, odd2],
-            'DC': [(1.1 + Math.random()*0.2).toFixed(2), (1.2 + Math.random()*0.2).toFixed(2), (1.3 + Math.random()*0.3).toFixed(2)],
-            'OU': [(1.5 + Math.random()*0.5).toFixed(2), (1.6 + Math.random()*0.6).toFixed(2), (2.1 + Math.random()*0.9).toFixed(2)]
-        };
-        
+    for (let i = 0; i < 12; i++) {
+        let home = shuffled[i * 2];
+        let away = shuffled[i * 2 + 1];
+
+        let homeProb = Math.floor(Math.random() * 55) + 25;
+        let awayProb = Math.floor(Math.random() * (100 - homeProb - 10)) + 10;
+        let drawProb = 100 - homeProb - awayProb;
+
+        let hPred = Math.floor(Math.random() * 3);
+        let aPred = Math.floor(Math.random() * 3);
+
+        if (homeProb > awayProb && hPred <= aPred) hPred = aPred + 1;
+        if (awayProb > homeProb && aPred <= hPred) aPred = hPred + 1;
+        if (Math.abs(homeProb - awayProb) < 10) hPred = aPred;
+
+        let conf = Math.floor(Math.random() * 25) + 72;
+
         currentMatches.push({
-            home, away,
-            liveScore: { home: gHome, away: gAway },
-            liveTimeStr: `${currentStr} • LIVE 90'`,
-            odds: oddsObj,
-            probs: { 1: 45, X: 25, 2: 30 },
-            score: `${gHome}-${gAway}`,
-            conf: Math.floor(60 + Math.random()*30),
-            fav: false
+            id: i + 1,
+            home: home,
+            away: away,
+            probabilities: { home: homeProb, draw: drawProb, away: awayProb },
+            prediction: { home: hPred, away: aPred },
+            confidence: conf,
+            liveScore: { home: hPred, away: aPred },
+            isFavorite: false
         });
     }
-    
-    const headerCount = document.getElementById('matches-header-count');
-    if(headerCount) headerCount.innerText = `${currentMatches.length} MATCHS`;
 
     renderMatchesList();
-    renderResultsList();
-    renderRankingTable();
+    updateRoundTimeSlots();
 }
 
 function renderMatchesList() {
     const container = document.getElementById('matches-container-rows');
-    if(!container) return;
+    if (!container) return;
     container.innerHTML = '';
-    
-    currentMatches.forEach((match, idx) => {
-        let activeOdds = match.odds[activeMarket] || match.odds['1X2'];
-        let row = document.createElement('div');
+
+    currentMatches.forEach(m => {
+        let o1 = (100 / m.probabilities.home).toFixed(2);
+        let oX = (100 / m.probabilities.draw).toFixed(2);
+        let o2 = (100 / m.probabilities.away).toFixed(2);
+
+        let cellContentA = o1;
+        let cellContentB = oX;
+        let cellContentC = o2;
+
+        if (activeMarket === 'DC') {
+            cellContentA = (1 / (1/parseFloat(o1) + 1/parseFloat(oX)) * 0.9).toFixed(2);
+            cellContentB = (1 / (1/parseFloat(o1) + 1/parseFloat(o2)) * 0.9).toFixed(2);
+            cellContentC = (1 / (1/parseFloat(oX) + 1/parseFloat(o2)) * 0.9).toFixed(2);
+        } else if (activeMarket === 'OU') {
+            let total = m.prediction.home + m.prediction.away;
+            cellContentA = total < 2.5 ? (1.4 + Math.random()*0.4).toFixed(2) : (2.1 + Math.random()*0.8).toFixed(2);
+            cellContentB = total >= 2.5 ? (1.5 + Math.random()*0.4).toFixed(2) : (2.2 + Math.random()*0.7).toFixed(2);
+            cellContentC = total >= 3.5 ? (2.3 + Math.random()*0.9).toFixed(2) : (1.3 + Math.random()*0.3).toFixed(2);
+        }
+
+        const row = document.createElement('div');
         row.className = 'match-item-row';
-        row.onclick = () => openModal(idx);
         row.innerHTML = `
-            <div class="team-row-wrapper">
-                <i class="fa-regular fa-star star-icon"></i>
+            <div class="team-row-wrapper" onclick="openModal(${m.id})">
+                <i class="fa-solid fa-star star-icon ${m.isFavorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav(${m.id})"></i>
                 <div class="teams-meta-block">
                     <div class="team-line-node">
-                        <div class="team-info-side"><span>${match.home.flag}</span><span class="team-name-string">${match.home.name}</span></div>
-                        <span class="live-score-digit">${match.liveScore.home}</span>
+                        <div class="team-info-side">
+                            <span class="flag-icon">${m.home.flag}</span>
+                            <span class="team-name-string">${m.home.name}</span>
+                        </div>
                     </div>
                     <div class="team-line-node">
-                        <div class="team-info-side"><span>${match.away.flag}</span><span class="team-name-string">${match.away.name}</span></div>
-                        <span class="live-score-digit">${match.liveScore.away}</span>
+                        <div class="team-info-side">
+                            <span class="flag-icon">${m.away.flag}</span>
+                            <span class="team-name-string">${m.away.name}</span>
+                        </div>
                     </div>
-                    <div class="live-time-meta">${match.liveTimeStr}</div>
                 </div>
             </div>
             <div class="odds-values-block">
-                <div class="odd-cell-box">${activeOdds[0]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
-                <div class="odd-cell-box">${activeOdds[1]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
-                <div class="odd-cell-box">${activeOdds[2]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${cellContentA}</div>
+                <div class="odd-cell-box">${cellContentB}</div>
+                <div class="odd-cell-box">${cellContentC}</div>
             </div>
-            <div class="predicted-score-cell">
-                <span class="score-badge">${match.score}</span>
-                <span class="analysis-pct-lbl">(${match.conf}%)</span>
+            <div class="predicted-score-cell" onclick="openModal(${m.id})">
+                <span class="score-badge">${m.prediction.home} - ${m.prediction.away}</span>
+                <span class="analysis-pct-lbl">${m.confidence}%</span>
             </div>
         `;
         container.appendChild(row);
@@ -848,21 +1420,21 @@ function renderMatchesList() {
 
 function renderResultsList() {
     const container = document.getElementById('results-container-rows');
-    if(!container) return;
+    if (!container) return;
     container.innerHTML = '';
-    
-    if (pastResults.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding: 20px; color:#718096; font-size:9pt;">Aucun résultat disponible. Attendez le prochain round.</div>';
+
+    if(pastResults.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:20px; font-size:9pt; color:#718096;">Aucun résultat disponible pour le moment.</div>';
         return;
     }
-    
-    pastResults.forEach(match => {
-        let row = document.createElement('div');
+
+    pastResults.forEach(r => {
+        const row = document.createElement('div');
         row.className = 'result-row';
         row.innerHTML = `
-            <div class="res-team-side"><span>${match.home.flag}</span> <b>${match.home.name}</b></div>
-            <div class="res-score-center">${match.score}</div>
-            <div class="res-team-side away"><b>${match.away.name}</b> <span>${match.away.flag}</span></div>
+            <div class="res-team-side"><span>${r.home.flag}</span> <strong>${r.home.name}</strong></div>
+            <div class="res-score-center">${r.liveScore.home} - ${r.liveScore.away}</div>
+            <div class="res-team-side away"><strong>${r.away.name}</strong> <span>${r.away.flag}</span></div>
         `;
         container.appendChild(row);
     });
@@ -870,59 +1442,78 @@ function renderResultsList() {
 
 function renderRankingTable() {
     const container = document.getElementById('ranking-container-rows');
-    if(!container) return;
+    if (!container) return;
     container.innerHTML = '';
-    
-    globalStandings.forEach((rowObj, index) => {
-        let tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td class="team-cell"><span>${rowObj.team.flag}</span> <span>${rowObj.team.name}</span></td>
-            <td>${rowObj.played}</td>
-            <td>${rowObj.won}</td>
-            <td>${rowObj.drawn}</td>
-            <td>${rowObj.lost}</td>
-            <td style="font-weight:bold; color:#0e4f2f;">${rowObj.points}</td>
+
+    globalStandings.forEach((s, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>${index + 1}</strong></td>
+            <td class="team-cell"><span>${s.team.flag}</span> ${s.team.name}</td>
+            <td>${s.played}</td>
+            <td>${s.won}</td>
+            <td>${s.drawn}</td>
+            <td>${s.lost}</td>
+            <td><strong>${s.points}</strong></td>
         `;
-        container.appendChild(tr);
+        container.appendChild(row);
     });
 }
 
-function openModal(idx) {
-    let match = currentMatches[idx];
-    document.getElementById('mdl-home-name').innerText = match.home.name;
-    document.getElementById('mdl-home-flag').innerText = match.home.flag;
-    document.getElementById('mdl-away-name').innerText = match.away.name;
-    document.getElementById('mdl-away-flag').innerText = match.away.flag;
-    document.getElementById('mdl-bar-1').style.width = `${match.probs[1]}%`;
-    document.getElementById('mdl-bar-x').style.width = `${match.probs['X']}%`;
-    document.getElementById('mdl-bar-2').style.width = `${match.probs[2]}%`;
-    document.getElementById('mdl-conf').innerText = `${match.conf}%`;
+function toggleFav(matchId) {
+    let match = currentMatches.find(m => m.id === matchId);
+    if(match) {
+        match.isFavorite = !match.isFavorite;
+        renderMatchesList();
+    }
+}
+
+function openModal(matchId) {
+    let m = currentMatches.find(match => match.id === matchId);
+    if(!m) return;
+
+    document.getElementById('mdl-home-flag').innerText = m.home.flag;
+    document.getElementById('mdl-home-name').innerText = m.home.name;
+    document.getElementById('mdl-away-flag').innerText = m.away.flag;
+    document.getElementById('mdl-away-name').innerText = m.away.name;
+
+    document.getElementById('mdl-bar-1').style.width = `${m.probabilities.home}%`;
+    document.getElementById('mdl-bar-1').innerText = `1 (${m.probabilities.home}%)`;
+    document.getElementById('mdl-bar-x').style.width = `${m.probabilities.draw}%`;
+    document.getElementById('mdl-bar-x').innerText = `X (${m.probabilities.draw}%)`;
+    document.getElementById('mdl-bar-2').style.width = `${m.probabilities.away}%`;
+    document.getElementById('mdl-bar-2').innerText = `2 (${m.probabilities.away}%)`;
+
+    document.getElementById('mdl-conf').innerText = `${m.confidence}%`;
     document.getElementById('analysis-modal').classList.add('active');
 }
 
-function closeModal() { document.getElementById('analysis-modal').classList.remove('active'); }
+function closeModal() {
+    document.getElementById('analysis-modal').classList.remove('active');
+}
 
-function startCountdownTimer() {
-    const timerLabel = document.getElementById('timer-clock');
+// Fixed 2 minute continuous ticker interval loop updates
+function startMasterClockCountdown() {
     setInterval(() => {
         countdownSeconds--;
-        if(countdownSeconds <= 0) {
-            countdownSeconds = 120; // 2 minitra raikitra
-            updateRoundTimeSlots();
+        if (countdownSeconds <= 0) {
+            countdownSeconds = 120; // Automatically loops at exactly 2 minutes
             generateMatchesData();
         }
-        let min = Math.floor(countdownSeconds / 60).toString().padStart(2,'0');
-        let sec = (countdownSeconds % 60).toString().padStart(2,'0');
-        if(timerLabel) timerLabel.innerText = `${min}:${sec}`;
+        
+        let m = Math.floor(countdownSeconds / 60).toString().padStart(2, '0');
+        let s = (countdownSeconds % 60).toString().padStart(2, '0');
+        const clockEl = document.getElementById('timer-clock');
+        if(clockEl) clockEl.innerText = `${m}:${s}`;
     }, 1000);
 }
 
+// Initializers
 window.addEventListener('DOMContentLoaded', () => {
     initStandings();
-    updateRoundTimeSlots();
     generateMatchesData();
-    startCountdownTimer();
+    startMasterClockCountdown();
+    setupDragAndDropListeners();
 });
 </script>
 </body>
