@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pronostic Vital - Virtuel Football Premium</title>
+<title>Pronostic Vital - Virtuel Football</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* Global Reset & Base Style */
@@ -35,6 +35,14 @@ body {
     overflow-x: hidden;
 }
 
+/* Views Management */
+.view {
+    display: none;
+}
+.view.active {
+    display: block;
+}
+
 /* Header Section */
 .header-banner {
     background: linear-gradient(135deg, #0e4f2f 0%, #052616 100%);
@@ -63,7 +71,6 @@ body {
     padding: 5px 10px;
     border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .search-bar-container {
@@ -80,10 +87,6 @@ body {
     padding: 8px 10px 8px 36px;
     color: #ffffff;
     font-size: 10pt;
-}
-
-.search-bar-container input::placeholder {
-    color: rgba(255,255,255,0.6);
 }
 
 .search-icon {
@@ -104,18 +107,8 @@ body {
     text-align: center;
 }
 
-.info-card h3 {
-    font-size: 9.5pt;
-    font-weight: 700;
-    color: #4a5568;
-    margin-bottom: 4px;
-}
-
-.info-card p {
-    font-size: 8pt;
-    color: #718096;
-    line-height: 1.4;
-}
+.info-card h3 { font-size: 9.5pt; font-weight: 700; color: #4a5568; margin-bottom: 4px; }
+.info-card p { font-size: 8pt; color: #718096; line-height: 1.4; }
 
 /* Leagues Selector Header */
 .leagues-scroll-wrapper {
@@ -127,10 +120,7 @@ body {
     background-color: #ffffff;
     border-bottom: 1px solid #e6ece8;
 }
-
-.leagues-scroll-wrapper::-webkit-scrollbar {
-    display: none;
-}
+.leagues-scroll-wrapper::-webkit-scrollbar { display: none; }
 
 .league-tab {
     display: inline-flex;
@@ -144,11 +134,7 @@ body {
     font-weight: 600;
     cursor: pointer;
 }
-
-.league-tab.active {
-    background-color: #0e4f2f;
-    color: #ffffff;
-}
+.league-tab.active { background-color: #0e4f2f; color: #ffffff; }
 
 .text-gold { color: #d4af37; }
 .text-blue { color: #2b6cb0; }
@@ -172,456 +158,222 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
-.tournament-header .title {
-    font-weight: 700;
-    font-size: 9.5pt;
-}
-
-.tournament-header .matches-count {
-    background-color: rgba(255,255,255,0.2);
-    font-size: 7.5pt;
-    font-weight: 700;
-    padding: 3px 6px;
-    border-radius: 4px;
-}
+.tournament-header .title { font-weight: 700; font-size: 9.5pt; }
+.tournament-header .matches-count { background-color: rgba(255,255,255,0.2); font-size: 7.5pt; font-weight: 700; padding: 3px 6px; border-radius: 4px; }
 
 /* Sub Tabs */
-.sub-nav-tabs {
-    display: flex;
-    background-color: #ffffff;
-    border-bottom: 2px solid #edf2f0;
-}
+.sub-nav-tabs { display: flex; background-color: #ffffff; border-bottom: 2px solid #edf2f0; }
+.sub-tab { flex: 1; background: none; border: none; outline: none; padding: 12px 0; font-size: 8.5pt; font-weight: 700; color: #718096; text-align: center; cursor: pointer; }
+.sub-tab.active { color: #0e4f2f; border-bottom: 3px solid #0e4f2f; }
 
-.sub-tab {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    padding: 12px 0;
-    font-size: 8.5pt;
-    font-weight: 700;
-    color: #718096;
-    text-align: center;
-    cursor: pointer;
-}
+/* Time Slots */
+.time-slots-container { display: flex; overflow-x: auto; background-color: #f7faf8; padding: 8px 6px; border-bottom: 1px solid #e8edea; gap: 6px; }
+.time-slots-container::-webkit-scrollbar { display: none; }
+.time-slot { min-width: 55px; text-align: center; padding: 6px 4px; border-radius: 4px; font-size: 8.5pt; font-weight: 600; color: #4a5568; background-color: #ffffff; border: 1px solid #e2e8f0; }
+.time-slot.past { color: #a0aec0; background-color: #f1f5f3; text-decoration: line-through; }
+.time-slot.active { background-color: #e53e3e; color: #ffffff; border-color: #e53e3e; font-weight: 700; }
+.live-indicator { display: block; font-size: 5.5pt; font-weight: 800; margin-top: 1px; }
 
-.sub-tab.active {
-    color: #0e4f2f;
-    border-bottom: 3px solid #0e4f2f;
-}
+/* Countdown Banner */
+.countdown-banner { display: flex; justify-content: space-between; align-items: center; background-color: #fff5f5; padding: 8px 12px; border-bottom: 1px solid #fed7d7; }
+.countdown-text { font-size: 8.5pt; font-weight: 700; color: #c53030; }
+.refresh-btn { background-color: #0e4f2f; color: #ffffff; border: none; padding: 4px 8px; font-size: 7.5pt; font-weight: 700; border-radius: 4px; cursor: pointer; }
 
-/* Dynamic Live Round Times Navigation */
-.time-slots-container {
-    display: flex;
-    overflow-x: auto;
-    background-color: #f7faf8;
-    padding: 8px 6px;
-    border-bottom: 1px solid #e8edea;
-    gap: 6px;
-}
+/* Markets Filter */
+.markets-filter-row { display: flex; overflow-x: auto; padding: 8px 10px; gap: 6px; background-color: #ffffff; border-bottom: 1px solid #edf2f0; }
+.markets-filter-row::-webkit-scrollbar { display: none; }
+.market-btn { white-space: nowrap; background-color: #f0f4f2; border: 1px solid #e2e8f0; padding: 6px 10px; border-radius: 4px; font-size: 8pt; font-weight: 700; color: #4a5568; cursor: pointer; }
+.market-btn.active { background-color: #2f855a; color: #ffffff; border-color: #2f855a; }
 
-.time-slots-container::-webkit-scrollbar {
-    display: none;
-}
+.panel-content { display: none; }
+.panel-content.active { display: block; }
 
-.time-slot {
-    min-width: 55px;
-    text-align: center;
-    padding: 6px 4px;
-    border-radius: 4px;
-    font-size: 8.5pt;
-    font-weight: 600;
-    color: #4a5568;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-}
-
-.time-slot.past {
-    color: #a0aec0;
-    background-color: #f1f5f3;
-    text-decoration: line-through;
-}
-
-.time-slot.active {
-    background-color: #e53e3e;
-    color: #ffffff;
-    border-color: #e53e3e;
-    font-weight: 700;
-}
-
-.live-indicator {
-    display: block;
-    font-size: 5.5pt;
-    font-weight: 800;
-    margin-top: 1px;
-}
-
-/* Countdown Alert Line */
-.countdown-banner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff5f5;
-    padding: 8px 12px;
-    border-bottom: 1px solid #fed7d7;
-}
-
-.countdown-text {
-    font-size: 8.5pt;
-    font-weight: 700;
-    color: #c53030;
-}
-
-.refresh-btn {
-    background-color: #0e4f2f;
-    color: #ffffff;
-    border: none;
-    outline: none;
-    padding: 4px 8px;
-    font-size: 7.5pt;
-    font-weight: 700;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Filter Market Options Layout Buttons */
-.markets-filter-row {
-    display: flex;
-    overflow-x: auto;
-    padding: 8px 10px;
-    gap: 6px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #edf2f0;
-}
-
-.markets-filter-row::-webkit-scrollbar {
-    display: none;
-}
-
-.market-btn {
-    white-space: nowrap;
-    background-color: #f0f4f2;
-    border: 1px solid #e2e8f0;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 8pt;
-    font-weight: 700;
-    color: #4a5568;
-    cursor: pointer;
-}
-
-.market-btn.active {
-    background-color: #2f855a;
-    color: #ffffff;
-    border-color: #2f855a;
-}
-
-/* Panels */
-.panel-content {
-    display: none;
-}
-.panel-content.active {
-    display: block;
-}
-
-/* Table Header Style */
-.matches-list-header {
-    display: flex;
-    align-items: center;
-    background-color: #f7faf8;
-    padding: 6px 12px;
-    font-size: 7.5pt;
-    font-weight: 700;
-    color: #718096;
-    border-bottom: 1px solid #e2e8f0;
-}
-
+.matches-list-header { display: flex; align-items: center; background-color: #f7faf8; padding: 6px 12px; font-size: 7.5pt; font-weight: 700; color: #718096; border-bottom: 1px solid #e2e8f0; }
 .team-lbl { flex: 1.4; }
 .odds-header-lbls { flex: 1.8; display: flex; justify-content: space-around; }
 .lbl-box { width: 33%; text-align: center; }
 .score-lbl { width: 65px; text-align: right; }
 
-/* Match Rows Styling Updated */
-.match-item-row {
-    display: flex;
-    align-items: center;
-    padding: 10px 12px;
-    border-bottom: 1px solid #edf2f0;
-    background-color: #ffffff;
-    cursor: pointer;
-    position: relative;
-}
+/* Match Item Row */
+.match-item-row { display: flex; align-items: center; padding: 10px 12px; border-bottom: 1px solid #edf2f0; background-color: #ffffff; cursor: pointer; }
+.team-row-wrapper { flex: 1.4; display: flex; align-items: flex-start; gap: 6px; }
+.star-icon { color: #cbd5e0; font-size: 8.5pt; margin-top: 4px; }
+.star-icon.active { color: #d4af37; }
+.teams-meta-block { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.team-line-node { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.team-info-side { display: flex; align-items: center; gap: 6px; }
+.flag-icon { font-size: 11pt; }
+.team-name-string { font-size: 8.5pt; font-weight: 800; color: #2d3748; text-transform: uppercase; }
+.live-score-digit { font-size: 9.5pt; font-weight: 800; color: #38a169; padding-right: 15px; }
+.live-time-meta { font-size: 7pt; color: #718096; font-weight: 600; margin-top: 2px; }
+.odds-values-block { flex: 1.8; display: flex; gap: 4px; }
+.odd-cell-box { width: 33%; background-color: #f7faf8; border: 1px solid #e2e8f0; text-align: center; padding: 6px 0; border-radius: 4px; font-size: 8.5pt; font-weight: 700; color: #2d3748; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2px; }
+.lock-icon-small { font-size: 6.5pt; color: #d4af37; }
+.predicted-score-cell { width: 65px; text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
+.score-badge { background-color: #f0fdf4; color: #166534; font-size: 8.5pt; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid #bbf7d0; }
+.analysis-pct-lbl { font-size: 7pt; font-weight: 700; color: #a0aec0; margin-top: 2px; }
 
-.team-row-wrapper {
-    flex: 1.4;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-}
-
-.star-icon {
-    color: #cbd5e0;
-    font-size: 8.5pt;
-    margin-top: 4px;
-}
-.star-icon.active {
-    color: #d4af37;
-}
-
-.teams-meta-block {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.team-line-node {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.team-info-side {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.flag-icon {
-    font-size: 11pt;
-}
-
-.team-name-string {
-    font-size: 8.5pt;
-    font-weight: 800;
-    color: #2d3748;
-    text-transform: uppercase;
-}
-
-.live-score-digit {
-    font-size: 9.5pt;
-    font-weight: 800;
-    color: #38a169;
-    padding-right: 15px;
-}
-
-.live-time-meta {
-    font-size: 7pt;
-    color: #718096;
-    font-weight: 600;
-    margin-top: 2px;
-}
-
-.odds-values-block {
-    flex: 1.8;
-    display: flex;
-    gap: 4px;
-}
-
-.odd-cell-box {
-    width: 33%;
-    background-color: #f7faf8;
-    border: 1px solid #e2e8f0;
-    text-align: center;
-    padding: 6px 0;
-    border-radius: 4px;
-    font-size: 8.5pt;
-    font-weight: 700;
-    color: #2d3748;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-}
-
-.lock-icon-small {
-    font-size: 6.5pt;
-    color: #d4af37;
-}
-
-.predicted-score-cell {
-    width: 65px;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.score-badge {
-    background-color: #f0fdf4;
-    color: #166534;
-    font-size: 8.5pt;
-    font-weight: 800;
-    padding: 2px 6px;
-    border-radius: 4px;
-    border: 1px solid #bbf7d0;
-}
-
-.analysis-pct-lbl {
-    font-size: 7pt;
-    font-weight: 700;
-    color: #a0aec0;
-    margin-top: 2px;
-}
-
-/* Results Content Panel Stylesheet */
-.results-list, .ranking-table-wrapper {
-    padding: 8px;
-}
-
-.result-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    border: 1px solid #edf2f0;
-    font-size: 9pt;
-}
-
-.res-team-side {
-    width: 40%;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
+/* Results & Standings */
+.results-list, .ranking-table-wrapper { padding: 8px; }
+.result-row { display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 10px; border-radius: 6px; margin-bottom: 6px; border: 1px solid #edf2f0; font-size: 9pt; }
+.res-team-side { width: 40%; display: flex; align-items: center; gap: 5px; }
 .res-team-side.away { justify-content: flex-end; }
-.res-score-center {
-    width: 20%;
-    text-align: center;
-    font-weight: 800;
-    background-color: #edf2f0;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* Standings / Ranking Table */
-.ranking-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    font-size: 8.5pt;
-}
-
-.ranking-table th, .ranking-table td {
-    padding: 8px 6px;
-    text-align: center;
-    border-bottom: 1px solid #edf2f0;
-}
-
+.res-score-center { width: 20%; text-align: center; font-weight: 800; background-color: #edf2f0; padding: 2px 6px; border-radius: 4px; }
+.ranking-table { width: 100%; border-collapse: collapse; background-color: #ffffff; font-size: 8.5pt; }
+.ranking-table th, .ranking-table td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #edf2f0; }
 .ranking-table th { background-color: #f7faf8; color: #718096; }
 .ranking-table td.team-cell { text-align: left; font-weight: 700; display: flex; align-items: center; gap: 4px;}
 
-/* PREMIUM COMPONENT & VIEWS */
-.premium-overlay-card {
-    background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%);
-    border: 1px dashed #d97706;
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 12px;
-    text-align: center;
-}
-.btn-unlock-premium {
-    background: linear-gradient(45deg, #d97706, #b45309);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 8.5pt;
-    margin-top: 8px;
-    cursor: pointer;
-    box-shadow: 0 3px 6px rgba(180,83,9,0.3);
+/* -----------------------------------------
+   NEW SCREEN DYNAMICS FROM IMAGE (CONFIG/MENU)
+----------------------------------------- */
+.config-container {
+    padding: 14px;
+    background-color: #f8fafc;
 }
 
-.h2h-badge {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    border-radius: 3px;
-    color: white;
-    font-size: 7pt;
-    font-weight: 700;
-    line-height: 18px;
-    text-align: center;
-    margin: 0 2px;
-}
-.bg-win { background-color: #38a169; }
-.bg-draw { background-color: #718096; }
-.bg-loss { background-color: #e53e3e; }
-
-/* Modal Structure */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    z-index: 999;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.modal-overlay.active { display: flex; }
-
-.modal-card {
-    background-color: #ffffff;
-    width: 100%;
-    max-width: 420px;
+/* Banner Premium Top */
+.banner-passer-premium {
+    background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+    border: 1px solid #fde68a;
     border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-header {
-    background-color: #0e4f2f;
-    color: #ffffff;
     padding: 14px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+.banner-passer-premium .left-side {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.banner-passer-premium .star-badge-icon {
+    background-color: #f59e0b;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9pt;
+}
+.banner-passer-premium span.txt {
+    font-weight: 700;
+    font-size: 9.5pt;
+    color: #b45309;
+    letter-spacing: 0.3px;
 }
 
+/* Banner Analyse Premium */
+.banner-analyse-premium {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 12px;
+    padding: 16px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.banner-analyse-premium .left-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.banner-analyse-premium .icon-box {
+    color: #6366f1;
+    font-size: 16pt;
+}
+.banner-analyse-premium h4 { font-size: 10.5pt; font-weight: 700; letter-spacing: 0.5px; }
+.banner-analyse-premium p { font-size: 7.5pt; color: #94a3b8; margin-top: 2px; }
+
+/* Grid Sections */
+.section-title-lbl {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.5px;
+}
+.text-orange-tips { color: #f97316; }
+.text-green-live { color: #10b981; }
+
+.menu-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.menu-grid-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.menu-grid-card:active { background-color: #f1f5f9; }
+.menu-grid-card .card-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.menu-grid-card i.main-icon { font-size: 13pt; color: #64748b; }
+.menu-grid-card span.card-label-str { font-size: 9pt; font-weight: 700; color: #1e293b; }
+
+/* Settings List Rows */
+.settings-list-group {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.settings-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    font-size: 9pt;
+    font-weight: 600;
+    color: #334155;
+}
+.settings-list-item:last-child { border-bottom: none; }
+.settings-list-item .item-left { display: flex; align-items: center; gap: 10px; }
+.settings-list-item i.item-icon { color: #64748b; font-size: 11pt; width: 16px; text-align: center; }
+.settings-list-item.disconnect-btn { color: #ef4444; }
+.settings-list-item.disconnect-btn i { color: #ef4444; }
+
+/* Chevron style universal global color */
+i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
+
+/* Modal Detail Analysis */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 20px; }
+.modal-overlay.active { display: flex; }
+.modal-card { background-color: #ffffff; width: 100%; max-width: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.modal-header { background-color: #0e4f2f; color: #ffffff; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
 .modal-header h3 { font-size: 11pt; font-weight: 700; }
 .close-modal-btn { background: none; border: none; color: #ffffff; font-size: 18pt; cursor: pointer; }
-.modal-body { padding: 16px; overflow-y: auto; flex: 1; }
-
-.progress-triple {
-    display: flex;
-    height: 24px;
-    border-radius: 6px;
-    overflow: hidden;
-    font-size: 8pt;
-    font-weight: 700;
-    color: #ffffff;
-    text-align: center;
-    line-height: 24px;
-    margin: 10px 0;
-}
-
+.modal-body { padding: 16px; }
+.progress-triple { display: flex; height: 24px; border-radius: 6px; overflow: hidden; font-size: 8pt; font-weight: 700; color: #ffffff; text-align: center; line-height: 24px; margin: 10px 0; }
 .bar-1 { background-color: #3182ce; }
 .bar-x { background-color: #a0aec0; }
 .bar-2 { background-color: #e53e3e; }
-
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    font-size: 8.5pt;
-    border-bottom: 1px solid #edf2f0;
-}
+.stat-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 8.5pt; border-bottom: 1px solid #f7faf8; }
 
 /* Sticky Bottom Bar */
 .bottom-nav-bar {
@@ -639,18 +391,7 @@ body {
     align-items: center;
     z-index: 900;
 }
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #718096;
-    cursor: pointer;
-    flex: 1;
-    height: 100%;
-}
-
+.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #718096; cursor: pointer; flex: 1; height: 100%; }
 .nav-item i { font-size: 13pt; margin-bottom: 3px; }
 .nav-item span { font-size: 7.5pt; font-weight: 600; }
 .nav-item.active { color: #0e4f2f; }
@@ -658,248 +399,303 @@ body {
 </head>
 <body>
 <div class="app-container">
-<!-- Main View -->
-<div id="main-view" class="view active">
-    <!-- Top Header Layout Banner -->
-    <div class="header-banner">
-        <div class="header-top">
-            <span class="logo"><i class="fa-solid fa-bolt"></i> PRONOSTIC VITAL</span>
-            <span class="badge premium-badge" onclick="openPremiumDashboard()"><i class="fa-solid fa-crown"></i> PREMIUM VIP</span>
-        </div>
-        <div class="search-bar-container">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" placeholder="Rechercher des équipes, ligues...">
-        </div>
-    </div>
 
-    <!-- Notification Header Card info -->
-    <div class="info-card">
-        <h3>ANALYSE ALGORITHMIQUE AVANCÉE</h3>
-        <p>Bahoaka mivantana avy amin'ny fitantaran'ny AI ny tondro sy ny antontan'isa Premium ho an'ny match rehetra.</p>
-    </div>
-
-    <!-- Leagues Menu Scrolling Filter Selector -->
-    <div class="leagues-scroll-wrapper">
-        <div class="league-tab active"><i class="fa-solid fa-trophy text-gold"></i> Coupe d'Afrique</div>
-        <div class="league-tab"><i class="fa-solid fa-shield-halved text-blue"></i> Ligue des Champions UEFA</div>
-        <div class="league-tab"><i class="fa-solid fa-crown text-purple"></i> Premier League</div>
-        <div class="league-tab"><i class="fa-solid fa-circle-dot text-orange"></i> LaLiga</div>
-    </div>
-
-    <!-- Main Dynamic Tournament Card Grid Wrapper Box -->
-    <div class="tournament-container">
-        <div class="tournament-header">
-            <span class="title"><i class="fa-solid fa-trophy"></i> COUPE D'AFRIQUE</span>
-            <span class="matches-count" id="matches-count-label">10 MATCHS</span>
+    <!-- VIEW 1: MAIN MATCHS LIST -->
+    <div id="main-view" class="view active">
+        <!-- Top Header Layout Banner -->
+        <div class="header-banner">
+            <div class="header-top">
+                <span class="logo"><i class="fa-solid fa-bolt"></i> PRONOSTIC VITAL</span>
+                <span class="badge premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</span>
+            </div>
+            <div class="search-bar-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" placeholder="Rechercher des équipes, ligues...">
+            </div>
         </div>
 
-        <!-- Sub Panel Switcher Navigation Tabs Row -->
-        <div class="sub-nav-tabs">
-            <button class="sub-tab" id="tab-btn-results" onclick="switchSubPanel('results')">RÉSULTATS</button>
-            <button class="sub-tab active" id="tab-btn-matchs" onclick="switchSubPanel('matchs')">MATCHS</button>
-            <button class="sub-tab" id="tab-btn-ranking" onclick="switchSubPanel('ranking')">CLASSEMENT</button>
+        <div class="info-card">
+            <h3>STRUCTURE POUR TOUTES LES COMPÉTITIONS</h3>
+            <p>Le même design et la même structure sont utilisés pour toutes les compétitions.</p>
         </div>
 
-        <!-- Dynamic Chronological Dynamic Round Times Line Header -->
-        <div class="time-slots-container" id="time-slots-line"></div>
-
-        <!-- Live Simulation Global Action Timer Bar Row -->
-        <div class="countdown-banner">
-            <div class="countdown-text">PROCHAIN MATCH DANS : <span id="timer-clock" class="text-danger">02:00</span></div>
-            <button class="refresh-btn" onclick="recalculateAI()"><i class="fa-solid fa-rotate"></i> RECALCULER AI</button>
+        <div class="leagues-scroll-wrapper">
+            <div class="league-tab active"><i class="fa-solid fa-trophy text-gold"></i> Coupe d'Afrique</div>
+            <div class="league-tab"><i class="fa-solid fa-shield-halved text-blue"></i> Ligue des Champions</div>
+            <div class="league-tab"><i class="fa-solid fa-crown text-purple"></i> Premier League</div>
         </div>
 
-        <!-- Match Betting Market Selection Category Buttons Filter -->
-        <div class="markets-filter-row">
-            <button class="market-btn active" id="m-1X2" onclick="switchMarket('1X2')">1X2</button>
-            <button class="market-btn" id="m-DC" onclick="switchMarket('DC')">DOUBLE CHANCE</button>
-            <button class="market-btn" id="m-OU" onclick="switchMarket('OU')">OVER/UNDER</button>
-            <button class="market-btn" id="m-BTTS" onclick="switchMarket('BTTS')">BTTS</button>
-            <button class="market-btn" id="m-CS" onclick="switchMarket('CS')">CORRECT SCORE</button>
-        </div>
+        <div class="tournament-container">
+            <div class="tournament-header">
+                <span class="title"><i class="fa-solid fa-trophy"></i> COUPE D'AFRIQUE</span>
+                <span class="matches-count" id="matches-header-count">20 MATCHS</span>
+            </div>
 
-        <!-- SUB PANEL: MATCHS -->
-        <div id="panel-matchs" class="panel-content active">
-            <div class="matches-list-header">
-                <span class="team-lbl">MATCHS DU JOUR</span>
-                <div class="odds-header-lbls" id="market-labels-row">
-                    <span class="lbl-box">1</span>
-                    <span class="lbl-box">X</span>
-                    <span class="lbl-box">2</span>
+            <div class="sub-nav-tabs">
+                <button class="sub-tab" id="tab-btn-results" onclick="switchSubPanel('results')">RÉSULTATS</button>
+                <button class="sub-tab active" id="tab-btn-matchs" onclick="switchSubPanel('matchs')">MATCHS</button>
+                <button class="sub-tab" id="tab-btn-ranking" onclick="switchSubPanel('ranking')">CLASSEMENT</button>
+            </div>
+
+            <div class="time-slots-container" id="time-slots-line"></div>
+
+            <div class="countdown-banner">
+                <div class="countdown-text">PROCHAIN MATCH DANS : <span id="timer-clock">02:00</span></div>
+                <button class="refresh-btn" onclick="generateMatchesData()"><i class="fa-solid fa-rotate"></i> RECALCULER AI</button>
+            </div>
+
+            <div class="markets-filter-row">
+                <button class="market-btn active" id="m-1X2" onclick="switchMarket('1X2')">1X2</button>
+                <button class="market-btn" id="m-DC" onclick="switchMarket('DC')">DOUBLE CHANCE</button>
+                <button class="market-btn" id="m-OU" onclick="switchMarket('OU')">OVER/UNDER</button>
+            </div>
+
+            <!-- Panel Matchs -->
+            <div id="panel-matchs" class="panel-content active">
+                <div class="matches-list-header">
+                    <span class="team-lbl">MATCHS DU DAY</span>
+                    <div class="odds-header-lbls" id="market-labels-row">
+                        <span class="lbl-box">1</span><span class="lbl-box">X</span><span class="lbl-box">2</span>
+                    </div>
+                    <span class="score-lbl">SCORE</span>
                 </div>
-                <span class="score-lbl">SCORE PRÉDIT</span>
+                <div id="matches-container-rows"></div>
             </div>
-            <div id="matches-container-rows"></div>
-        </div>
 
-        <!-- SUB PANEL: RÉSULTATS -->
-        <div id="panel-results" class="panel-content">
-            <div class="results-list" id="results-container-rows"></div>
-        </div>
-
-        <!-- SUB PANEL: CLASSEMENT -->
-        <div id="panel-ranking" class="panel-content">
-            <div class="ranking-table-wrapper">
-                <table class="ranking-table">
-                    <thead>
-                        <tr>
-                            <th>Pos</th>
-                            <th style="text-align:left;">Équipe</th>
-                            <th>MJ</th>
-                            <th>G</th>
-                            <th>N</th>
-                            <th>P</th>
-                            <th>Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ranking-container-rows"></tbody>
-                </table>
+            <!-- Panel Results -->
+            <div id="panel-results" class="panel-content">
+                <div class="results-list" id="results-container-rows"></div>
             </div>
-        </div>
-    </div>
-</div>
 
-<!-- Modal Overlay View Sheet Analytics Detail Panel (NOW INTEGRATED WITH PREMIUM ANALYTICS) -->
-<div id="analysis-modal" class="modal-overlay">
-    <div class="modal-card">
-        <div class="modal-header">
-            <div>
-                <h3>ANALYSE PRÉDICTIVE SIMULATION IA</h3>
-                <p style="font-size:7.5pt; color:#a3e635; margin-top:2px;">📊 METRICS & PREMIER TRENDS VIP</p>
-            </div>
-            <button class="close-modal-btn" onclick="closeModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div style="display:flex; justify-content:space-between; margin-bottom:15px; background:#f7faf8; padding:10px; border-radius:6px; text-align:center;">
-                <div style="width:45%;">
-                    <span id="mdl-home-flag" style="font-size:24pt;"></span>
-                    <h4 id="mdl-home-name" style="font-size:9.5pt; font-weight:700; margin-top:4px;"></h4>
-                    <div id="mdl-home-form" style="margin-top:4px;"></div>
-                </div>
-                <div style="font-weight:800; align-self:center; color:#0e4f2f;">VS</div>
-                <div style="width:45%;">
-                    <span id="mdl-away-flag" style="font-size:24pt;"></span>
-                    <h4 id="mdl-away-name" style="font-size:9.5pt; font-weight:700; margin-top:4px;"></h4>
-                    <div id="mdl-away-form" style="margin-top:4px;"></div>
+            <!-- Panel Ranking -->
+            <div id="panel-ranking" class="panel-content">
+                <div class="ranking-table-wrapper">
+                    <table class="ranking-table">
+                        <thead>
+                            <tr><th>Pos</th><th style="text-align:left;">Équipe</th><th>MJ</th><th>G</th><th>N</th><th>P</th><th>Pts</th></tr>
+                        </thead>
+                        <tbody id="ranking-container-rows"></tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="probability-section">
-                <h5 style="font-size:8pt; font-weight:700; color:#718096; margin-bottom:4px;">PROBABILITÉS ALGORITHME 1X2</h5>
+    <!-- VIEW 2: DYNAMIC REELS CONFIGURATION DASHBOARD (EXACT SCREENSHOT LAYOUT) -->
+    <div id="config-view" class="view">
+        <div class="config-container">
+            
+            <!-- Passer à Premium Box Row -->
+            <div class="banner-passer-premium">
+                <div class="left-side">
+                    <div class="star-badge-icon"><i class="fa-solid fa-star"></i></div>
+                    <span class="txt">PASSER À PREMIUM</span>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+            </div>
+
+            <!-- Analyse Premium Banner Row -->
+            <div class="banner-analyse-premium">
+                <div class="left-content">
+                    <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <div>
+                        <h4>ANALYSE PREMIUM</h4>
+                        <p>Moteur d'analyse prédictive multimodal</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+            </div>
+
+            <!-- SECTION 1: TIPS -->
+            <div class="section-title-lbl text-orange-tips"><i class="fa-solid fa-fire"></i> Tips</div>
+            <div class="menu-grid-layout">
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-regular fa-calendar main-icon"></i>
+                        <span class="card-label-str">Free Tips</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-regular fa-star main-icon"></i>
+                        <span class="card-label-str">Best Tips</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-solid fa-trophy main-icon"></i>
+                        <span class="card-label-str">VIP Tips</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-regular fa-square-plus main-icon"></i>
+                        <span class="card-label-str">Single Tips</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-regular fa-clock main-icon"></i>
+                        <span class="card-label-str">HT/FT</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-solid fa-arrows-up-down main-icon"></i>
+                        <span class="card-label-str">Over-Under</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card" style="grid-column: span 2;">
+                    <div class="card-main-info">
+                        <i class="fa-solid fa-rotate main-icon"></i>
+                        <span class="card-label-str">BTTS (Both Teams To Score)</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LIVE -->
+            <div class="section-title-lbl text-green-live"><i class="fa-solid fa-wave-square"></i> Live</div>
+            <div class="menu-grid-layout">
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-solid fa-bolt main-icon"></i>
+                        <span class="card-label-str">Live Tips</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="menu-grid-card">
+                    <div class="card-main-info">
+                        <i class="fa-solid fa-chart-simple main-icon"></i>
+                        <span class="card-label-str">Live Scores</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+            </div>
+
+            <!-- SECTION 3: SETTINGS LIST GROUP -->
+            <div class="section-title-lbl"><i class="fa-solid fa-gear"></i> Settings</div>
+            <div class="settings-list-group">
+                <div class="settings-list-item">
+                    <div class="item-left"><i class="fa-regular fa-envelope item-icon"></i> Suggestion / Demandes</div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="settings-list-item">
+                    <div class="item-left"><i class="fa-solid fa-shield-halved item-icon"></i> Conditions d'utilisation</div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="settings-list-item">
+                    <div class="item-left"><i class="fa-solid fa-lock item-icon"></i> Politique de confidentialité</div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="settings-list-item">
+                    <div class="item-left"><i class="fa-solid fa-arrow-rotate-left item-icon"></i> Reset onboarding</div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+                <div class="settings-list-item disconnect-btn">
+                    <div class="item-left"><i class="fa-solid fa-power-off item-icon"></i> Se déconnecter</div>
+                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AI Analytics Modal View Sheet -->
+    <div id="analysis-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>ANALYSE SIMULATION IA</h3>
+                <button class="close-modal-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex; justify-content:space-between; text-align:center; margin-bottom:12px;">
+                    <div style="width:45%;"><span id="mdl-home-flag" style="font-size:20pt;"></span><h4 id="mdl-home-name" style="font-size:9pt;"></h4></div>
+                    <div style="align-self:center; font-weight:800;">VS</div>
+                    <div style="width:45%;"><span id="mdl-away-flag" style="font-size:20pt;"></span><h4 id="mdl-away-name" style="font-size:9pt;"></h4></div>
+                </div>
                 <div class="progress-triple">
                     <div class="bar bar-1" id="mdl-bar-1">1</div>
                     <div class="bar bar-x" id="mdl-bar-x">X</div>
                     <div class="bar bar-2" id="mdl-bar-2">2</div>
                 </div>
-            </div>
-
-            <div class="stat-row"><span>Buts attendus (xG Simulation)</span><strong id="mdl-xg"></strong></div>
-            <div class="stat-row"><span>Taux de confiance de l'IA</span><strong style="color:#38a169;" id="mdl-conf"></strong></div>
-            
-            <!-- --- PREMIUM VIP INSIGHTS SECTION --- -->
-            <div style="margin-top:14px; border-top: 2px dashed #e2e8f0; padding-top:12px;">
-                <h5 style="font-size:8.5pt; font-weight:700; color:#d97706;"><i class="fa-solid fa-crown"></i> ANALYSE PREMIUM EXCLUSIVE</h5>
-                
-                <div class="stat-row"><span>Tendance Cycle Prochain</span><strong id="mdl-premium-trend" style="color:#2b6cb0;">Hausse Domination</strong></div>
-                <div class="stat-row"><span>Pourcentage Over 1.5 Match</span><strong id="mdl-premium-o15">84%</strong></div>
-                <div class="stat-row"><span>Pourcentage Over 2.5 Match</span><strong id="mdl-premium-o25">56%</strong></div>
-                <div class="stat-row"><span>Indice Fiabilité Fixture (Seed)</span><strong id="mdl-premium-seed" style="font-family:monospace; color:#4a5568;">#B261-7F9X</strong></div>
-                
-                <div class="premium-overlay-card">
-                    <p style="font-size:7.5pt; color:#92400e; font-weight:600;">Ce pronostic fait partie des signaux à haute probabilité (Hot Cycle).</p>
-                    <button class="btn-unlock-premium"><i class="fa-solid fa-bolt"></i> Suivre ce Signal VIP</button>
-                </div>
+                <div class="stat-row"><span>Confiance IA</span><strong id="mdl-conf" style="color:#38a169;"></strong></div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Persistent Global Bottom Navigation Toolbar Footers -->
-<div class="bottom-nav-bar">
-    <div class="nav-item active" onclick="switchSubPanel('matchs')"><i class="fa-solid fa-house"></i><span>Matchs</span></div>
-    <div class="nav-item" onclick="openPremiumDashboard()"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
-    <div class="nav-item" onclick="openPremiumDashboard()"><i class="fa-solid fa-crown"></i><span>Premium</span></div>
-    <div class="nav-item"><i class="fa-solid fa-gear"></i><span>Configuration</span></div>
-</div>
+    <!-- Sticky Bottom Navigation Bar Footer Toolbar -->
+    <div class="bottom-nav-bar">
+        <div class="nav-item active" id="nav-home" onclick="switchView('main')"><i class="fa-solid fa-house"></i><span>Matchs</span></div>
+        <div class="nav-item" onclick="switchView('config')"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
+        <div class="nav-item" onclick="switchView('config')"><i class="fa-solid fa-crown"></i><span>Premium</span></div>
+        <div class="nav-item" id="nav-config" onclick="switchView('config')"><i class="fa-solid fa-gear"></i><span>Configuration</span></div>
+    </div>
+
 </div>
 
 <script>
+// Lisitry ny klioba 20 feno tsy misy nesorina
 const africaTeams = [
     { name: "Ouganda", flag: "🇺🇬" }, { name: "Égypte", flag: "🇪🇬" },
     { name: "Mozambique", flag: "🇲🇿" }, { name: "Gabon", flag: "🇬🇦" },
     { name: "Tunisie", flag: "🇹🇳" }, { name: "Guinée Équatoriale", flag: "🇬🇶" },
     { name: "Algérie", flag: "🇩🇿" }, { name: "Zambie", flag: "🇿🇲" },
     { name: "Botswana", flag: "🇧🇼" }, { name: "RD Congo", flag: "🇨🇩" },
-    { name: "Zimbabwe", flag: "🇿🇼" }, { name: "Nigeria", flag: "🇳🇬" },
-    { name: "Côte d'Ivoire", flag: "🇨🇮" }, { name: "Comores", flag: "🇰🇲" },
-    { name: "Burkina Faso", flag: "🇧🇫" }, { name: "Mali", flag: "🇲🇱" },
-    { name: "Tanzanie", flag: "🇹🇿" }, { name: "Maroc", flag: "🇲🇦" },
-    { name: "Cameroun", flag: "🇨🇲" }, { name: "Guinée", flag: "🇬🇳" }
+    { name: "Sénégal", flag: "🇸🇳" }, { name: "Maroc", flag: "🇲🇦" },
+    { name: "Nigeria", flag: "🇳🇬" }, { name: "Cameroun", flag: "🇨🇲" },
+    { name: "Côte d'Ivoire", flag: "🇨🇮" }, { name: "Ghana", flag: "🇬🇭" },
+    { name: "Mali", flag: "🇲🇱" }, { name: "Burkina Faso", flag: "🇧🇫" },
+    { name: "Afrique du Sud", flag: "🇿🇦" }, { name: "Cap-Vert", flag: "🇨🇻" }
 ];
 
 let activeSubPanel = 'matchs';
 let activeMarket = '1X2';
-let countdownSeconds = 120; // 2 minitra
+let countdownSeconds = 120; // 2 minitra raikitra
 let currentMatches = [];
-let pastResults = [];
-let standings = [];
 
-function initStandings() {
-    standings = africaTeams.map(t => ({
-        name: t.name, flag: t.flag, mj: 14, g: Math.floor(4+Math.random()*6), n: Math.floor(2+Math.random()*4), p: Math.floor(1+Math.random()*5), pts: 0
-    }));
-    calculatePoints();
-}
-
-function calculatePoints() {
-    standings.forEach(s => { s.pts = (s.g * 3) + s.n; });
-    standings.sort((a,b) => b.pts - a.pts);
+function switchView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    if(viewId === 'main') {
+        document.getElementById('main-view').classList.add('active');
+        document.getElementById('nav-home').classList.add('active');
+    } else if(viewId === 'config') {
+        document.getElementById('config-view').classList.add('active');
+        document.getElementById('nav-config').classList.add('active');
+    }
 }
 
 function switchSubPanel(panelId) {
     activeSubPanel = panelId;
     document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('active'));
-    
-    const targetTab = document.getElementById(`tab-btn-${panelId}`);
-    const targetPanel = document.getElementById(`panel-${panelId}`);
-    if(targetTab) targetTab.classList.add('active');
-    if(targetPanel) targetPanel.classList.add('active');
-    
-    if (panelId === 'results') renderResultsPanel();
-    if (panelId === 'ranking') renderRankingPanel();
+    document.getElementById(`tab-btn-${panelId}`).classList.add('active');
+    document.getElementById(`panel-${panelId}`).classList.add('active');
 }
 
 function switchMarket(marketCode) {
     activeMarket = marketCode;
     document.querySelectorAll('.market-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`m-${marketCode}`).classList.add('active');
-    
-    const labelHeader = document.getElementById('market-labels-row');
-    if (marketCode === '1X2') labelHeader.innerHTML = '<span class="lbl-box">1</span><span class="lbl-box">X</span><span class="lbl-box">2</span>';
-    else if (marketCode === 'DC') labelHeader.innerHTML = '<span class="lbl-box">1X</span><span class="lbl-box">12</span><span class="lbl-box">X2</span>';
-    else if (marketCode === 'OU') labelHeader.innerHTML = '<span class="lbl-box">U 2.5</span><span class="lbl-box">Seuil</span><span class="lbl-box">O 2.5</span>';
-    else if (marketCode === 'BTTS') labelHeader.innerHTML = '<span class="lbl-box">Oui</span><span class="lbl-box">/</span><span class="lbl-box">Non</span>';
-    else if (marketCode === 'CS') labelHeader.innerHTML = '<span class="lbl-box">Score A</span><span class="lbl-box">Score B</span><span class="lbl-box">Score C</span>';
-    
     renderMatchesList();
 }
 
 function updateRoundTimeSlots() {
     const wrapper = document.getElementById('time-slots-line');
+    if(!wrapper) return;
     wrapper.innerHTML = '';
     let now = new Date();
-    
-    for(let i = 5; i > 0; i--) {
-        let pastTime = new Date(now.getTime() - (i * 2 * 60 * 1000));
-        let str = `${pastTime.getHours().toString().padStart(2,'0')}:${pastTime.getMinutes().toString().padStart(2,'0')}`;
-        wrapper.innerHTML += `<div class="time-slot past">${str}</div>`;
-    }
-    
     let currentStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
     wrapper.innerHTML += `<div class="time-slot active">${currentStr} <span class="live-indicator">LIVE</span></div>`;
-    
-    for(let i = 1; i <= 5; i++) {
+    for(let i = 1; i <= 3; i++) {
         let futTime = new Date(now.getTime() + (i * 2 * 60 * 1000));
         let str = `${futTime.getHours().toString().padStart(2,'0')}:${futTime.getMinutes().toString().padStart(2,'0')}`;
         wrapper.innerHTML += `<div class="time-slot">${str}</div>`;
@@ -909,98 +705,70 @@ function updateRoundTimeSlots() {
 function generateMatchesData() {
     currentMatches = [];
     let paired = [...africaTeams];
+    
+    // Shuffle an'ireo klioba mba hifandanja ny fizarana lalao
+    for (let i = paired.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [paired[i], paired[j]] = [paired[j], paired[i]];
+    }
+
     let now = new Date();
     let currentStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
     
+    // Mamorona lalao 10 avy amin'ny klioba 20
     for(let i = 0; i < paired.length; i += 2) {
         let home = paired[i];
         let away = paired[i+1];
-        
-        let odd1 = (1.5 + Math.random()*2.2).toFixed(2);
-        let oddX = (2.6 + Math.random()*1.5).toFixed(2);
-        let odd2 = (1.8 + Math.random()*3.1).toFixed(2);
-        
-        let p1 = Math.floor(25 + Math.random()*45);
-        let pX = Math.floor(20 + Math.random()*20);
-        let p2 = 100 - (p1 + pX);
-        
-        let gHome = Math.floor(Math.random() * 3);
-        let gAway = Math.floor(Math.random() * 3);
+        let gHome = Math.floor(Math.random() * 4);
+        let gAway = Math.floor(Math.random() * 4);
         
         currentMatches.push({
             home, away,
             liveScore: { home: gHome, away: gAway },
             liveTimeStr: `${currentStr} • LIVE 90'`,
-            odds: { 1: odd1, X: oddX, 2: odd2 },
-            probs: { 1: p1, X: pX, 2: p2 },
+            odds: { 1: (1.5 + Math.random()*1.5).toFixed(2), X: (3.0 + Math.random()*1).toFixed(2), 2: (2.0 + Math.random()*2).toFixed(2) },
+            probs: { 1: 45, X: 25, 2: 30 },
             score: `${gHome}-${gAway}`,
-            conf: Math.floor(40 + Math.random()*50),
-            fav: false,
-            // Premium Fields Added
-            premiumTrend: Math.random() > 0.5 ? "Cycle Chaud (Over)" : "Cycle Froid (Under/X)",
-            o15: Math.floor(70 + Math.random()*25),
-            o25: Math.floor(40 + Math.random()*45),
-            seed: "HZ-" + Math.floor(1000 + Math.random()*9000)
+            conf: Math.floor(60 + Math.random()*30),
+            fav: false
         });
     }
-    renderMatchesList();
-}
+    
+    // Fanavaozana ny soratra lohateny hifanaraka amin'ny lalao 20 (ho an'ny klioba 20)
+    const headerCount = document.getElementById('matches-header-count');
+    if(headerCount) headerCount.innerText = `${currentMatches.length} MATCHS`;
 
-function toggleFav(idx, e) {
-    e.stopPropagation();
-    currentMatches[idx].fav = !currentMatches[idx].fav;
     renderMatchesList();
 }
 
 function renderMatchesList() {
     const container = document.getElementById('matches-container-rows');
+    if(!container) return;
     container.innerHTML = '';
     
     currentMatches.forEach((match, idx) => {
-        let valA = match.odds[1];
-        let valB = match.odds['X'];
-        let valC = match.odds[2];
-        
-        if(activeMarket === 'DC') {
-            valA = "1.24"; valB = "1.31"; valC = "1.45";
-        } else if(activeMarket === 'OU') {
-            valA = "1.75"; valB = "2.5"; valC = "1.92";
-        } else if(activeMarket === 'BTTS') {
-            valA = "1.85"; valB = "/"; valC = "1.85";
-        } else if(activeMarket === 'CS') {
-            valA = match.score; valB = "6.50"; valC = "12.00";
-        }
-        
-        let starClass = match.fav ? 'fa-solid fa-star star-icon active' : 'fa-regular fa-star star-icon';
-        
         let row = document.createElement('div');
         row.className = 'match-item-row';
         row.onclick = () => openModal(idx);
         row.innerHTML = `
             <div class="team-row-wrapper">
-                <i class="${starClass}" onclick="toggleFav(${idx}, event)"></i>
+                <i class="fa-regular fa-star star-icon"></i>
                 <div class="teams-meta-block">
                     <div class="team-line-node">
-                        <div class="team-info-side">
-                            <span class="flag-icon">${match.home.flag}</span>
-                            <span class="team-name-string">${match.home.name}</span>
-                        </div>
+                        <div class="team-info-side"><span>${match.home.flag}</span><span class="team-name-string">${match.home.name}</span></div>
                         <span class="live-score-digit">${match.liveScore.home}</span>
                     </div>
                     <div class="team-line-node">
-                        <div class="team-info-side">
-                            <span class="flag-icon">${match.away.flag}</span>
-                            <span class="team-name-string">${match.away.name}</span>
-                        </div>
+                        <div class="team-info-side"><span>${match.away.flag}</span><span class="team-name-string">${match.away.name}</span></div>
                         <span class="live-score-digit">${match.liveScore.away}</span>
                     </div>
                     <div class="live-time-meta">${match.liveTimeStr}</div>
                 </div>
             </div>
             <div class="odds-values-block">
-                <div class="odd-cell-box">${valA}<i class="fa-solid fa-lock lock-icon-small"></i></div>
-                <div class="odd-cell-box">${valB}<i class="fa-solid fa-lock lock-icon-small"></i></div>
-                <div class="odd-cell-box">${valC}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${match.odds[1]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${match.odds['X']}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${match.odds[2]}<i class="fa-solid fa-lock lock-icon-small"></i></div>
             </div>
             <div class="predicted-score-cell">
                 <span class="score-badge">${match.score}</span>
@@ -1011,135 +779,37 @@ function renderMatchesList() {
     });
 }
 
-function renderResultsPanel() {
-    const container = document.getElementById('results-container-rows');
-    container.innerHTML = '';
-    
-    if(pastResults.length === 0) {
-        for(let i=0; i<6; i++) {
-            let h = africaTeams[Math.floor(Math.random()*10)];
-            let a = africaTeams[Math.floor(Math.random()*10 + 10)];
-            pastResults.push({ home: h, away: a, score: `${Math.floor(Math.random()*3)}-${Math.floor(Math.random()*3)}` });
-        }
-    }
-    
-    pastResults.forEach(res => {
-        container.innerHTML += `
-            <div class="result-row">
-                <div class="res-team-side"><span>${res.home.flag}</span> <strong>${res.home.name}</strong></div>
-                <div class="res-score-center">${res.score}</div>
-                <div class="res-team-side away"><strong>${res.away.name}</strong> <span>${res.away.flag}</span></div>
-            </div>
-        `;
-    });
-}
-
-function renderRankingPanel() {
-    const container = document.getElementById('ranking-container-rows');
-    container.innerHTML = '';
-    
-    standings.forEach((team, index) => {
-        container.innerHTML += `
-            <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td class="team-cell"><span>${team.flag}</span> ${team.name}</td>
-                <td>${team.mj}</td>
-                <td>${team.g}</td>
-                <td>${team.n}</td>
-                <td>${team.p}</td>
-                <td><strong>${team.pts}</strong></td>
-            </tr>
-        `;
-    });
-}
-
-function recalculateAI() {
-    generateMatchesData();
-}
-
 function openModal(idx) {
     let match = currentMatches[idx];
-    document.getElementById('mdl-home-name').innerText = match.home.name.toUpperCase();
+    document.getElementById('mdl-home-name').innerText = match.home.name;
     document.getElementById('mdl-home-flag').innerText = match.home.flag;
-    document.getElementById('mdl-away-name').innerText = match.away.name.toUpperCase();
+    document.getElementById('mdl-away-name').innerText = match.away.name;
     document.getElementById('mdl-away-flag').innerText = match.away.flag;
-    
-    // H2H / Form Blocks Random Generation
-    document.getElementById('mdl-home-form').innerHTML = `
-        <span class="h2h-badge bg-win">G</span>
-        <span class="h2h-badge bg-win">G</span>
-        <span class="h2h-badge bg-draw">N</span>
-    `;
-    document.getElementById('mdl-away-form').innerHTML = `
-        <span class="h2h-badge bg-loss">P</span>
-        <span class="h2h-badge bg-draw">N</span>
-        <span class="h2h-badge bg-win">G</span>
-    `;
-
     document.getElementById('mdl-bar-1').style.width = `${match.probs[1]}%`;
-    document.getElementById('mdl-bar-1').innerText = `1 (${match.probs[1]}%)`;
     document.getElementById('mdl-bar-x').style.width = `${match.probs['X']}%`;
-    document.getElementById('mdl-bar-x').innerText = `X (${match.probs['X']}%)`;
     document.getElementById('mdl-bar-2').style.width = `${match.probs[2]}%`;
-    document.getElementById('mdl-bar-2').innerText = `2 (${match.probs[2]}%)`;
-    
-    document.getElementById('mdl-xg').innerText = `${(0.9 + Math.random()*1.5).toFixed(2)} - ${(0.4 + Math.random()*1.2).toFixed(2)}`;
     document.getElementById('mdl-conf').innerText = `${match.conf}%`;
-    
-    // Inject Premium Data into Modal
-    document.getElementById('mdl-premium-trend').innerText = match.premiumTrend;
-    document.getElementById('mdl-premium-o15').innerText = `${match.o15}%`;
-    document.getElementById('mdl-premium-o25').innerText = `${match.o25}%`;
-    document.getElementById('mdl-premium-seed').innerText = match.seed;
-    
     document.getElementById('analysis-modal').classList.add('active');
 }
 
-function openPremiumDashboard() {
-    // Manokatra mivantana ny match voalohany ho ohatra amin'ny Premium Panel
-    if(currentMatches.length > 0) openModal(0);
-}
-
-function closeModal() {
-    document.getElementById('analysis-modal').classList.remove('active');
-}
+function closeModal() { document.getElementById('analysis-modal').classList.remove('active'); }
 
 function startCountdownTimer() {
     const timerLabel = document.getElementById('timer-clock');
     setInterval(() => {
         countdownSeconds--;
         if(countdownSeconds <= 0) {
-            countdownSeconds = 120;
-            
-            pastResults = currentMatches.map(m => {
-                let s1 = m.liveScore.home;
-                let s2 = m.liveScore.away;
-                let tHome = standings.find(t => t.name === m.home.name);
-                let tAway = standings.find(t => t.name === m.away.name);
-                if(tHome && tAway) {
-                    tHome.mj++; tAway.mj++;
-                    if(s1 > s2) { tHome.g++; tAway.p++; }
-                    else if(s1 < s2) { tAway.g++; tHome.p++; }
-                    else { tHome.n++; tAway.n++; }
-                }
-                return { home: m.home, away: m.away, score: `${s1}-${s2}` };
-            });
-            calculatePoints();
+            countdownSeconds = 120; // 2 minitra raikitra
             updateRoundTimeSlots();
             generateMatchesData();
-            
-            if(activeSubPanel === 'results') renderResultsPanel();
-            if(activeSubPanel === 'ranking') renderRankingPanel();
         }
-        
         let min = Math.floor(countdownSeconds / 60).toString().padStart(2,'0');
         let sec = (countdownSeconds % 60).toString().padStart(2,'0');
-        timerLabel.innerText = `${min}:${sec}`;
+        if(timerLabel) timerLabel.innerText = `${min}:${sec}`;
     }, 1000);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    initStandings();
     updateRoundTimeSlots();
     generateMatchesData();
     startCountdownTimer();
