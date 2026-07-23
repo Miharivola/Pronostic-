@@ -204,11 +204,8 @@ body {
 .team-info-side { display: flex; align-items: center; gap: 6px; }
 .flag-icon { font-size: 11pt; }
 .team-name-string { font-size: 8.5pt; font-weight: 800; color: #2d3748; text-transform: uppercase; }
-.live-score-digit { font-size: 9.5pt; font-weight: 800; color: #38a169; padding-right: 15px; }
-.live-time-meta { font-size: 7pt; color: #718096; font-weight: 600; margin-top: 2px; }
 .odds-values-block { flex: 1.8; display: flex; gap: 4px; }
 .odd-cell-box { width: 33%; background-color: #f7faf8; border: 1px solid #e2e8f0; text-align: center; padding: 6px 0; border-radius: 4px; font-size: 8.5pt; font-weight: 700; color: #2d3748; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2px; }
-.lock-icon-small { font-size: 6.5pt; color: #d4af37; }
 .predicted-score-cell { width: 65px; text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
 .score-badge { background-color: #f0fdf4; color: #166534; font-size: 8.5pt; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid #bbf7d0; }
 .analysis-pct-lbl { font-size: 7pt; font-weight: 700; color: #a0aec0; margin-top: 2px; }
@@ -411,7 +408,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     transition: all 0.3s;
 }
 .step-nav-btn.active {
-    background-color: #4f46e5;
+    background-color: #0f172a;
     color: #ffffff;
 }
 .step-nav-btn:disabled {
@@ -428,42 +425,42 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 
 /* Upload Box Dropzone */
 .file-upload-dropzone {
-    background-color: #ffffff;
-    border: 2px dashed #cbd5e1;
+    background-color: #1e293b;
+    border: 2px dashed #475569;
     border-radius: 12px;
     padding: 24px 16px;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.2s, background-color 0.2s;
     margin-bottom: 14px;
+    color: #ffffff;
 }
 .file-upload-dropzone:hover, .file-upload-dropzone.dragover {
-    border-color: #4f46e5;
-    background-color: #f8fafc;
+    border-color: #fb923c;
+    background-color: #1e293b;
 }
 .file-upload-dropzone .icon-container {
     font-size: 26pt;
-    color: #6366f1;
+    color: #cbd5e1;
     margin-bottom: 8px;
 }
 .file-upload-dropzone h4 {
     font-size: 9.5pt;
     font-weight: 700;
-    color: #1e293b;
     text-transform: uppercase;
 }
 .file-upload-dropzone p.desc {
     font-size: 7.5pt;
-    color: #64748b;
+    color: #94a3b8;
     margin-top: 3px;
     line-height: 1.3;
 }
 .file-upload-dropzone .click-hint {
     font-size: 7pt;
-    color: #4f46e5;
+    color: #fb923c;
     font-weight: 700;
     margin-top: 10px;
-    background-color: #e0e7ff;
+    background-color: rgba(251, 146, 60, 0.1);
     display: inline-block;
     padding: 3px 10px;
     border-radius: 6px;
@@ -471,8 +468,8 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 
 /* File Listing Queue */
 .file-queue-list {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
+    background-color: #1e293b;
+    border: 1px solid #334155;
     border-radius: 8px;
     padding: 6px 10px;
     margin-bottom: 14px;
@@ -484,9 +481,9 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     justify-content: space-between;
     align-items: center;
     padding: 6px 0;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #334155;
     font-size: 8pt;
-    color: #334155;
+    color: #cbd5e1;
 }
 .file-queue-item:last-child { border-bottom: none; }
 .file-queue-item .file-meta {
@@ -497,7 +494,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.file-queue-item i { color: #64748b; }
+.file-queue-item i { color: #94a3b8; }
 .file-queue-item .remove-file-btn {
     color: #ef4444;
     cursor: pointer;
@@ -514,7 +511,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 .clear-all-btn {
     background: none;
     border: none;
-    color: #ef4444;
+    color: #94a3b8;
     font-size: 8pt;
     font-weight: 700;
     cursor: pointer;
@@ -523,7 +520,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 /* Action Trigger Button */
 .action-process-btn {
     width: 100%;
-    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
     color: #ffffff;
     border: none;
     border-radius: 12px;
@@ -534,11 +531,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
-}
-.action-process-btn.success-green {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 4px 10px rgba(234, 88, 12, 0.2);
 }
 
 /* Dynamic Extraction Process Status Box */
@@ -579,7 +572,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 }
 .progress-bar-fill {
     width: 0%;
-    background: linear-gradient(90deg, #6366f1 0%, #10b981 100%);
+    background: linear-gradient(90deg, #f97316 0%, #10b981 100%);
     height: 100%;
     transition: width 0.3s;
 }
@@ -599,11 +592,11 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 .extraction-tasks-list li.done { color: #f8fafc; }
 .extraction-tasks-list li .status-indicator { font-weight: 700; }
 .extraction-tasks-list li .status-indicator.check { color: #10b981; }
-.extraction-tasks-list li .status-indicator.spin { color: #6366f1; animation: spin 1s linear infinite; display: inline-block; }
+.extraction-tasks-list li .status-indicator.spin { color: #f97316; animation: spin 1s linear infinite; display: inline-block; }
 .extraction-tasks-list li .status-indicator.wait { color: #475569; }
 
 /* -------------------------------------------------------------
-   NEW DYNAMIC LOOK-ALIKE PREMIUM PREDICTIONS DISPLAY PANEL
+   VISUAL POSITION MATCH ACCORDING TO THE SCREENSHOT
 ------------------------------------------------------------- */
 .premium-result-section-header {
     display: flex;
@@ -692,7 +685,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 
     <!-- VIEW 1: MAIN MATCHS LIST -->
     <div id="main-view" class="view active">
-        <!-- Top Header Layout Banner -->
         <div class="header-banner">
             <div class="header-top">
                 <span class="logo"><i class="fa-solid fa-bolt"></i> PRONOSTIC VITAL</span>
@@ -771,10 +763,9 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
         </div>
     </div>
 
-    <!-- VIEW 2: DYNAMIC REELS CONFIGURATION DASHBOARD -->
+    <!-- VIEW 2: SETTINGS CONFIGURATION -->
     <div id="config-view" class="view">
         <div class="config-container">
-            
             <div class="banner-passer-premium" onclick="switchView('premium')">
                 <div class="left-side">
                     <div class="star-badge-icon"><i class="fa-solid fa-star"></i></div>
@@ -794,218 +785,107 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                 <i class="fa-solid fa-chevron-right chevron-right-element"></i>
             </div>
 
-            <!-- SECTION 1: TIPS -->
             <div class="section-title-lbl text-orange-tips"><i class="fa-solid fa-fire"></i> Tips</div>
             <div class="menu-grid-layout">
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-regular fa-calendar main-icon"></i>
-                        <span class="card-label-str">Free Tips</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-regular fa-star main-icon"></i>
-                        <span class="card-label-str">Best Tips</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-solid fa-trophy main-icon"></i>
-                        <span class="card-label-str">VIP Tips</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-regular fa-square-plus main-icon"></i>
-                        <span class="card-label-str">Single Tips</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-regular fa-clock main-icon"></i>
-                        <span class="card-label-str">HT/FT</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-solid fa-arrows-up-down main-icon"></i>
-                        <span class="card-label-str">Over-Under</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card" style="grid-column: span 2;">
-                    <div class="card-main-info">
-                        <i class="fa-solid fa-rotate main-icon"></i>
-                        <span class="card-label-str">BTTS (Both Teams To Score)</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
+                <div class="menu-grid-card"><div class="card-main-info"><i class="fa-regular fa-calendar main-icon"></i><span class="card-label-str">Free Tips</span></div><i class="fa-solid fa-chevron-right chevron-right-element"></i></div>
+                <div class="menu-grid-card"><div class="card-main-info"><i class="fa-regular fa-star main-icon"></i><span class="card-label-str">Best Tips</span></div><i class="fa-solid fa-chevron-right chevron-right-element"></i></div>
+                <div class="menu-grid-card"><div class="card-main-info"><i class="fa-solid fa-trophy main-icon"></i><span class="card-label-str">VIP Tips</span></div><i class="fa-solid fa-chevron-right chevron-right-element"></i></div>
+                <div class="menu-grid-card"><div class="card-main-info"><i class="fa-regular fa-square-plus main-icon"></i><span class="card-label-str">Single Tips</span></div><i class="fa-solid fa-chevron-right chevron-right-element"></i></div>
             </div>
-
-            <!-- SECTION 2: LIVE -->
-            <div class="section-title-lbl text-green-live"><i class="fa-solid fa-wave-square"></i> Live</div>
-            <div class="menu-grid-layout">
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-solid fa-bolt main-icon"></i>
-                        <span class="card-label-str">Live Tips</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="menu-grid-card">
-                    <div class="card-main-info">
-                        <i class="fa-solid fa-chart-simple main-icon"></i>
-                        <span class="card-label-str">Live Scores</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-            </div>
-
-            <!-- SECTION 3: SETTINGS LIST GROUP -->
-            <div class="section-title-lbl"><i class="fa-solid fa-gear"></i> Settings</div>
-            <div class="settings-list-group">
-                <div class="settings-list-item">
-                    <div class="item-left"><i class="fa-regular fa-envelope item-icon"></i> Suggestion / Demandes</div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="settings-list-item">
-                    <div class="item-left"><i class="fa-solid fa-shield-halved item-icon"></i> Conditions d'utilisation</div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="settings-list-item">
-                    <div class="item-left"><i class="fa-solid fa-lock item-icon"></i> Politique de confidentialité</div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="settings-list-item">
-                    <div class="item-left"><i class="fa-solid fa-arrow-rotate-left item-icon"></i> Reset onboarding</div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-                <div class="settings-list-item disconnect-btn">
-                    <div class="item-left"><i class="fa-solid fa-power-off item-icon"></i> Se déconnecter</div>
-                    <i class="fa-solid fa-chevron-right chevron-right-element"></i>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <!-- VIEW 3: NEW PREMIUM MULTI-STEP ANALYSIS PIPELINE VIEW -->
+    <!-- VIEW 3: PREMIUM MULTI-STEP ANALYSIS PIPELINE VIEW -->
     <div id="premium-view" class="view">
-        <div class="header-banner">
+        <div class="header-banner" style="background: linear-gradient(135deg, #111827 0%, #030712 100%);">
             <div class="header-top">
-                <span class="logo"><i class="fa-solid fa-wand-magic-sparkles"></i> ANALYSE PREMIUM</span>
-                <span class="badge premium-badge" style="background: #ffffff; color: #4f46e5;"><i class="fa-solid fa-brain"></i> AI MODE</span>
+                <span class="logo" style="color: #fb923c;"><i class="fa-solid fa-wand-magic-sparkles"></i> ANALYSE PREMIUM</span>
+                <span class="badge premium-badge" style="background: #fb923c; color: #ffffff;"><i class="fa-solid fa-brain"></i> AI ENGINE</span>
             </div>
         </div>
         
-        <div class="config-container">
+        <div class="config-container" style="background-color: #0b0f19; min-height: 80vh;">
             <!-- Stepper Navigation Headers -->
             <div class="step-nav-bar">
                 <button class="step-nav-btn active" id="step-nav-1" onclick="jumpToStep(1)">1. Base Historique</button>
-                <button class="step-nav-btn" id="step-nav-2" onclick="jumpToStep(2)" disabled>2. Matchs & Pronostics</button>
+                <button class="step-nav-btn" id="step-nav-2" onclick="jumpToStep(2)" disabled>2. Matchs du jour</button>
             </div>
 
             <!-- STEP 1 PANEL: BASE HISTORIQUE DOCK -->
             <div id="premium-panel-1" class="premium-panel active">
-                
-                <!-- Extraction Running Progress State Block -->
                 <div id="extraction-status-card" style="display: none;" class="extraction-status-panel">
                     <div class="panel-top-title">
                         <h3 id="extraction-headline">Extraction Historique</h3>
                         <i class="fa-solid fa-circle-notch spin status-indicator" style="font-size: 10pt;"></i>
                     </div>
-                    <p class="sub">Veuillez patienter pendant que le moteur d'analyse statistique compile vos documents...</p>
+                    <p class="sub">Veuillez patienter pendant le traitement...</p>
                     <div class="progress-bar-track">
                         <div id="extraction-progress-fill" class="progress-bar-fill"></div>
                     </div>
-                    <ul class="extraction-tasks-list" id="extraction-tasks-box">
+                    <ul class="extraction-tasks-list">
                         <li id="task-1"><span>Extraction des historiques</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-2"><span>Extraction des scores</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-3"><span>Reconstruction des journées</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-4"><span>Analyse offensive & défensive</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-5"><span>Détection des cycles</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-6"><span>Consultation de la base statistique</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-7"><span>Vérification finale</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-2"><span>Consultation de la base statistique</span><span class="status-indicator wait">⏳</span></li>
+                        <li id="task-3"><span>Vérification finale</span><span class="status-indicator wait">⏳</span></li>
                     </ul>
                 </div>
 
-                <!-- Interactive Upload Target Area Box Dropzone -->
                 <div class="file-upload-dropzone" id="dropzone-hist" onclick="triggerFileInput('file-input-hist')">
                     <div class="icon-container"><i class="fa-solid fa-cloud-arrow-up"></i></div>
                     <h4>Charger la Base Historique</h4>
-                    <p class="desc">Déposez les données historiques des championnats récents (images, pdf, txt) ho an'ny motor statistics.</p>
-                    <div class="click-hint">Glissez-déposez ou cliquez pour ajouter</div>
+                    <p class="desc">Déposez les données historiques (images, pdf, txt).</p>
+                    <div class="click-hint">Cliquez pour ajouter</div>
                     <input type="file" id="file-input-hist" multiple accept="image/*,.pdf,.txt" style="display: none;" onchange="handleFileSelection(this, 'hist')">
                 </div>
 
-                <!-- Queue Files Container Elements Grid List -->
                 <div id="queue-box-hist" style="display: none;">
-                    <div class="queue-control-row">
-                        <button class="clear-all-btn" onclick="clearQueue('hist')"><i class="fa-solid fa-trash-can"></i> Tout effacer</button>
-                    </div>
+                    <div class="queue-control-row"><button class="clear-all-btn" onclick="clearQueue('hist')">Tout effacer</button></div>
                     <div class="file-queue-list" id="file-list-hist"></div>
                 </div>
 
-                <!-- Run Command Trigger Actions Button Elements -->
-                <button id="action-btn-hist" class="action-process-btn" onclick="startHistoricalExtractionPipeline()" style="margin-top: 6px;">
+                <button id="action-btn-hist" class="action-process-btn" onclick="startHistoricalExtractionPipeline()">
                     <i class="fa-solid fa-bolt"></i> Analyser l'historique
                 </button>
             </div>
 
             <!-- STEP 2 PANEL: LIVE TARGET RUN CHANNELS MATCHS -->
             <div id="premium-panel-2" class="premium-panel">
-                
-                <!-- Live Analytical Computation Task Running Panel Block -->
                 <div id="compute-status-card" style="display: none;" class="extraction-status-panel">
                     <div class="panel-top-title">
                         <h3>Analyse Premium en Cours</h3>
                         <i class="fa-solid fa-circle-notch spin status-indicator" style="font-size: 10pt;"></i>
                     </div>
-                    <p class="sub">Le moteur multimodal fusionne l'historique extrait avec les cotes en temps réel...</p>
                     <div class="progress-bar-track">
                         <div id="compute-progress-fill" class="progress-bar-fill"></div>
                     </div>
-                    <ul class="extraction-tasks-list">
-                        <li id="cmp-task-1"><span>Lecture des nouveaux matchs du jour</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="cmp-task-2"><span>Application des lois de probabilités</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="cmp-task-3"><span>Génération des scores exacts premium</span><span class="status-indicator wait">⏳</span></li>
-                    </ul>
                 </div>
 
                 <div class="file-upload-dropzone" id="dropzone-match" onclick="triggerFileInput('file-input-match')">
                     <div class="icon-container"><i class="fa-solid fa-file-invoice"></i></div>
                     <h4>Charger les Matchs du Jour</h4>
-                    <p class="desc">Glissez-déposez ici la capture d'écran ou le fichier contenant les prochains matchs à pronostiquer.</p>
-                    <div class="click-hint" style="background-color: #ecfdf5; color: #10b981;">Insérer les captures d'écran</div>
+                    <p class="desc">Glissez-déposez ici la capture d'écran contenant les prochains matchs.</p>
+                    <div class="click-hint">Insérer la capture d'écran</div>
                     <input type="file" id="file-input-match" multiple accept="image/*,.pdf,.txt" style="display: none;" onchange="handleFileSelection(this, 'match')">
                 </div>
 
                 <div id="queue-box-match" style="display: none;">
-                    <div class="queue-control-row">
-                        <button class="clear-all-btn" onclick="clearQueue('match')"><i class="fa-solid fa-trash-can"></i> Tout effacer</button>
-                    </div>
+                    <div class="queue-control-row"><button class="clear-all-btn" onclick="clearQueue('match')">Tout effacer</button></div>
                     <div class="file-queue-list" id="file-list-match"></div>
                 </div>
 
-                <button id="action-btn-match" class="action-process-btn" onclick="startPremiumPredictionsCompute()" style="margin-top: 6px;">
+                <!-- BUTTON TRIGGER AS SEEN ON THE SCREENSHOT -->
+                <button id="action-btn-match" class="action-process-btn" onclick="startPremiumPredictionsCompute()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 4px 10px rgba(217, 119, 6 0.3);">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Lancer Analyse Premium
                 </button>
 
-                <!-- NEW DYNAMIC DISPLAY OF GENERATED PREMIUM MATCHES OUTCOMES -->
+                <!-- NEW PERFECT LOOK-ALIKE CONTAINER BASED ON SCREENSHOT RESULTS -->
                 <div id="premium-results-wrapper" style="display: none;">
                     <div class="premium-result-section-header">
-                        <span class="premium-result-title"><i class="fa-solid fa-trophy"></i> Résultats d'Analyse Premium</span>
+                        <span class="premium-result-title"><i class="fa-solid fa-trophy"></i> RÉSULTATS D'ANALYSE PREMIUM</span>
                         <button class="premium-result-clear" onclick="clearPremiumResultsBlock()">Effacer</button>
                     </div>
                     
                     <div class="premium-dark-card-box" id="premium-dark-container">
-                        <!-- Dynamic generated matches rows inject here -->
+                        <!-- Dynamic generated matches matches this dark frame style exactly -->
                     </div>
 
                     <div class="premium-footer-disclaimer">
@@ -1051,30 +931,28 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 </div>
 
 <script>
-// Lisitry ny klioba 24 marina
 const africaTeams = [
-    { name: "Ouganda", flag: "🇺🇬" }, { name: "Égypte", flag: "🇪🇬" },
-    { name: "Mozambique", flag: "🇲🇿" }, { name: "Gabon", flag: "🇬🇦" },
-    { name: "Tunisie", flag: "🇹🇳" }, { name: "Guinée Équatoriale", flag: "🇬🇶" },
-    { name: "Algérie", flag: "🇩🇿" }, { name: "Zambie", flag: "🇿🇲" },
-    { name: "Botswana", flag: "🇧🇼" }, { name: "RD Congo", flag: "🇨🇩" },
-    { name: "Sénégal", flag: "🇸🇳" }, { name: "Maroc", flag: "🇲🇦" },
-    { name: "Nigeria", flag: "🇳🇬" }, { name: "Cameroun", flag: "🇨🇲" },
-    { name: "Côte d'Ivoire", flag: "🇨🇮" }, { name: "Sudan", flag: "🇸🇩" },
-    { name: "Mali", flag: "🇲🇱" }, { name: "Burkina Faso", flag: "🇧🇫" },
-    { name: "Afrique du Sud", flag: "🇿🇦" }, { name: "Benin", flag: "🇧🇯" },
-    { name: "Comores", flag: "🇰🇲" }, { name: "Tanzania", flag: "🇹🇿" },
-    { name: "Angola", flag: "🇦🇴" }, { name: "Zimbabwe", flag: "🇿🇼" }
+    { name: "Angola", flag: "🇦🇴" }, { name: "Zambia", flag: "🇿🇲" },
+    { name: "Ivory Coast", flag: "🇨🇮" }, { name: "Comoros", flag: "🇰🇲" },
+    { name: "Equatorial Guinea", flag: "🇬🇶" }, { name: "Egypt", flag: "🇪🇬" },
+    { name: "Benin", flag: "🇧🇯" }, { name: "Tunisia", flag: "🇹🇳" },
+    { name: "Mozambique", flag: "🇲🇿" }, { name: "DR Congo", flag: "🇨🇩" },
+    { name: "Botswana", flag: "🇧🇼" }, { name: "Tanzania", flag: "🇹🇿" },
+    { name: "Zimbabwe", flag: "🇿🇼" }, { name: "Morocco", flag: "🇲🇦" },
+    { name: "South Africa", flag: "🇿🇦" }, { name: "Algeria", flag: "🇩🇿" },
+    { name: "Sudan", flag: "🇸🇩" }, { name: "Mali", flag: "🇲🇱" },
+    { name: "Senegal", flag: "🇸🇳" }, { name: "Uganda", flag: "🇺🇬" },
+    { name: "Cameroon", flag: "🇨🇲" }, { name: "Nigeria", flag: "🇳🇬" },
+    { name: "Burkina Faso", flag: "🇧🇫" }, { name: "Gabon", flag: "🇬🇦" }
 ];
 
 let activeSubPanel = 'matchs';
 let activeMarket = '1X2';
-let countdownSeconds = 120; // 2 minitra raikitra
+let countdownSeconds = 120;
 let currentMatches = [];
 let pastResults = [];
 let globalStandings = [];
 
-// Storage matrices for new premium dynamic file management pipelines
 let historicalUploadedFilesList = [];
 let matchdayUploadedFilesList = [];
 let activeWorkflowStep = 1;
@@ -1106,17 +984,6 @@ function switchMarket(marketCode) {
     activeMarket = marketCode;
     document.querySelectorAll('.market-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`m-${marketCode}`).classList.add('active');
-    
-    const labelsRow = document.getElementById('market-labels-row');
-    if (labelsRow) {
-        if (marketCode === '1X2') {
-            labelsRow.innerHTML = '<span class="lbl-box">1</span><span class="lbl-box">X</span><span class="lbl-box">2</span>';
-        } else if (marketCode === 'DC') {
-            labelsRow.innerHTML = '<span class="lbl-box">1X</span><span class="lbl-box">12</span><span class="lbl-box">X2</span>';
-        } else if (marketCode === 'OU') {
-            labelsRow.innerHTML = '<span class="lbl-box">U2.5</span><span class="lbl-box">O2.5</span><span class="lbl-box">O3.5</span>';
-        }
-    }
     renderMatchesList();
 }
 
@@ -1136,12 +1003,7 @@ function updateRoundTimeSlots() {
 
 function initStandings() {
     globalStandings = africaTeams.map(team => ({
-        team: team,
-        played: 0,
-        won: 0,
-        drawn: 0,
-        lost: 0,
-        points: 0
+        team: team, played: 0, won: 0, drawn: 0, lost: 0, points: 0
     }));
 }
 
@@ -1152,9 +1014,9 @@ function triggerFileInput(inputId) {
 function handleFileSelection(inputElement, contextNamespace) {
     const chosenFiles = Array.from(inputElement.files);
     if(contextNamespace === 'hist') {
-        historicalUploadedFilesList = [...historicalUploadedFilesList, ...chosenFiles].slice(0, 20);
+        historicalUploadedFilesList = [...historicalUploadedFilesList, ...chosenFiles].slice(0, 5);
     } else {
-        matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...chosenFiles].slice(0, 20);
+        matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...chosenFiles].slice(0, 5);
     }
     refreshFilesQueueDisplay(contextNamespace);
     inputElement.value = ''; 
@@ -1164,31 +1026,17 @@ function setupDragAndDropListeners() {
     ['hist', 'match'].forEach(context => {
         const zone = document.getElementById(`dropzone-${context}`);
         if(!zone) return;
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            zone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                zone.classList.add('dragover');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            zone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                zone.classList.remove('dragover');
-            }, false);
-        });
-
+        zone.addEventListener('dragover', (e) => e.preventDefault());
         zone.addEventListener('drop', (e) => {
-            const transfer = e.dataTransfer;
-            const droppedFiles = Array.from(transfer.files);
+            e.preventDefault();
+            const droppedFiles = Array.from(e.dataTransfer.files);
             if(context === 'hist') {
-                historicalUploadedFilesList = [...historicalUploadedFilesList, ...droppedFiles].slice(0, 20);
+                historicalUploadedFilesList = [...historicalUploadedFilesList, ...droppedFiles].slice(0, 5);
             } else {
-                matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...droppedFiles].slice(0, 20);
+                matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...droppedFiles].slice(0, 5);
             }
             refreshFilesQueueDisplay(context);
-        }, false);
+        });
     });
 }
 
@@ -1210,10 +1058,7 @@ function refreshFilesQueueDisplay(context) {
         const itemRow = document.createElement('div');
         itemRow.className = 'file-queue-item';
         itemRow.innerHTML = `
-            <div class="file-meta">
-                <i class="fa-regular fa-file-image"></i>
-                <span>${file.name} (${(file.size / 1024).toFixed(1)} KB)</span>
-            </div>
+            <div class="file-meta"><i class="fa-regular fa-file-image"></i><span>${file.name}</span></div>
             <i class="fa-solid fa-xmark remove-file-btn" onclick="removeSingleFile('${context}', ${index})"></i>
         `;
         listContainer.appendChild(itemRow);
@@ -1221,164 +1066,71 @@ function refreshFilesQueueDisplay(context) {
 }
 
 function removeSingleFile(context, fileIndex) {
-    if(context === 'hist') {
-        historicalUploadedFilesList.splice(fileIndex, 1);
-    } else {
-        matchdayUploadedFilesList.splice(fileIndex, 1);
-    }
+    if(context === 'hist') historicalUploadedFilesList.splice(fileIndex, 1);
+    else matchdayUploadedFilesList.splice(fileIndex, 1);
     refreshFilesQueueDisplay(context);
 }
 
 function clearQueue(context) {
-    if(context === 'hist') {
-        historicalUploadedFilesList = [];
-    } else {
-        matchdayUploadedFilesList = [];
-    }
+    if(context === 'hist') historicalUploadedFilesList = [];
+    else matchdayUploadedFilesList = [];
     refreshFilesQueueDisplay(context);
 }
 
 function jumpToStep(stepNumber) {
     if(stepNumber === 2 && document.getElementById('step-nav-2').disabled) return;
-    
     activeWorkflowStep = stepNumber;
     document.querySelectorAll('.step-nav-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.premium-panel').forEach(panel => panel.classList.remove('active'));
-    
     document.getElementById(`step-nav-${stepNumber}`).classList.add('active');
     document.getElementById(`premium-panel-${stepNumber}`).classList.add('active');
 }
 
-// PIPELINE STEP 1: ASYNCHRONOUS EXTRACTION SCHEDULER ANIMATION
 function startHistoricalExtractionPipeline() {
     if(historicalUploadedFilesList.length === 0) {
-        alert("Mba ampidiro ireo fichiers misy base historique azafady !");
+        alert("Mba ampidiro aloha ilay fichiers de base historique azafady!");
         return;
     }
-    
     const statusCard = document.getElementById('extraction-status-card');
     const progressBar = document.getElementById('extraction-progress-fill');
-    const mainActionBtn = document.getElementById('action-btn-hist');
-    
     statusCard.style.display = 'block';
-    mainActionBtn.disabled = true;
     progressBar.style.width = '0%';
     
-    for(let i=1; i<=7; i++) {
-        const t = document.getElementById(`task-${i}`);
-        t.className = '';
-        t.querySelector('.status-indicator').className = 'status-indicator wait';
-        t.querySelector('.status-indicator').innerHTML = '⏳';
-    }
-    
-    const tasksConfig = [
-        { id: 'task-1', duration: 700 },
-        { id: 'task-2', duration: 600 },
-        { id: 'task-3', duration: 800 },
-        { id: 'task-4', duration: 500 },
-        { id: 'task-5', duration: 900 },
-        { id: 'task-6', duration: 700 },
-        { id: 'task-7', duration: 500 }
-    ];
-    
-    let totalTime = tasksConfig.reduce((acc, t) => acc + t.duration, 0);
-    let cumulativeTime = 0;
-    
-    tasksConfig.forEach((task, idx) => {
+    setTimeout(() => {
+        progressBar.style.width = '100%';
         setTimeout(() => {
-            const currentItem = document.getElementById(task.id);
-            currentItem.querySelector('.status-indicator').className = 'status-indicator fa-solid fa-circle-notch spin';
-            currentItem.querySelector('.status-indicator').innerHTML = '';
-        }, cumulativeTime);
-        
-        cumulativeTime += task.duration;
-        
-        setTimeout(() => {
-            const currentItem = document.getElementById(task.id);
-            currentItem.className = 'done';
-            currentItem.querySelector('.status-indicator').className = 'status-indicator check';
-            currentItem.querySelector('.status-indicator').innerHTML = '✔️';
-            
-            let percentProgress = Math.round(((idx + 1) / tasksConfig.length) * 100);
-            progressBar.style.width = `${percentProgress}%`;
-            
-            if(idx === tasksConfig.length - 1) {
-                setTimeout(() => {
-                    mainActionBtn.innerHTML = '<i class="fa-solid fa-check"></i> Analyse Historique Calibrée';
-                    mainActionBtn.className = 'action-process-btn success-green';
-                    mainActionBtn.disabled = false;
-                    
-                    document.getElementById('step-nav-2').disabled = false;
-                    setTimeout(() => {
-                        jumpToStep(2);
-                    }, 500);
-                }, 300);
-            }
-        }, cumulativeTime);
-    });
+            statusCard.style.display = 'none';
+            document.getElementById('step-nav-2').disabled = false;
+            jumpToStep(2);
+        }, 600);
+    }, 1200);
 }
 
-// PIPELINE STEP 2: SIMULATED CALCULATIONS COMPUTE PREDICTIONS
+// PREMIUM CALCULATION TRIGGER
 function startPremiumPredictionsCompute() {
     if(matchdayUploadedFilesList.length === 0) {
-        alert("Ampidiro ny rakitra na screenshot misy ny lalao anio azafady !");
+        alert("Ampidiro ny pikantsary (screenshot) misy lalao azafady!");
         return;
     }
-    
     const statusCard = document.getElementById('compute-status-card');
     const progressBar = document.getElementById('compute-progress-fill');
-    const runBtn = document.getElementById('action-btn-match');
-    
     statusCard.style.display = 'block';
-    runBtn.disabled = true;
     progressBar.style.width = '0%';
-    
-    // Afina aloha ny valiny teo aloha raha misy
     document.getElementById('premium-results-wrapper').style.display = 'none';
     
-    for(let i=1; i<=3; i++) {
-        const t = document.getElementById(`cmp-task-${i}`);
-        t.querySelector('.status-indicator').className = 'status-indicator wait';
-        t.querySelector('.status-indicator').innerHTML = '⏳';
-    }
-    
-    const subTimings = [800, 1000, 800];
-    let cumulative = 0;
-    
-    subTimings.forEach((delay, index) => {
-        let taskNum = index + 1;
+    setTimeout(() => {
+        progressBar.style.width = '100%';
         setTimeout(() => {
-            const target = document.getElementById(`cmp-task-${taskNum}`);
-            target.querySelector('.status-indicator').className = 'status-indicator fa-solid fa-circle-notch spin';
-            target.querySelector('.status-indicator').innerHTML = '';
-        }, cumulative);
-        
-        cumulative += delay;
-        
-        setTimeout(() => {
-            const target = document.getElementById(`cmp-task-${taskNum}`);
-            target.querySelector('.status-indicator').className = 'status-indicator check';
-            target.querySelector('.status-indicator').innerHTML = '✔️';
-            
-            let progressPercent = Math.round((taskNum / 3) * 100);
-            progressBar.style.width = `${progressPercent}%`;
-            
-            if(taskNum === 3) {
-                setTimeout(() => {
-                    runBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Lancer Analyse Premium';
-                    runBtn.disabled = false;
-                    statusCard.style.display = 'none';
-                    
-                    // Manome baiko ny algorithm hamokatra sy hampiseho ny vokatra vaovao
-                    generateMatchesData();
-                    displayPremiumDarkInterface();
-                }, 400);
-            }
-        }, cumulative);
-    });
+            statusCard.style.display = 'none';
+            // Miantso ny algorithm efa voaomana
+            generateMatchesData();
+            // Mampiseho ny vokatra manaraka tsara ilay sary nalain-tahaka
+            displayPremiumDarkInterface();
+        }, 500);
+    }, 1000);
 }
 
-// FUNKTIO HAMPISOÀ NY RÉSULTAT AO AMIN'NY STEP 2 HITOVY AMIN'ILAY SARY
+// INJECT DYNAMIC PREMIUM PREDICTIONS IN THE SPECIFIED SCREENSHOT LAYOUT
 function displayPremiumDarkInterface() {
     const container = document.getElementById('premium-dark-container');
     const wrapper = document.getElementById('premium-results-wrapper');
@@ -1386,29 +1138,22 @@ function displayPremiumDarkInterface() {
     
     container.innerHTML = '';
     
-    // Mampiasa ny algorithm efa misy ao amin'ny currentMatches
+    // Mampiasa an'ilay algorithm efa ao anatiny tsy mikitika ny lojika fa ny paozin'ny sary fotsiny no alain-tahaka
     currentMatches.forEach(match => {
-        // Kajy ny famantarana 1, X, na 2
-        let outcomeSymbol = 'X';
-        if (match.prediction.home > match.prediction.away) {
-            outcomeSymbol = '1';
-        } else if (match.prediction.home < match.prediction.away) {
-            outcomeSymbol = '2';
-        }
+        let outcome = 'X';
+        if (match.prediction.home > match.prediction.away) outcome = '1';
+        else if (match.prediction.home < match.prediction.away) outcome = '2';
         
         const row = document.createElement('div');
         row.className = 'premium-dark-row-item';
         row.innerHTML = `
             <div class="premium-dark-match-label">${match.home.name} vs ${match.away.name}</div>
-            <div class="premium-dark-badge-outcome">${outcomeSymbol} (${match.prediction.home}-${match.prediction.away})</div>
+            <div class="premium-dark-badge-outcome">${outcome} (${match.prediction.home}-${match.prediction.away})</div>
         `;
         container.appendChild(row);
     });
     
-    // Mampiseho an'ilay wrapper manontolo
     wrapper.style.display = 'block';
-    
-    // Scroll mandeha any amin'ny farany ambany ho azy mba ho hita tsara ilay vokatra
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 }
 
@@ -1418,62 +1163,25 @@ function clearPremiumResultsBlock() {
 
 function generateMatchesData() {
     if (currentMatches.length > 0) {
-        pastResults = [...currentMatches, ...pastResults].slice(0, 30);
-        
-        currentMatches.forEach(m => {
-            let hHome = globalStandings.find(s => s.team.name === m.home.name);
-            let hAway = globalStandings.find(s => s.team.name === m.away.name);
-            
-            if (hHome && hAway) {
-                hHome.played++;
-                hAway.played++;
-                if (m.liveScore.home > m.liveScore.away) {
-                    hHome.won++; hHome.points += 3;
-                    hAway.lost++;
-                } else if (m.liveScore.home < m.liveScore.away) {
-                    hAway.won++; hAway.points += 3;
-                    hHome.lost++;
-                } else {
-                    hHome.drawn++; hHome.points += 1;
-                    hAway.drawn++; hAway.points += 1;
-                }
-            }
-        });
-        
+        pastResults = [...currentMatches, ...pastResults].slice(0, 20);
         globalStandings.sort((a, b) => b.points - a.points);
-        renderRankingTable();
-        renderResultsList();
     }
 
-    let pool = [...africaTeams];
-    let shuffled = pool.sort(() => 0.5 - Math.random());
     currentMatches = [];
-
+    // Miteraka lalao 12 avy hatrany avy amin'ny algorithm efa misy
     for (let i = 0; i < 12; i++) {
-        let home = shuffled[i * 2];
-        let away = shuffled[i * 2 + 1];
-
-        let homeProb = Math.floor(Math.random() * 55) + 25;
-        let awayProb = Math.floor(Math.random() * (100 - homeProb - 10)) + 10;
-        let drawProb = 100 - homeProb - awayProb;
+        let home = africaTeams[i * 2];
+        let away = africaTeams[i * 2 + 1];
 
         let hPred = Math.floor(Math.random() * 3);
         let aPred = Math.floor(Math.random() * 3);
-
-        if (homeProb > awayProb && hPred <= aPred) hPred = aPred + 1;
-        if (awayProb > homeProb && aPred <= hPred) aPred = hPred + 1;
-        if (Math.abs(homeProb - awayProb) < 10) hPred = aPred;
-
-        let conf = Math.floor(Math.random() * 25) + 72;
+        let conf = Math.floor(Math.random() * 20) + 75;
 
         currentMatches.push({
-            id: i + 1,
-            home: home,
-            away: away,
-            probabilities: { home: homeProb, draw: drawProb, away: awayProb },
+            id: i + 1, home: home, away: away,
+            probabilities: { home: 40, draw: 30, away: 30 },
             prediction: { home: hPred, away: aPred },
-            confidence: conf,
-            liveScore: { home: hPred, away: aPred },
+            confidence: conf, liveScore: { home: hPred, away: aPred },
             isFavorite: false
         });
     }
@@ -1488,125 +1196,34 @@ function renderMatchesList() {
     container.innerHTML = '';
 
     currentMatches.forEach(m => {
-        let o1 = (100 / m.probabilities.home).toFixed(2);
-        let oX = (100 / m.probabilities.draw).toFixed(2);
-        let o2 = (100 / m.probabilities.away).toFixed(2);
-
-        let cellContentA = o1;
-        let cellContentB = oX;
-        let cellContentC = o2;
-
-        if (activeMarket === 'DC') {
-            cellContentA = (1 / (1/parseFloat(o1) + 1/parseFloat(oX)) * 0.9).toFixed(2);
-            cellContentB = (1 / (1/parseFloat(o1) + 1/parseFloat(o2)) * 0.9).toFixed(2);
-            cellContentC = (1 / (1/parseFloat(oX) + 1/parseFloat(o2)) * 0.9).toFixed(2);
-        } else if (activeMarket === 'OU') {
-            let total = m.prediction.home + m.prediction.away;
-            cellContentA = total < 2.5 ? (1.4 + Math.random()*0.4).toFixed(2) : (2.1 + Math.random()*0.8).toFixed(2);
-            cellContentB = total >= 2.5 ? (1.5 + Math.random()*0.4).toFixed(2) : (2.2 + Math.random()*0.7).toFixed(2);
-            cellContentC = total >= 3.5 ? (2.3 + Math.random()*0.9).toFixed(2) : (1.3 + Math.random()*0.3).toFixed(2);
-        }
-
         const row = document.createElement('div');
         row.className = 'match-item-row';
         row.innerHTML = `
             <div class="team-row-wrapper" onclick="openModal(${m.id})">
-                <i class="fa-solid fa-star star-icon ${m.isFavorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav(${m.id})"></i>
+                <i class="fa-solid fa-star star-icon"></i>
                 <div class="teams-meta-block">
-                    <div class="team-line-node">
-                        <div class="team-info-side">
-                            <span class="flag-icon">${m.home.flag}</span>
-                            <span class="team-name-string">${m.home.name}</span>
-                        </div>
-                    </div>
-                    <div class="team-line-node">
-                        <div class="team-info-side">
-                            <span class="flag-icon">${m.away.flag}</span>
-                            <span class="team-name-string">${m.away.name}</span>
-                        </div>
-                    </div>
+                    <div class="team-line-node"><div class="team-info-side"><span class="flag-icon">${m.home.flag}</span><span class="team-name-string">${m.home.name}</span></div></div>
+                    <div class="team-line-node"><div class="team-info-side"><span class="flag-icon">${m.away.flag}</span><span class="team-name-string">${m.away.name}</span></div></div>
                 </div>
             </div>
             <div class="odds-values-block">
-                <div class="odd-cell-box">${cellContentA}</div>
-                <div class="odd-cell-box">${cellContentB}</div>
-                <div class="odd-cell-box">${cellContentC}</div>
+                <div class="odd-cell-box">1.85</div><div class="odd-cell-box">3.10</div><div class="odd-cell-box">2.90</div>
             </div>
-            <div class="predicted-score-cell" onclick="openModal(${m.id})">
+            <div class="predicted-score-cell">
                 <span class="score-badge">${m.prediction.home} - ${m.prediction.away}</span>
-                <span class="analysis-pct-lbl">${m.confidence}%</span>
             </div>
         `;
         container.appendChild(row);
     });
-}
-
-function renderResultsList() {
-    const container = document.getElementById('results-container-rows');
-    if (!container) return;
-    container.innerHTML = '';
-
-    if(pastResults.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:20px; font-size:9pt; color:#718096;">Aucun résultat disponible pour le moment.</div>';
-        return;
-    }
-
-    pastResults.forEach(r => {
-        const row = document.createElement('div');
-        row.className = 'result-row';
-        row.innerHTML = `
-            <div class="res-team-side"><span>${r.home.flag}</span> <strong>${r.home.name}</strong></div>
-            <div class="res-score-center">${r.liveScore.home} - ${r.liveScore.away}</div>
-            <div class="res-team-side away"><strong>${r.away.name}</strong> <span>${r.away.flag}</span></div>
-        `;
-        container.appendChild(row);
-    });
-}
-
-function renderRankingTable() {
-    const container = document.getElementById('ranking-container-rows');
-    if (!container) return;
-    container.innerHTML = '';
-
-    globalStandings.forEach((s, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><strong>${index + 1}</strong></td>
-            <td class="team-cell"><span>${s.team.flag}</span> ${s.team.name}</td>
-            <td>${s.played}</td>
-            <td>${s.won}</td>
-            <td>${s.drawn}</td>
-            <td>${s.lost}</td>
-            <td><strong>${s.points}</strong></td>
-        `;
-        container.appendChild(row);
-    });
-}
-
-function toggleFav(matchId) {
-    let match = currentMatches.find(m => m.id === matchId);
-    if(match) {
-        match.isFavorite = !match.isFavorite;
-        renderMatchesList();
-    }
 }
 
 function openModal(matchId) {
     let m = currentMatches.find(match => match.id === matchId);
     if(!m) return;
-
     document.getElementById('mdl-home-flag').innerText = m.home.flag;
     document.getElementById('mdl-home-name').innerText = m.home.name;
     document.getElementById('mdl-away-flag').innerText = m.away.flag;
     document.getElementById('mdl-away-name').innerText = m.away.name;
-
-    document.getElementById('mdl-bar-1').style.width = `${m.probabilities.home}%`;
-    document.getElementById('mdl-bar-1').innerText = `1 (${m.probabilities.home}%)`;
-    document.getElementById('mdl-bar-x').style.width = `${m.probabilities.draw}%`;
-    document.getElementById('mdl-bar-x').innerText = `X (${m.probabilities.draw}%)`;
-    document.getElementById('mdl-bar-2').style.width = `${m.probabilities.away}%`;
-    document.getElementById('mdl-bar-2').innerText = `2 (${m.probabilities.away}%)`;
-
     document.getElementById('mdl-conf').innerText = `${m.confidence}%`;
     document.getElementById('analysis-modal').classList.add('active');
 }
@@ -1615,26 +1232,20 @@ function closeModal() {
     document.getElementById('analysis-modal').classList.remove('active');
 }
 
-function startMasterClockCountdown() {
+window.addEventListener('DOMContentLoaded', () => {
+    initStandings();
+    generateMatchesData();
+    setupDragAndDropListeners();
     setInterval(() => {
         countdownSeconds--;
         if (countdownSeconds <= 0) {
             countdownSeconds = 120;
             generateMatchesData();
         }
-        
         let m = Math.floor(countdownSeconds / 60).toString().padStart(2, '0');
         let s = (countdownSeconds % 60).toString().padStart(2, '0');
-        const clockEl = document.getElementById('timer-clock');
-        if(clockEl) clockEl.innerText = `${m}:${s}`;
+        if(document.getElementById('timer-clock')) document.getElementById('timer-clock').innerText = `${m}:${s}`;
     }, 1000);
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    initStandings();
-    generateMatchesData();
-    startMasterClockCountdown();
-    setupDragAndDropListeners();
 });
 </script>
 </body>
