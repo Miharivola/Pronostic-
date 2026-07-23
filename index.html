@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pronostic Vital - Virtuel Football Bet261</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* Global Configuration Reset and Base Style Typography matching Bet261 UI look */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #f2f4f3;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* Simulated Smartphone View Frame Wrapper Container */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: #f7f9f8;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+    padding-bottom: 75px; /* Leave breathing space for floating footer menu bar overlay */
+    overflow-x: hidden;
+}
+
+/* Hide dynamic panel views seamlessly */
+.view {
+    display: none;
+}
+.view.active {
+    display: block;
+}
+
+/* Rich Vibrant Professional Color Gradient & Header Theme Configurations */
+.header-banner {
+    background: linear-gradient(135deg, #0e4f2f 0%, #052616 100%);
+    color: #ffffff;
+    padding: 16px 14px 14px 14px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.header-top .logo {
+    font-weight: 800;
+    font-size: 16pt;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.premium-badge {
+    background: linear-gradient(45deg, #d4af37, #f3e5ab);
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 8pt;
+    padding: 5px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.search-bar-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-bar-container input {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    padding: 8px 10px 8px 36px;
+    color: #ffffff;
+    font-size: 10pt;
+}
+
+.search-bar-container input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.6);
+    font-size: 10pt;
+}
+
+/* Top explanatory block banner styled accurately */
+.info-card {
+    background-color: #ffffff;
+    margin: 10px 12px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.info-card h3 {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 4px;
+}
+
+.info-card p {
+    font-size: 8.5pt;
+    color: #718096;
+    line-height: 1.3;
+}
+
+/* Horizontal scrolling tournament filters selector menu bar styling */
+.leagues-scroll-wrapper {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 6px 10px;
+    gap: 8px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e6ece8;
+}
+
+.leagues-scroll-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scroll bars on smart views */
+}
+
+.league-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f0f4f1;
+    color: #444;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.league-tab.active {
+    background-color: #0e4f2f;
+    color: #ffffff;
+}
+
+.text-gold { color: #d4af37; }
+.text-blue { color: #2b6cb0; }
+.text-purple { color: #6b46c1; }
+.text-orange { color: #dd6b20; }
+
+/* Main Tournament Panel Container Box Card block UI components */
+.tournament-container {
+    margin: 10px 12px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e1e7e4;
+}
+
+.tournament-header {
+    background-color: #0e4f2f;
+    color: #ffffff;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tournament-header .title {
+    font-weight: 700;
+    font-size: 9.5pt;
+    letter-spacing: 0.3px;
+}
+
+.tournament-header .matches-count {
+    background-color: rgba(255,255,255,0.2);
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.sub-nav-tabs {
+    display: flex;
+    background-color: #ffffff;
+    border-bottom: 2px solid #edf2f0;
+}
+
+.sub-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #718096;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sub-tab.active {
+    color: #0e4f2f;
+    border-bottom: 3px solid #0e4f2f;
+}
+
+/* Time slots navigation scrollbar layout styling elements */
+.time-slots-container {
+    display: flex;
+    overflow-x: auto;
+    background-color: #f7faf8;
+    padding: 8px 4px;
+    border-bottom: 1px solid #e8edea;
+    gap: 6px;
+}
+
+.time-slot {
+    min-width: 52px;
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 4px;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #4a5568;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+}
+
+.time-slot.past {
+    color: #a0aec0;
+    background-color: #f1f5f3;
+}
+
+.time-slot.active {
+    background-color: #e53e3e;
+    color: #ffffff;
+    border-color: #e53e3e;
+    position: relative;
+    font-weight: 700;
+}
+
+.live-indicator {
+    display: block;
+    font-size: 5pt;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin-top: 1px;
+}
+
+/* Real-time simulation predictive countdown banner display bar */
+.countdown-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff5f5;
+    padding: 8px 12px;
+    border-bottom: 1px solid #fed7d7;
+}
+
+.countdown-text {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #c53030;
+}
+
+.refresh-btn {
+    background-color: #0e4f2f;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    padding: 4px 8px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Betting Market Selection Action row grid menu button elements style sheets */
+.markets-filter-row {
+    display: flex;
+    overflow-x: auto;
+    padding: 8px 10px;
+    gap: 6px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #edf2f0;
+}
+
+.market-btn {
+    white-space: nowrap;
+    background-color: #f0f4f2;
+    border: 1px solid #e2e8f0;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 8pt;
+    font-weight: 700;
+    color: #4a5568;
+    cursor: pointer;
+}
+
+.market-btn.active {
+    background-color: #2f855a;
+    color: #ffffff;
+    border-color: #2f855a;
+}
+
+/* Table header column labels configurations layout alignments grid */
+.matches-list-header {
+    display: flex;
+    align-items: center;
+    background-color: #f7faf8;
+    padding: 6px 12px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: #718096;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.team-lbl {
+    flex: 1.3;
+}
+
+.odds-header-lbls {
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.lbl-box {
+    width: 33%;
+    text-align: center;
+}
+
+.score-lbl {
+    width: 65px;
+    text-align: right;
+}
+
+/* Core Main Matches Data Row Items Layout Custom Designs UI elements grid */
+.match-item-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid #edf2f0;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.match-item-row:hover {
+    background-color: #f4f8f5;
+}
+
+.teams-meta-block {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.team-line-node {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+.team-name-string {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #2d3748;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.odds-values-block {
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+    gap: 4px;
+}
+
+.odd-cell-box {
+    width: 33%;
+    background-color: #f7faf8;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 4px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.predicted-score-cell {
+    width: 65px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.score-badge {
+    background-color: #e6fffa;
+    color: #00a389;
+    font-size: 8.5pt;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #b2f5ea;
+}
+
+.analysis-pct-lbl {
+    font-size: 7pt;
+    font-weight: 700;
+    color: #a0aec0;
+    margin-top: 2px;
+}
+
+/* Modal views layout overlay background configurations */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+    background-color: #0e4f2f;
+    color: #ffffff;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 11pt;
+    font-weight: 700;
+}
+
+.modal-subtitle {
+    font-size: 8pt;
+    color: #a3e635;
+    margin-top: 2px;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 18pt;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 16px;
+}
+
+.ai-precision-badge {
+    background-color: #f0fff4;
+    border: 1px solid #c6f6d5;
+    color: #38a169;
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.match-vs-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f7faf8;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.team-modal-side {
+    width: 40%;
+}
+
+.team-modal-side h4 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.team-flag-placeholder {
+    width: 36px;
+    height: 36px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    margin: 0 auto 6px auto;
+}
+
+.vs-circle {
+    width: 44px;
+    height: 44px;
+    background-color: #0e4f2f;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 8pt;
+    font-weight: 700;
+}
+
+.probability-section {
+    margin-bottom: 18px;
+}
+
+.probability-section h5, .stats-table h5 {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #718096;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.progress-triple {
+    display: flex;
+    height: 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 8pt;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    line-height: 24px;
+    margin-bottom: 8px;
+}
+
+.bar-1 { background-color: #3182ce; }
+.bar-x { background-color: #a0aec0; }
+.bar-2 { background-color: #e53e3e; }
+
+.ai-recommendation-text {
+    font-size: 8.5pt;
+    color: #4a5568;
+    line-height: 1.4;
+}
+
+.ai-confidence-box {
+    background-color: #ebf8ff;
+    border: 1px solid #bee3f8;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-bottom: 16px;
+}
+
+.stats-table {
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 14px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 8.5pt;
+    border-bottom: 1px solid #f7faf8;
+}
+
+.stat-row span { color: #4a5568; }
+.stat-row strong { color: #1a202c; font-weight: 700; }
+
+.text-success { color: #38a169 !important; }
+.text-danger { color: #e53e3e !important; }
+.text-center { text-align: center; }
+.sub-txt { font-size: 7.5pt; color: #a0aec0; }
+
+/* Premium Member Center configuration sheets design */
+.premium-header {
+    background-color: #1a202c;
+    color: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.back-arrow-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+.premium-content-padding {
+    padding: 16px;
+}
+
+.upsell-card-gold {
+    background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(170,124,17,0.3);
+}
+
+.upsell-card-gold h3 { font-size: 14pt; margin-bottom: 6px; font-weight: 800; letter-spacing: 1px;}
+.upsell-card-gold p { font-size: 9.5pt; margin-bottom: 16px; opacity: 0.9; line-height: 1.4;}
+
+.action-btn-gold {
+    background-color: #1a202c;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 9pt;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.tips-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.tip-box-item {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tip-box-item i { font-size: 16pt; }
+.tip-box-item strong { font-size: 9pt; color: #2d3748; display: block;}
+.tip-box-item p { font-size: 7.5pt; color: #718096; margin-top: 1px;}
+
+.settings-list-group h4 {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #718096;
+    margin-bottom: 8px;
+}
+
+.setting-item {
+    background-color: #ffffff;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9pt;
+    font-weight: 600;
+    color: #4a5568;
+    cursor: pointer;
+}
+
+.privacy-body-text {
+    padding: 20px 16px;
+}
+.privacy-body-text h3 { font-size: 11pt; margin: 14px 0 6px 0; color: #2d3748;}
+.privacy-body-text p { font-size: 9pt; color: #4a5568; line-height: 1.5; margin-bottom: 10px;}
+.btn-dark-return { background-color: #2d3748; color: #fff; border:none; padding: 8px 16px; border-radius:4px; font-weight:700; cursor:pointer; margin-top:10px;}
+
+/* Sticky floating bottom global user tab navigation bar layout overlays */
+.bottom-nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: 60px;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 900;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #718096;
+    cursor: pointer;
+    flex: 1;
+    height: 100%;
+}
+
+.nav-item i {
+    font-size: 13pt;
+    margin-bottom: 3px;
+}
+
+.nav-item span {
+    font-size: 7.5pt;
+    font-weight: 600;
+}
+
+.nav-item.active {
+    color: #0e4f2f;
+}
+</style>
+</head>
+<body>
+<div class="app-container">
+<!-- Main Dashboard View -->
+<div id="main-view" class="view active">
+<!-- Header section matching standard Bet261 styling with dark green look -->
+<div class="header-banner">
+<div class="header-top">
+<span class="logo"><i class="fa-solid fa-bolt"></i> PRONOSTIC VITAL</span>
+<div class="user-status">
+<span class="badge premium-badge" onclick="switchView('premium-view')"><i class="fa-solid fa-crown"></i> PREMIUM</span>
+</div>
+</div>
+<div class="search-bar-container">
+<i class="fa-solid fa-magnifying-glass search-icon"></i>
+<input type="text" placeholder="Rechercher des équipes, ligues...">
+</div>
+</div>
+
+<!-- Top Notification / Info Banner -->
+<div class="info-card">
+<h3>STRUCTURE POUR TOUTES LES COMPÉTITIONS</h3>
+<p>Le même design et la même structure sont utilisés pour toutes les compétitions. La seule différence est le nom de la compétition.</p>
+</div>
+
+<!-- Leagues Tabs Header Selector -->
+<div class="leagues-scroll-wrapper">
+<div class="league-tab active" id="tab-afrique" onclick="selectLeague('afrique')">
+<i class="fa-solid fa-trophy text-gold"></i> Coupe d'Afrique
+</div>
+<div class="league-tab" id="tab-champions" onclick="selectLeague('champions')">
+<i class="fa-solid fa-shield-halved text-blue"></i> Ligue des Champions UEFA
+</div>
+<div class="league-tab" id="tab-premier" onclick="selectLeague('premier')">
+<i class="fa-solid fa-crown text-purple"></i> Premier League
+</div>
+<div class="league-tab" id="tab-laliga" onclick="selectLeague('laliga')">
+<i class="fa-solid fa-circle-dot text-orange"></i> LaLiga
+</div>
+</div>
+
+<!-- Main Tournament Area Container -->
+<div class="tournament-container">
+<div class="tournament-header">
+<span class="title" id="tournament-title"><i class="fa-solid fa-trophy"></i> COUPE D'AFRIQUE</span>
+<span class="matches-count">12 MATCHS</span>
+</div>
+
+<!-- Sub Navigation Tabs (Résultats, Matchs, Classement) -->
+<div class="sub-nav-tabs">
+<button class="sub-tab">RÉSULTATS</button>
+<button class="sub-tab active">MATCHS</button>
+<button class="sub-tab">CLASSEMENT</button>
+</div>
+
+<!-- Countdown and Round Times Line Selector -->
+<div class="time-slots-container" id="time-slots-wrapper">
+<div class="time-slot past">15:50</div>
+<div class="time-slot past">15:52</div>
+<div class="time-slot past">15:54</div>
+<div class="time-slot past">15:56</div>
+<div class="time-slot past">15:58</div>
+<div class="time-slot current active" id="current-match-time">16:00 <span class="live-indicator">LIVE</span></div>
+<div class="time-slot future">16:02</div>
+<div class="time-slot future">16:04</div>
+<div class="time-slot future">16:06</div>
+<div class="time-slot future">16:08</div>
+<div class="time-slot future">16:10</div>
+</div>
+
+<!-- Global Live Countdown Counter Block -->
+<div class="countdown-banner">
+<div class="countdown-text">PROCHAIN MATCH DANS : <span id="timer-clock" class="text-danger">02:00</span></div>
+<button class="refresh-btn" onclick="generateNewPredictions()"><i class="fa-solid fa-rotate"></i> RECALCULER AI</button>
+</div>
+
+<!-- Betting Markets Filters Tabs Row -->
+<div class="markets-filter-row">
+<button class="market-btn active" id="m-btn-1X2" onclick="switchMarket('1X2')">1X2</button>
+<button class="market-btn" id="m-btn-DC" onclick="switchMarket('DC')">DOUBLE CHANCE</button>
+<button class="market-btn" id="m-btn-OU" onclick="switchMarket('OU')">OVER/UNDER</button>
+<button class="market-btn" id="m-btn-BTTS" onclick="switchMarket('BTTS')">BTTS</button>
+<button class="market-btn" id="m-btn-CS" onclick="switchMarket('CS')">CORRECT SCORE</button>
+<button class="market-btn">+ 29 DE PLUS</button>
+</div>
+
+<!-- Matches Dynamic Odds Grid List -->
+<div class="matches-list-header" id="market-grid-header">
+<span class="team-lbl">MATCHS DU JOUR</span>
+<div class="odds-header-lbls" id="odds-header-labels">
+<span class="lbl-box">1</span>
+<span class="lbl-box">X</span>
+<span class="lbl-box">2</span>
+</div>
+<span class="score-lbl">SCORE PRÉDIT <i class="fa-solid fa-circle-info"></i></span>
+</div>
+
+<!-- Matches Rows Container -->
+<div class="matches-rows-wrapper" id="matches-container">
+<!-- Rows will be injected dynamically by JS -->
+</div>
+</div>
+</div>
+
+<!-- AI Deep Analysis Detailed Popup Modal View -->
+<div id="analysis-modal" class="modal-overlay">
+<div class="modal-card">
+<div class="modal-header">
+<div>
+<h3>ANALYSE PRÉDICTIVE SIMULATION IA</h3>
+<p class="modal-subtitle" id="modal-league-subtitle">COUPE D'AFRIQUE — Journée 3</p>
+</div>
+<button class="close-modal-btn" onclick="closeModal()">&times;</button>
+</div>
+
+<div class="modal-body">
+<div class="ai-precision-badge">PRÉCISION: <span id="modal-precision">94%</span></div>
+
+<div class="match-vs-display">
+<div class="team-modal-side text-center">
+<div class="team-flag-placeholder" id="modal-home-flag" style="background-color: #3182ce;"></div>
+<h4 id="modal-home-name">OUGANDA</h4>
+<span class="sub-txt">Domicile</span>
+</div>
+<div class="vs-circle">VS<br><small>STATS</small></div>
+<div class="team-modal-side text-center">
+<div class="team-flag-placeholder" id="modal-away-flag" style="background-color: #e53e3e;"></div>
+<h4 id="modal-away-name">ÉGYPTE</h4>
+<span class="sub-txt">Extérieur</span>
+</div>
+</div>
+
+<div class="probability-section">
+<h5>PROBABILITÉS DE VICTOIRE (1X2)</h5>
+<div class="progress-triple">
+<div class="bar bar-1" id="modal-bar-1" style="width: 55%">1 (55%)</div>
+<div class="bar bar-x" id="modal-bar-x" style="width: 26%">X (26%)</div>
+<div class="bar bar-2" id="modal-bar-2" style="width: 19%">2 (19%)</div>
+</div>
+<p class="ai-recommendation-text" id="modal-recommendation">Notre modèle prédictif IA estime l'issue du match en faveur de l'<b>ÉQUIPE DOMICILE (1)</b> avec 55% de confiance.</p>
+</div>
+
+<div class="ai-confidence-box">
+<span>CONFIANCE IA :</span>
+<strong class="text-success" id="modal-confidence-pct">37%</strong>
+</div>
+
+<div class="stats-table">
+<h5>STATISTIQUES DE MATCH PRÉVUES</h5>
+<div class="stat-row">
+<span>Buts attendus (xG)</span>
+<strong id="modal-stat-xg">1.92 - 0.74</strong>
+</div>
+<div class="stat-row">
+<span>Tirs cadrés</span>
+<strong id="modal-stat-tirs">7 - 3</strong>
+</div>
+<div class="stat-row">
+<span>Météo & Arbitre</span>
+<span class="sub-txt" id="modal-stat-weather">Ensoleillé, 28°C | B. Gassama (Gambia)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Premium Upsell / Configuration View Tab -->
+<div id="premium-view" class="view">
+<div class="premium-header">
+<button class="back-arrow-btn" onclick="switchView('main-view')"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+<h2>Espace Membre Premium AI</h2>
+</div>
+<div class="premium-content-padding">
+<div class="upsell-card-gold">
+<div class="gold-shine"></div>
+<h3>PASSER À PREMIUM</h3>
+<p>Débloquez le moteur d'analyse prédictive multimodal pour maximiser vos gains de coupons virtuels.</p>
+<button class="action-btn-gold">ACTIVER L'ACCÈS VIP</button>
+</div>
+
+<div class="tips-grid-layout">
+<div class="tip-box-item">
+<i class="fa-solid fa-calendar-days text-blue"></i>
+<div><strong>Free Tips</strong><p>Analyses de base gratuites</p></div>
+</div>
+<div class="tip-box-item">
+<i class="fa-solid fa-star text-gold"></i>
+<div><strong>Best Tips</strong><p>Fiabilité élevée 90%+</p></div>
+</div>
+<div class="tip-box-item">
+<i class="fa-solid fa-user-shield text-purple"></i>
+<div><strong>VIP Tips</strong><p>Score Exact & Grosses Cotes</p></div>
+</div>
+<div class="tip-box-item">
+<i class="fa-solid fa-bullseye text-orange"></i>
+<div><strong>Single Tips</strong><p>Match unique safe du jour</p></div>
+</div>
+</div>
+
+<div class="settings-list-group">
+<h4>SETTINGS & APPLICATION</h4>
+<div class="setting-item"><span><i class="fa-solid fa-envelope"></i> Suggestions/Demandes</span><i class="fa-solid fa-chevron-right"></i></div>
+<div class="setting-item" onclick="switchView('privacy-view')"><span><i class="fa-solid fa-shield-halved"></i> Politique de confidentialité</span><i class="fa-solid fa-chevron-right"></i></div>
+<div class="setting-item" onclick="resetApp()"><span><i class="fa-solid fa-arrow-rotate-left text-danger"></i> Reset onboarding / Vider le cache</span></div>
+</div>
+</div>
+</div>
+
+<!-- Privacy View -->
+<div id="privacy-view" class="view">
+<div class="premium-header">
+<button class="back-arrow-btn" onclick="switchView('premium-view')"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+<h2>Politique de Confidentialité</h2>
+</div>
+<div class="privacy-body-text">
+<h3>1. Responsabilité des paris</h3>
+<p>Tous les conseils de paris et prévisions sportifs fournis sur notre plateforme sont à titre informatif uniquement. Nous ne garantissons aucun résultat financier et déclinons toute responsabilité en cas de pertes subies.</p>
+<h3>2. Accès Premium VIP</h3>
+<p>L'accès aux fonctionnalités avancées d'analyse prédictive se fait via un abonnement renouvelable automatiquement. L'accès peut être annulé par l'utilisateur à tout moment via son compte de paiement.</p>
+<button class="btn-dark-return" onclick="switchView('premium-view')">Retour</button>
+</div>
+</div>
+
+<!-- Persistent Bottom Navigation Bar -->
+<div class="bottom-nav-bar">
+<div class="nav-item active" id="nav-main" onclick="switchView('main-view')">
+<i class="fa-solid fa-house"></i>
+<span>Matchs</span>
+</div>
+<div class="nav-item" id="nav-tips" onclick="switchView('premium-view')">
+<i class="fa-solid fa-brain"></i>
+<span>AI Tips</span>
+</div>
+<div class="nav-item" id="nav-premium" onclick="switchView('premium-view')">
+<i class="fa-solid fa-crown"></i>
+<span>Premium</span>
+</div>
+<div class="nav-item" id="nav-config" onclick="switchView('premium-view')">
+<i class="fa-solid fa-gear"></i>
+<span>Configuration</span>
+</div>
+</div>
+</div>
+
+<script>
+// Mock Database Teams for different Virtual Football Leagues
+const teamsDatabase = {
+    afrique: [
+        "Madagascar", "Sénégal", "Égypte", "Maroc", "Algérie", "Tunisie", 
+        "Nigeria", "Cameroun", "Côte d'Ivoire", "Ghana", "Mali", "Burkina Faso"
+    ],
+    champions: [
+        "Real Madrid", "Man City", "Bayern", "PSG", "Barcelona", "Arsenal",
+        "Inter Milan", "Dortmund", "Atletico", "Juventus", "Liverpool", "Leverkusen"
+    ],
+    premier: [
+        "Arsenal", "Man City", "Liverpool", "Aston Villa", "Tottenham", "Chelsea",
+        "Man United", "Newcastle", "West Ham", "Brighton", "Bournemouth", "Wolves"
+    ],
+    laliga: [
+        "Real Madrid", "Barcelona", "Girona", "Atletico Madrid", "Athletic Bilbao", "Real Sociedad",
+        "Betis", "Valencia", "Villarreal", "Getafe", "Osasuna", "Sevilla"
+    ]
+};
+
+// State Variables management
+let currentLeague = 'afrique';
+let currentMarket = '1X2';
+let secondsLeft = 120; // 2 minutes strict loop matching virtual matchdays
+let matchesData = [];
+
+// App Navigation Control
+function switchView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    
+    // Bottom nav updates active highlights UI elements
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (viewId === 'main-view') {
+        document.getElementById('nav-main').classList.add('active');
+    } else if (viewId === 'premium-view') {
+        document.getElementById('nav-premium').classList.add('active');
+    }
+}
+
+// Market Selector Tabs Switching Logic
+function switchMarket(marketCode) {
+    currentMarket = marketCode;
+    document.querySelectorAll('.market-btn').forEach(btn => btn.classList.remove('active'));
+    const targetedBtn = document.getElementById(`m-btn-${marketCode}`);
+    if (targetedBtn) targetedBtn.classList.add('active');
+    
+    // Update labels headers
+    const labelHeader = document.getElementById('odds-header-labels');
+    if (marketCode === '1X2') {
+        labelHeader.innerHTML = '<span class="lbl-box">1</span><span class="lbl-box">X</span><span class="lbl-box">2</span>';
+    } else if (marketCode === 'DC') {
+        labelHeader.innerHTML = '<span class="lbl-box">1X</span><span class="lbl-box">12</span><span class="lbl-box">X2</span>';
+    } else if (marketCode === 'OU') {
+        labelHeader.innerHTML = '<span class="lbl-box">U 2.5</span><span class="lbl-box">Barres</span><span class="lbl-box">O 2.5</span>';
+    } else if (marketCode === 'BTTS') {
+        labelHeader.innerHTML = '<span class="lbl-box">Oui</span><span class="lbl-box">/</span><span class="lbl-box">Non</span>';
+    } else if (marketCode === 'CS') {
+        labelHeader.innerHTML = '<span class="lbl-box">Score 1</span><span class="lbl-box">Score 2</span><span class="lbl-box">Score 3</span>';
+    }
+    
+    renderMatchesGrid();
+}
+
+// League Switching Selector Logic 
+function selectLeague(leagueKey) {
+    currentLeague = leagueKey;
+    document.querySelectorAll('.league-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(`tab-${leagueKey}`).classList.add('active');
+    
+    // Header title update labels strings
+    const titles = {
+        afrique: "COUPE D'AFRIQUE",
+        champions: "LIGUE DES CHAMPIONS UEFA",
+        premier: "PREMIER LEAGUE",
+        laliga: "LALIGA"
+    };
+    document.getElementById('tournament-title').innerHTML = `<i class="fa-solid fa-trophy"></i> ${titles[leagueKey]}`;
+    
+    generateNewPredictions();
+}
+
+// Dynamic Generation Simulation algorithm for Mock Betting Data & Odds metrics
+function generateNewPredictions() {
+    const listTeams = teamsDatabase[currentLeague];
+    matchesData = [];
+    
+    // Shuffle arrays list to pair combinations
+    const shuffled = [...listTeams].sort(() => 0.5 - Math.random());
+    
+    for(let i = 0; i < shuffled.length; i += 2) {
+        if(i + 1 < shuffled.length) {
+            const home = shuffled[i];
+            const away = shuffled[i + 1];
+            
+            // Randomly simulate complex algorithmic statistics parameters
+            const odd1 = (1.4 + Math.random() * 2.5).toFixed(2);
+            const oddX = (2.8 + Math.random() * 1.8).toFixed(2);
+            const odd2 = (1.9 + Math.random() * 3.5).toFixed(2);
+            
+            const prob1 = Math.floor(25 + Math.random() * 50);
+            const probX = Math.floor(15 + Math.random() * 25);
+            const prob2 = 100 - (prob1 + probX);
+            
+            const scoreOptions = ["1-0", "2-1", "0-0", "1-1", "0-2", "2-0", "3-1"];
+            const predictedScore = scoreOptions[Math.floor(Math.random() * scoreOptions.length)];
+            const confidence = Math.floor(65 + Math.random() * 30);
+            const analysisPct = Math.floor(15 + Math.random() * 80);
+            
+            matchesData.push({
+                home, away,
+                odds: { 1: odd1, X: oddX, 2: odd2 },
+                probs: { 1: prob1, X: probX, 2: prob2 },
+                score: predictedScore,
+                confidence: confidence,
+                analysisPct: analysisPct,
+                xg: `${(0.8 + Math.random()*2).toFixed(2)} - ${(0.5 + Math.random()*1.5).toFixed(2)}`,
+                tirs: `${Math.floor(4+Math.random()*8)} - ${Math.floor(2+Math.random()*6)}`
+            });
+        }
+    }
+    renderMatchesGrid();
+}
+
+// Inject DOM Node item rows into UI View tables grid
+function renderMatchesGrid() {
+    const container = document.getElementById('matches-container');
+    container.innerHTML = '';
+    
+    matchesData.forEach((match, index) => {
+        const row = document.createElement('div');
+        row.className = 'match-item-row';
+        row.onclick = () => openAnalysisModal(index);
+        
+        // Dynamic labels switching context filters mapping display
+        let cellA = match.odds[1];
+        let cellB = match.odds['X'];
+        let cellC = match.odds[2];
+        
+        if (currentMarket === 'DC') {
+            cellA = (1.1 + Math.random()*0.3).toFixed(2);
+            cellB = (1.2 + Math.random()*0.2).toFixed(2);
+            cellC = (1.3 + Math.random()*0.4).toFixed(2);
+        } else if (currentMarket === 'OU') {
+            cellA = (1.5 + Math.random()*0.8).toFixed(2);
+            cellB = "2.5";
+            cellC = (1.4 + Math.random()*0.7).toFixed(2);
+        } else if (currentMarket === 'BTTS') {
+            cellA = (1.6 + Math.random()*0.5).toFixed(2);
+            cellB = "/";
+            cellC = (1.5 + Math.random()*0.6).toFixed(2);
+        } else if (currentMarket === 'CS') {
+            cellA = match.score;
+            cellB = (4.5 + Math.random()*8).toFixed(2);
+            cellC = (6.0 + Math.random()*12).toFixed(2);
+        }
+        
+        row.innerHTML = `
+            <div class="teams-meta-block">
+                <div class="team-line-node">
+                    <span class="team-name-string">${match.home}</span>
+                </div>
+                <div class="team-line-node">
+                    <span class="team-name-string">${match.away}</span>
+                </div>
+            </div>
+            <div class="odds-values-block">
+                <div class="odd-cell-box">${cellA}</div>
+                <div class="odd-cell-box">${cellB}</div>
+                <div class="odd-cell-box">${cellC}</div>
+            </div>
+            <div class="predicted-score-cell">
+                <span class="score-badge">${match.score}</span>
+                <span class="analysis-pct-lbl">CONF. ${match.analysisPct}%</span>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+}
+
+// Modal open details logic 
+function openAnalysisModal(index) {
+    const match = matchesData[index];
+    const titles = {
+        afrique: "COUPE D'AFRIQUE",
+        champions: "LIGUE DES CHAMPIONS UEFA",
+        premier: "PREMIER LEAGUE",
+        laliga: "LALIGA"
+    };
+    
+    document.getElementById('modal-league-subtitle').innerText = `${titles[currentLeague]} — Journée Simulation`;
+    document.getElementById('modal-home-name').innerText = match.home.toUpperCase();
+    document.getElementById('modal-away-name').innerText = match.away.toUpperCase();
+    
+    // Width percentages mappings bars graphs animations UI
+    document.getElementById('modal-bar-1').style.width = `${match.probs[1]}%`;
+    document.getElementById('modal-bar-1').innerText = `1 (${match.probs[1]}%)`;
+    document.getElementById('modal-bar-x').style.width = `${match.probs['X']}%`;
+    document.getElementById('modal-bar-x').innerText = `X (${match.probs['X']}%)`;
+    document.getElementById('modal-bar-2').style.width = `${match.probs[2]}%`;
+    document.getElementById('modal-bar-2').innerText = `2 (${match.probs[2]}%)`;
+    
+    // Recommendation texts mapping update statements labels 
+    let favTeam = match.home;
+    if (match.probs[2] > match.probs[1]) favTeam = match.away;
+    document.getElementById('modal-recommendation').innerHTML = `Notre modèle prédictif IA estime l'issue du match en faveur de l'<b>${favTeam.toUpperCase()}</b> avec ${Math.max(match.probs[1], match.probs[2])}% de confiance.`;
+    
+    document.getElementById('modal-confidence-pct').innerText = `${match.confidence}%`;
+    document.getElementById('modal-stat-xg').innerText = match.xg;
+    document.getElementById('modal-stat-tirs').innerText = match.tirs;
+    document.getElementById('modal-precision').innerText = `${88 + Math.floor(Math.random()*10)}%`;
+    
+    document.getElementById('analysis-modal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('analysis-modal').classList.remove('active');
+}
+
+// Global 2 minutes Strict Countdown Loop Mechanism handling real-time matches round timing update lines
+function initCountdownTimer() {
+    const clockLabel = document.getElementById('timer-clock');
+    
+    setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+            secondsLeft = 120; // Reset loop back immediately to exactly 2 minutes
+            generateNewPredictions();
+            
+            // Advance prediction hours visually on time slot nodes seamlessly
+            const liveMatchTime = document.getElementById('current-match-time');
+            if(liveMatchTime) {
+                let currentStr = liveMatchTime.firstChild.textContent.trim();
+                let [hours, mins] = currentStr.split(':').map(Number);
+                mins += 2;
+                if(mins >= 60) {
+                    mins -= 60;
+                    hours = (hours + 1) % 24;
+                }
+                let newTimeStr = `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}`;
+                liveMatchTime.innerHTML = `${newTimeStr} <span class="live-indicator">LIVE</span>`;
+            }
+        }
+        
+        let m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+        let s = (secondsLeft % 60).toString().padStart(2, '0');
+        clockLabel.innerText = `${m}:${s}`;
+    }, 1000);
+}
+
+// Clear state cache parameters reset functions
+function resetApp() {
+    localStorage.clear();
+    alert("Application réinitialisée avec succès !");
+    window.location.reload();
+}
+
+// Window Load Init Procedures Trigger
+window.addEventListener('DOMContentLoaded', () => {
+    generateNewPredictions();
+    initCountdownTimer();
+});
+</script>
+</body>
+  </html>
