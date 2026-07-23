@@ -217,7 +217,7 @@ body {
 .res-team-side.away { justify-content: flex-end; }
 .res-score-center { width: 20%; text-align: center; font-weight: 800; background-color: #edf2f0; padding: 2px 6px; border-radius: 4px; }
 .ranking-table { width: 100%; border-collapse: collapse; background-color: #ffffff; font-size: 8.5pt; }
-.ranking-table th, .ranking-table-td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #edf2f0; }
+.ranking-table th, .ranking-table td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #edf2f0; }
 .ranking-table th { background-color: #f7faf8; color: #718096; }
 .ranking-table td.team-cell { text-align: left; font-weight: 700; display: flex; align-items: center; gap: 4px;}
 
@@ -296,7 +296,6 @@ body {
     letter-spacing: 0.5px;
 }
 .text-orange-tips { color: #f97316; }
-.text-green-live { color: #10b981; }
 
 .menu-grid-layout {
     display: grid;
@@ -346,9 +345,6 @@ body {
 .settings-list-item:last-child { border-bottom: none; }
 .settings-list-item .item-left { display: flex; align-items: center; gap: 10px; }
 .settings-list-item i.item-icon { color: #64748b; font-size: 11pt; width: 16px; text-align: center; }
-.settings-list-item.disconnect-btn { color: #ef4444; }
-.settings-list-item.disconnect-btn i { color: #ef4444; }
-
 i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 
 /* Modal Detail Analysis */
@@ -386,7 +382,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
 .nav-item span { font-size: 7.5pt; font-weight: 600; }
 .nav-item.active { color: #0e4f2f; }
 
-/* PREMIUM WORKFLOW INTERFACE STYLING */
+/* PREMIUM PIPELINE VIEW STYLING */
 .step-nav-bar {
     display: flex;
     gap: 8px;
@@ -435,9 +431,8 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     margin-bottom: 14px;
     color: #ffffff;
 }
-.file-upload-dropzone:hover, .file-upload-dropzone.dragover {
+.file-upload-dropzone:hover {
     border-color: #fb923c;
-    background-color: #1e293b;
 }
 .file-upload-dropzone .icon-container {
     font-size: 26pt;
@@ -502,7 +497,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     padding: 0 4px;
 }
 
-/* Clear all row */
 .queue-control-row {
     display: flex;
     justify-content: flex-end;
@@ -517,7 +511,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     cursor: pointer;
 }
 
-/* Action Trigger Button */
 .action-process-btn {
     width: 100%;
     background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
@@ -534,7 +527,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     box-shadow: 0 4px 10px rgba(234, 88, 12, 0.2);
 }
 
-/* Dynamic Extraction Process Status Box */
 .extraction-status-panel {
     background-color: #0f172a;
     border: 1px solid #1e293b;
@@ -556,12 +548,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     letter-spacing: 0.5px;
     color: #e2e8f0;
 }
-.extraction-status-panel p.sub {
-    font-size: 7.5pt;
-    color: #94a3b8;
-    margin-bottom: 10px;
-    line-height: 1.3;
-}
 .progress-bar-track {
     width: 100%;
     background-color: #1e293b;
@@ -576,24 +562,6 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
     height: 100%;
     transition: width 0.3s;
 }
-.extraction-tasks-list {
-    list-style: none;
-    font-size: 8pt;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-.extraction-tasks-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #cbd5e1;
-}
-.extraction-tasks-list li.done { color: #f8fafc; }
-.extraction-tasks-list li .status-indicator { font-weight: 700; }
-.extraction-tasks-list li .status-indicator.check { color: #10b981; }
-.extraction-tasks-list li .status-indicator.spin { color: #f97316; animation: spin 1s linear infinite; display: inline-block; }
-.extraction-tasks-list li .status-indicator.wait { color: #475569; }
 
 /* -------------------------------------------------------------
    VISUAL POSITION MATCH ACCORDING TO THE SCREENSHOT
@@ -795,7 +763,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
         </div>
     </div>
 
-    <!-- VIEW 3: PREMIUM MULTI-STEP ANALYSIS PIPELINE VIEW -->
+    <!-- VIEW 3: PREMIUM MULTI-STEP ANALYSIS -->
     <div id="premium-view" class="view">
         <div class="header-banner" style="background: linear-gradient(135deg, #111827 0%, #030712 100%);">
             <div class="header-top">
@@ -811,22 +779,16 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                 <button class="step-nav-btn" id="step-nav-2" onclick="jumpToStep(2)" disabled>2. Matchs du jour</button>
             </div>
 
-            <!-- STEP 1 PANEL: BASE HISTORIQUE DOCK -->
+            <!-- STEP 1 PANEL: BASE HISTORIQUE -->
             <div id="premium-panel-1" class="premium-panel active">
                 <div id="extraction-status-card" style="display: none;" class="extraction-status-panel">
                     <div class="panel-top-title">
                         <h3 id="extraction-headline">Extraction Historique</h3>
-                        <i class="fa-solid fa-circle-notch spin status-indicator" style="font-size: 10pt;"></i>
+                        <i class="fa-solid fa-circle-notch spin" style="font-size: 10pt; color: #fb923c;"></i>
                     </div>
-                    <p class="sub">Veuillez patienter pendant le traitement...</p>
                     <div class="progress-bar-track">
                         <div id="extraction-progress-fill" class="progress-bar-fill"></div>
                     </div>
-                    <ul class="extraction-tasks-list">
-                        <li id="task-1"><span>Extraction des historiques</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-2"><span>Consultation de la base statistique</span><span class="status-indicator wait">⏳</span></li>
-                        <li id="task-3"><span>Vérification finale</span><span class="status-indicator wait">⏳</span></li>
-                    </ul>
                 </div>
 
                 <div class="file-upload-dropzone" id="dropzone-hist" onclick="triggerFileInput('file-input-hist')">
@@ -847,12 +809,12 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                 </button>
             </div>
 
-            <!-- STEP 2 PANEL: LIVE TARGET RUN CHANNELS MATCHS -->
+            <!-- STEP 2 PANEL: MATCHS DU JOUR -->
             <div id="premium-panel-2" class="premium-panel">
                 <div id="compute-status-card" style="display: none;" class="extraction-status-panel">
                     <div class="panel-top-title">
                         <h3>Analyse Premium en Cours</h3>
-                        <i class="fa-solid fa-circle-notch spin status-indicator" style="font-size: 10pt;"></i>
+                        <i class="fa-solid fa-circle-notch spin" style="font-size: 10pt; color: #fb923c;"></i>
                     </div>
                     <div class="progress-bar-track">
                         <div id="compute-progress-fill" class="progress-bar-fill"></div>
@@ -872,12 +834,11 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                     <div class="file-queue-list" id="file-list-match"></div>
                 </div>
 
-                <!-- BUTTON TRIGGER AS SEEN ON THE SCREENSHOT -->
-                <button id="action-btn-match" class="action-process-btn" onclick="startPremiumPredictionsCompute()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 4px 10px rgba(217, 119, 6 0.3);">
+                <button id="action-btn-match" class="action-process-btn" onclick="startPremiumPredictionsCompute()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Lancer Analyse Premium
                 </button>
 
-                <!-- NEW PERFECT LOOK-ALIKE CONTAINER BASED ON SCREENSHOT RESULTS -->
+                <!-- PREMIUM RESULTS VIEW ACCORDING TO SCREENSHOT -->
                 <div id="premium-results-wrapper" style="display: none;">
                     <div class="premium-result-section-header">
                         <span class="premium-result-title"><i class="fa-solid fa-trophy"></i> RÉSULTATS D'ANALYSE PREMIUM</span>
@@ -885,14 +846,13 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
                     </div>
                     
                     <div class="premium-dark-card-box" id="premium-dark-container">
-                        <!-- Dynamic generated matches matches this dark frame style exactly -->
+                        <!-- Content injected via JavaScript with absolute fidelity to the image design -->
                     </div>
 
                     <div class="premium-footer-disclaimer">
                         <p>Analyse Premium est un moteur d'analyse statistique multimodal sécurisé. Toutes les données extraites restent stockées temporairement pendant la session de l'utilisateur.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -920,7 +880,7 @@ i.chevron-right-element { color: #cbd5e1; font-size: 8pt; }
         </div>
     </div>
 
-    <!-- Sticky Bottom Navigation Bar Footer Toolbar -->
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-nav-bar">
         <div class="nav-item active" id="nav-home" onclick="switchView('main')"><i class="fa-solid fa-house"></i><span>Matchs</span></div>
         <div class="nav-item" onclick="switchView('premium')"><i class="fa-solid fa-brain"></i><span>AI Tips</span></div>
@@ -955,7 +915,6 @@ let globalStandings = [];
 
 let historicalUploadedFilesList = [];
 let matchdayUploadedFilesList = [];
-let activeWorkflowStep = 1;
 
 function switchView(viewId) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1003,8 +962,9 @@ function updateRoundTimeSlots() {
 
 function initStandings() {
     globalStandings = africaTeams.map(team => ({
-        team: team, played: 0, won: 0, drawn: 0, lost: 0, points: 0
+        team: team, played: 14, won: 6, drawn: 4, lost: 4, points: 22
     }));
+    renderRankingTable();
 }
 
 function triggerFileInput(inputId) {
@@ -1014,30 +974,12 @@ function triggerFileInput(inputId) {
 function handleFileSelection(inputElement, contextNamespace) {
     const chosenFiles = Array.from(inputElement.files);
     if(contextNamespace === 'hist') {
-        historicalUploadedFilesList = [...historicalUploadedFilesList, ...chosenFiles].slice(0, 5);
+        historicalUploadedFilesList = [...historicalUploadedFilesList, ...chosenFiles];
     } else {
-        matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...chosenFiles].slice(0, 5);
+        matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...chosenFiles];
     }
     refreshFilesQueueDisplay(contextNamespace);
     inputElement.value = ''; 
-}
-
-function setupDragAndDropListeners() {
-    ['hist', 'match'].forEach(context => {
-        const zone = document.getElementById(`dropzone-${context}`);
-        if(!zone) return;
-        zone.addEventListener('dragover', (e) => e.preventDefault());
-        zone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const droppedFiles = Array.from(e.dataTransfer.files);
-            if(context === 'hist') {
-                historicalUploadedFilesList = [...historicalUploadedFilesList, ...droppedFiles].slice(0, 5);
-            } else {
-                matchdayUploadedFilesList = [...matchdayUploadedFilesList, ...droppedFiles].slice(0, 5);
-            }
-            refreshFilesQueueDisplay(context);
-        });
-    });
 }
 
 function refreshFilesQueueDisplay(context) {
@@ -1079,7 +1021,6 @@ function clearQueue(context) {
 
 function jumpToStep(stepNumber) {
     if(stepNumber === 2 && document.getElementById('step-nav-2').disabled) return;
-    activeWorkflowStep = stepNumber;
     document.querySelectorAll('.step-nav-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.premium-panel').forEach(panel => panel.classList.remove('active'));
     document.getElementById(`step-nav-${stepNumber}`).classList.add('active');
@@ -1102,11 +1043,10 @@ function startHistoricalExtractionPipeline() {
             statusCard.style.display = 'none';
             document.getElementById('step-nav-2').disabled = false;
             jumpToStep(2);
-        }, 600);
-    }, 1200);
+        }, 400);
+    }, 800);
 }
 
-// PREMIUM CALCULATION TRIGGER
 function startPremiumPredictionsCompute() {
     if(matchdayUploadedFilesList.length === 0) {
         alert("Ampidiro ny pikantsary (screenshot) misy lalao azafady!");
@@ -1122,15 +1062,11 @@ function startPremiumPredictionsCompute() {
         progressBar.style.width = '100%';
         setTimeout(() => {
             statusCard.style.display = 'none';
-            // Miantso ny algorithm efa voaomana
-            generateMatchesData();
-            // Mampiseho ny vokatra manaraka tsara ilay sary nalain-tahaka
             displayPremiumDarkInterface();
-        }, 500);
-    }, 1000);
+        }, 400);
+    }, 800);
 }
 
-// INJECT DYNAMIC PREMIUM PREDICTIONS IN THE SPECIFIED SCREENSHOT LAYOUT
 function displayPremiumDarkInterface() {
     const container = document.getElementById('premium-dark-container');
     const wrapper = document.getElementById('premium-results-wrapper');
@@ -1138,7 +1074,6 @@ function displayPremiumDarkInterface() {
     
     container.innerHTML = '';
     
-    // Mampiasa an'ilay algorithm efa ao anatiny tsy mikitika ny lojika fa ny paozin'ny sary fotsiny no alain-tahaka
     currentMatches.forEach(match => {
         let outcome = 'X';
         if (match.prediction.home > match.prediction.away) outcome = '1';
@@ -1154,7 +1089,6 @@ function displayPremiumDarkInterface() {
     });
     
     wrapper.style.display = 'block';
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 }
 
 function clearPremiumResultsBlock() {
@@ -1164,11 +1098,10 @@ function clearPremiumResultsBlock() {
 function generateMatchesData() {
     if (currentMatches.length > 0) {
         pastResults = [...currentMatches, ...pastResults].slice(0, 20);
-        globalStandings.sort((a, b) => b.points - a.points);
+        renderResultsList();
     }
 
     currentMatches = [];
-    // Miteraka lalao 12 avy hatrany avy amin'ny algorithm efa misy
     for (let i = 0; i < 12; i++) {
         let home = africaTeams[i * 2];
         let away = africaTeams[i * 2 + 1];
@@ -1179,9 +1112,9 @@ function generateMatchesData() {
 
         currentMatches.push({
             id: i + 1, home: home, away: away,
-            probabilities: { home: 40, draw: 30, away: 30 },
+            probabilities: { home: 42, draw: 28, away: 30 },
             prediction: { home: hPred, away: aPred },
-            confidence: conf, liveScore: { home: hPred, away: aPred },
+            confidence: conf,
             isFavorite: false
         });
     }
@@ -1217,6 +1150,43 @@ function renderMatchesList() {
     });
 }
 
+function renderResultsList() {
+    const container = document.getElementById('results-container-rows');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    pastResults.forEach(r => {
+        const row = document.createElement('div');
+        row.className = 'result-row';
+        row.innerHTML = `
+            <div class="res-team-side">${r.home.flag} <b>${r.home.name}</b></div>
+            <div class="res-score-center">${r.prediction.home} - ${r.prediction.away}</div>
+            <div class="res-team-side away"><b>${r.away.name}</b> ${r.away.flag}</div>
+        `;
+        container.appendChild(row);
+    });
+}
+
+function renderRankingTable() {
+    const container = document.getElementById('ranking-container-rows');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    globalStandings.forEach((s, idx) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td class="team-cell">${s.team.flag} ${s.team.name}</td>
+            <td>${s.played}</td>
+            <td>${s.won}</td>
+            <td>${s.drawn}</td>
+            <td>${s.lost}</td>
+            <td><b>${s.points}</b></td>
+        `;
+        container.appendChild(row);
+    });
+}
+
 function openModal(matchId) {
     let m = currentMatches.find(match => match.id === matchId);
     if(!m) return;
@@ -1235,7 +1205,6 @@ function closeModal() {
 window.addEventListener('DOMContentLoaded', () => {
     initStandings();
     generateMatchesData();
-    setupDragAndDropListeners();
     setInterval(() => {
         countdownSeconds--;
         if (countdownSeconds <= 0) {
