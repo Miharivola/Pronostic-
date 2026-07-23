@@ -35,13 +35,6 @@ body {
     overflow-x: hidden;
 }
 
-.view {
-    display: none;
-}
-.view.active {
-    display: block;
-}
-
 /* Header Section */
 .header-banner {
     background: linear-gradient(135deg, #0e4f2f 0%, #052616 100%);
@@ -192,7 +185,7 @@ body {
     border-radius: 4px;
 }
 
-/* Sub Tabs (Matchs, Résultats, Classement) */
+/* Sub Tabs */
 .sub-nav-tabs {
     display: flex;
     background-color: #ffffff;
@@ -323,7 +316,7 @@ body {
     border-color: #2f855a;
 }
 
-/* Dynamic Panel Wrappers Layout Table Lists */
+/* Panels */
 .panel-content {
     display: none;
 }
@@ -331,7 +324,7 @@ body {
     display: block;
 }
 
-/* Table Header Style Columns Labels */
+/* Table Header Style */
 .matches-list-header {
     display: flex;
     align-items: center;
@@ -348,7 +341,7 @@ body {
 .lbl-box { width: 33%; text-align: center; }
 .score-lbl { width: 65px; text-align: right; }
 
-/* Match Rows Styling UI Elements layout */
+/* Match Rows Styling Updated */
 .match-item-row {
     display: flex;
     align-items: center;
@@ -356,16 +349,40 @@ body {
     border-bottom: 1px solid #edf2f0;
     background-color: #ffffff;
     cursor: pointer;
+    position: relative;
+}
+
+.team-row-wrapper {
+    flex: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.star-icon {
+    color: #cbd5e0;
+    font-size: 8.5pt;
+    margin-top: 4px;
+}
+.star-icon.active {
+    color: #d4af37;
 }
 
 .teams-meta-block {
-    flex: 1.4;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
 .team-line-node {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.team-info-side {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -377,8 +394,23 @@ body {
 
 .team-name-string {
     font-size: 8.5pt;
-    font-weight: 700;
+    font-weight: 800;
     color: #2d3748;
+    text-transform: uppercase;
+}
+
+.live-score-digit {
+    font-size: 9.5pt;
+    font-weight: 800;
+    color: #38a169;
+    padding-right: 15px;
+}
+
+.live-time-meta {
+    font-size: 7pt;
+    color: #718096;
+    font-weight: 600;
+    margin-top: 2px;
 }
 
 .odds-values-block {
@@ -392,11 +424,21 @@ body {
     background-color: #f7faf8;
     border: 1px solid #e2e8f0;
     text-align: center;
-    padding: 8px 0;
+    padding: 6px 0;
     border-radius: 4px;
     font-size: 8.5pt;
     font-weight: 700;
     color: #2d3748;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.lock-icon-small {
+    font-size: 6.5pt;
+    color: #d4af37;
 }
 
 .predicted-score-cell {
@@ -408,13 +450,13 @@ body {
 }
 
 .score-badge {
-    background-color: #e6fffa;
-    color: #00a389;
+    background-color: #f0fdf4;
+    color: #166534;
     font-size: 8.5pt;
     font-weight: 800;
     padding: 2px 6px;
     border-radius: 4px;
-    border: 1px solid #b2f5ea;
+    border: 1px solid #bbf7d0;
 }
 
 .analysis-pct-lbl {
@@ -458,7 +500,7 @@ body {
     border-radius: 4px;
 }
 
-/* Standings / Ranking Table Look Design */
+/* Standings / Ranking Table */
 .ranking-table {
     width: 100%;
     border-collapse: collapse;
@@ -475,7 +517,7 @@ body {
 .ranking-table th { background-color: #f7faf8; color: #718096; }
 .ranking-table td.team-cell { text-align: left; font-weight: 700; display: flex; align-items: center; gap: 4px;}
 
-/* Modal Structure UI layouts */
+/* Modal Structure */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -539,7 +581,7 @@ body {
     border-bottom: 1px solid #f7faf8;
 }
 
-/* Sticky Bottom global user menu navigation bar */
+/* Sticky Bottom Bar */
 .bottom-nav-bar {
     position: fixed;
     bottom: 0;
@@ -617,9 +659,7 @@ body {
         </div>
 
         <!-- Dynamic Chronological Dynamic Round Times Line Header -->
-        <div class="time-slots-container" id="time-slots-line">
-            <!-- Dynamic generated slots seamlessly injected by clock script -->
-        </div>
+        <div class="time-slots-container" id="time-slots-line"></div>
 
         <!-- Live Simulation Global Action Timer Bar Row -->
         <div class="countdown-banner">
@@ -636,7 +676,7 @@ body {
             <button class="market-btn" id="m-CS" onclick="switchMarket('CS')">CORRECT SCORE</button>
         </div>
 
-        <!-- SUB PANEL: MATCHS (DEFAULT ACTIVE) -->
+        <!-- SUB PANEL: MATCHS -->
         <div id="panel-matchs" class="panel-content active">
             <div class="matches-list-header">
                 <span class="team-lbl">MATCHS DU JOUR</span>
@@ -647,16 +687,12 @@ body {
                 </div>
                 <span class="score-lbl">SCORE PRÉDIT</span>
             </div>
-            <div id="matches-container-rows">
-                <!-- Matches list inserted dynamically -->
-            </div>
+            <div id="matches-container-rows"></div>
         </div>
 
         <!-- SUB PANEL: RÉSULTATS -->
         <div id="panel-results" class="panel-content">
-            <div class="results-list" id="results-container-rows">
-                <!-- Past simulated results history list rendered here -->
-            </div>
+            <div class="results-list" id="results-container-rows"></div>
         </div>
 
         <!-- SUB PANEL: CLASSEMENT -->
@@ -674,17 +710,14 @@ body {
                             <th>Pts</th>
                         </tr>
                     </thead>
-                    <tbody id="ranking-container-rows">
-                        <!-- Dynamic Standings table rankings lists filled here -->
-                    </tbody>
+                    <tbody id="ranking-container-rows"></tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 
-<!-- Modal Overlay View Sheet Analytics Detail Panel popup Box -->
+<!-- Modal Overlay View Sheet Analytics Detail Panel -->
 <div id="analysis-modal" class="modal-overlay">
     <div class="modal-card">
         <div class="modal-header">
@@ -730,7 +763,6 @@ body {
 </div>
 
 <script>
-// Exactly 20 real African Nations teams matching screenshot layout with official emoji flags
 const africaTeams = [
     { name: "Ouganda", flag: "🇺🇬" }, { name: "Égypte", flag: "🇪🇬" },
     { name: "Mozambique", flag: "🇲🇿" }, { name: "Gabon", flag: "🇬🇦" },
@@ -746,12 +778,11 @@ const africaTeams = [
 
 let activeSubPanel = 'matchs';
 let activeMarket = '1X2';
-let countdownSeconds = 120; // Exact strict 2 minutes round cycle loops
+let countdownSeconds = 120; // 2 minitra
 let currentMatches = [];
 let pastResults = [];
 let standings = [];
 
-// Initialize data rankings standings 
 function initStandings() {
     standings = africaTeams.map(t => ({
         name: t.name, flag: t.flag, mj: 14, g: Math.floor(4+Math.random()*6), n: Math.floor(2+Math.random()*4), p: Math.floor(1+Math.random()*5), pts: 0
@@ -764,7 +795,6 @@ function calculatePoints() {
     standings.sort((a,b) => b.pts - a.pts);
 }
 
-// Switch sub navigation views tabs panels (Matchs, Résultats, Classement)
 function switchSubPanel(panelId) {
     activeSubPanel = panelId;
     document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
@@ -777,7 +807,6 @@ function switchSubPanel(panelId) {
     if (panelId === 'ranking') renderRankingPanel();
 }
 
-// Switch Betting market view filter labels columns
 function switchMarket(marketCode) {
     activeMarket = marketCode;
     document.querySelectorAll('.market-btn').forEach(b => b.classList.remove('active'));
@@ -793,25 +822,20 @@ function switchMarket(marketCode) {
     renderMatchesList();
 }
 
-// Global active real-time clock visual updates on top tabs lines
 function updateRoundTimeSlots() {
     const wrapper = document.getElementById('time-slots-line');
     wrapper.innerHTML = '';
-    
     let now = new Date();
     
-    // Generate 5 past round labels metrics ticks
     for(let i = 5; i > 0; i--) {
         let pastTime = new Date(now.getTime() - (i * 2 * 60 * 1000));
         let str = `${pastTime.getHours().toString().padStart(2,'0')}:${pastTime.getMinutes().toString().padStart(2,'0')}`;
         wrapper.innerHTML += `<div class="time-slot past">${str}</div>`;
     }
     
-    // Current LIVE Time Box node Slot position values inputs
     let currentStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
     wrapper.innerHTML += `<div class="time-slot active">${currentStr} <span class="live-indicator">LIVE</span></div>`;
     
-    // Generate 5 future round prediction departure time slots dynamic boxes
     for(let i = 1; i <= 5; i++) {
         let futTime = new Date(now.getTime() + (i * 2 * 60 * 1000));
         let str = `${futTime.getHours().toString().padStart(2,'0')}:${futTime.getMinutes().toString().padStart(2,'0')}`;
@@ -819,12 +843,12 @@ function updateRoundTimeSlots() {
     }
 }
 
-// AI Simulation Analytics generating 10 paired matches array data list models
 function generateMatchesData() {
     currentMatches = [];
     let paired = [...africaTeams];
+    let now = new Date();
+    let currentStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
     
-    // Fixed pairs matching image representation looks as closely as possible
     for(let i = 0; i < paired.length; i += 2) {
         let home = paired[i];
         let away = paired[i+1];
@@ -837,22 +861,30 @@ function generateMatchesData() {
         let pX = Math.floor(20 + Math.random()*20);
         let p2 = 100 - (p1 + pX);
         
-        let scoreOpts = ["1-1", "0-0", "2-1", "1-0", "0-2", "2-0", "3-1"];
-        let predictedScore = scoreOpts[Math.floor(Math.random()*scoreOpts.length)];
-        let conf = Math.floor(20 + Math.random()*70);
+        // Goals live dynamic generation (ohtran'ny sary)
+        let gHome = Math.floor(Math.random() * 3);
+        let gAway = Math.floor(Math.random() * 3);
         
         currentMatches.push({
             home, away,
+            liveScore: { home: gHome, away: gAway },
+            liveTimeStr: `${currentStr} • LIVE 90'`,
             odds: { 1: odd1, X: oddX, 2: odd2 },
             probs: { 1: p1, X: pX, 2: p2 },
-            score: predictedScore,
-            conf: conf
+            score: `${gHome}-${gAway}`,
+            conf: Math.floor(40 + Math.random()*50),
+            fav: false
         });
     }
     renderMatchesList();
 }
 
-// Injects array entries into current visual matches HTML nodes rows tables
+function toggleFav(idx, e) {
+    e.stopPropagation();
+    currentMatches[idx].fav = !currentMatches[idx].fav;
+    renderMatchesList();
+}
+
 function renderMatchesList() {
     const container = document.getElementById('matches-container-rows');
     container.innerHTML = '';
@@ -872,41 +904,51 @@ function renderMatchesList() {
             valA = match.score; valB = "6.50"; valC = "12.00";
         }
         
+        let starClass = match.fav ? 'fa-solid fa-star star-icon active' : 'fa-regular fa-star star-icon';
+        
         let row = document.createElement('div');
         row.className = 'match-item-row';
         row.onclick = () => openModal(idx);
         row.innerHTML = `
-            <div class="teams-meta-block">
-                <div class="team-line-node">
-                    <span class="flag-icon">${match.home.flag}</span>
-                    <span class="team-name-string">${match.home.name}</span>
-                </div>
-                <div class="team-line-node">
-                    <span class="flag-icon">${match.away.flag}</span>
-                    <span class="team-name-string">${match.away.name}</span>
+            <div class="team-row-wrapper">
+                <i class="${starClass}" onclick="toggleFav(${idx}, event)"></i>
+                <div class="teams-meta-block">
+                    <div class="team-line-node">
+                        <div class="team-info-side">
+                            <span class="flag-icon">${match.home.flag}</span>
+                            <span class="team-name-string">${match.home.name}</span>
+                        </div>
+                        <span class="live-score-digit">${match.liveScore.home}</span>
+                    </div>
+                    <div class="team-line-node">
+                        <div class="team-info-side">
+                            <span class="flag-icon">${match.away.flag}</span>
+                            <span class="team-name-string">${match.away.name}</span>
+                        </div>
+                        <span class="live-score-digit">${match.liveScore.away}</span>
+                    </div>
+                    <div class="live-time-meta">${match.liveTimeStr}</div>
                 </div>
             </div>
             <div class="odds-values-block">
-                <div class="odd-cell-box">${valA}</div>
-                <div class="odd-cell-box">${valB}</div>
-                <div class="odd-cell-box">${valC}</div>
+                <div class="odd-cell-box">${valA}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${valB}<i class="fa-solid fa-lock lock-icon-small"></i></div>
+                <div class="odd-cell-box">${valC}<i class="fa-solid fa-lock lock-icon-small"></i></div>
             </div>
             <div class="predicted-score-cell">
                 <span class="score-badge">${match.score}</span>
-                <span class="analysis-pct-lbl">CONF. ${match.conf}%</span>
+                <span class="analysis-pct-lbl">(${match.conf}%)</span>
             </div>
         `;
         container.appendChild(row);
     });
 }
 
-// Renders panel historical simulated outcomes results list 
 function renderResultsPanel() {
     const container = document.getElementById('results-container-rows');
     container.innerHTML = '';
     
     if(pastResults.length === 0) {
-        // Mock generation initial backup list data items entries
         for(let i=0; i<6; i++) {
             let h = africaTeams[Math.floor(Math.random()*10)];
             let a = africaTeams[Math.floor(Math.random()*10 + 10)];
@@ -925,7 +967,6 @@ function renderResultsPanel() {
     });
 }
 
-// Renders dynamic standings league rankings panel table lists
 function renderRankingPanel() {
     const container = document.getElementById('ranking-container-rows');
     container.innerHTML = '';
@@ -945,12 +986,10 @@ function renderRankingPanel() {
     });
 }
 
-// Recalculate AI trigger functions action buttons elements click events handlers
 function recalculateAI() {
     generateMatchesData();
 }
 
-// Modal management popups panels views functions handling logic blocks
 function openModal(idx) {
     let match = currentMatches[idx];
     document.getElementById('mdl-home-name').innerText = match.home.name.toUpperCase();
@@ -975,19 +1014,16 @@ function closeModal() {
     document.getElementById('analysis-modal').classList.remove('active');
 }
 
-// Exact 2-minute loop handling countdown timers ticks updates clocks values triggers
 function startCountdownTimer() {
     const timerLabel = document.getElementById('timer-clock');
     setInterval(() => {
         countdownSeconds--;
         if(countdownSeconds <= 0) {
-            countdownSeconds = 120; // Loops immediately back to exactly 2 minutes
+            countdownSeconds = 120;
             
-            // Push active cycle arrays contents down into past history results listing values lists
             pastResults = currentMatches.map(m => {
-                let s1 = Math.floor(Math.random()*3);
-                let s2 = Math.floor(Math.random()*3);
-                // Dynamically update standings points based on random generation simulation updates 
+                let s1 = m.liveScore.home;
+                let s2 = m.liveScore.away;
                 let tHome = standings.find(t => t.name === m.home.name);
                 let tAway = standings.find(t => t.name === m.away.name);
                 if(tHome && tAway) {
@@ -999,7 +1035,6 @@ function startCountdownTimer() {
                 return { home: m.home, away: m.away, score: `${s1}-${s2}` };
             });
             calculatePoints();
-            
             updateRoundTimeSlots();
             generateMatchesData();
             
@@ -1013,7 +1048,6 @@ function startCountdownTimer() {
     }, 1000);
 }
 
-// Initial Bootstrapping Window bindings setup
 window.addEventListener('DOMContentLoaded', () => {
     initStandings();
     updateRoundTimeSlots();
