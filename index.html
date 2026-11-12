@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bet261 Virtual Pro - Sync</title>
+    <title>Bet261 Virtual Pro - Exact Replica</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -27,15 +27,13 @@
             </div>
             <div>
                 <h1 class="text-white font-extrabold text-base tracking-tight leading-none">VIRTUAL <span class="text-emerald-400">261</span></h1>
-                <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Bet261 Engine • Max 6 Buts</span>
+                <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Bet261 Engine Pro</span>
             </div>
         </div>
         <div class="flex items-center space-x-2">
-            <!-- Ora tena izy -->
             <div class="text-xs font-mono text-slate-400 bg-black/30 px-2 py-1 rounded border border-white/5" id="real-clock">
                 --:--:--
             </div>
-            <!-- Countdown mankany amin'ny ora manaraka -->
             <div id="timer-badge" class="flex items-center space-x-1.5 bg-emerald-500/15 border border-emerald-500/50 px-3 py-1 rounded-lg text-emerald-400 font-mono font-bold text-sm shadow-inner">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" id="timer-dot"></span>
                 <span id="timer-text">00:00</span>
@@ -43,7 +41,7 @@
         </div>
     </header>
 
-    <!-- FIFIDIANANA FIFANINANANA -->
+    <!-- FIFIDIANANA LEAGUE -->
     <div class="p-3 grid grid-cols-2 gap-2.5 bg-[#0F172A] border-b border-white/5">
         <button onclick="switchLeague(0)" id="btn-league-0" class="p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md">
             <div class="flex justify-between items-center">
@@ -62,8 +60,16 @@
         </button>
     </div>
 
-    <!-- TSIPIKA ORA BET261 (13:21, 13:23, 13:25, 13:27, 13:29) -->
+    <!-- TSIPIKA ORA (IMPAIR MINUTES) -->
     <div class="bg-[#52B755] px-2 py-1.5 flex items-center justify-between space-x-1 overflow-x-auto shadow-inner" id="time-slots-bar">
+    </div>
+
+    <!-- MARKETS (1X2, Mi-tps, Double Chance) -->
+    <div class="bg-[#162032] px-3 py-2 border-b border-white/10 flex space-x-2 overflow-x-auto text-xs font-bold">
+        <button class="bg-[#E11D48] text-white px-3 py-1.5 rounded-lg shadow">1X2</button>
+        <button class="bg-white/10 text-slate-300 px-3 py-1.5 rounded-lg hover:bg-white/20">Mi-tps 1X2</button>
+        <button class="bg-white/10 text-slate-300 px-3 py-1.5 rounded-lg hover:bg-white/20">Double Chance</button>
+        <button class="bg-white/10 text-slate-300 px-3 py-1.5 rounded-lg hover:bg-white/20">Mi-tps DC</button>
     </div>
 
     <!-- BARRE JOURNEE & TABS -->
@@ -71,7 +77,7 @@
         <div class="px-4 py-2 flex justify-between items-center border-b border-white/5 text-xs">
             <div class="flex items-center space-x-2">
                 <span id="active-league-name" class="text-slate-300 font-bold uppercase tracking-wider">ENGLISH LEAGUE</span>
-                <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 font-mono" id="active-slot-label">Manomboka 13:21</span>
+                <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 font-mono" id="active-slot-label">Manomboka --:--</span>
             </div>
             <span id="journee-badge" class="bg-amber-500/20 border border-amber-500/30 text-amber-400 px-2.5 py-0.5 rounded-md font-extrabold tracking-wide">JOURNÉE 1 / 38</span>
         </div>
@@ -89,9 +95,8 @@
         </div>
     </div>
 
-    <!-- VOTOATINY (CONTENT) -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 p-3 max-w-2xl mx-auto w-full pb-12">
-        <!-- Fizarana 1: Pronostics & Cotes 1 X 2 -->
         <div id="view-pronostics">
             <div class="flex items-center px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                 <div class="flex-1">Lalao (Matchs)</div>
@@ -104,16 +109,12 @@
             <div id="matches-container" class="space-y-2.5"></div>
         </div>
 
-        <!-- Fizarana 2: Résultats -->
         <div id="view-resultats" class="space-y-2.5 hidden"></div>
-
-        <!-- Fizarana 3: Classement -->
         <div id="view-classement" class="hidden"></div>
     </main>
 
     <script>
-        // --- DATA EKIPA TENA IZY AO AMIN'NY BET261 ---
-        // Ny "rating" (1.0 ka hatramin'ny 10.0) dia namboarina mba hamoaka ny cotes tena mitovy amin'ny Bet261
+        // --- DATA EKIPA MARINA AVY AMIN'NY BET261 ---
         const baseTeamsData = [
             {
                 name: "English League",
@@ -173,20 +174,18 @@
             }
         ];
 
-        // --- RAFITRA ORA TENA IZY (SYNC AMIN'NY BET261) ---
-        const EPOCH_OFFSET_MS = 60 * 1000; // Manomboka minitra tsy ankasa (01, 03, 05, 21, 23...)
-        const CYCLE_DURATION_MS = 120 * 1000; // 2 minitra isaky ny journée
+        // --- ALGORITHM & TIME SYNC ---
+        const EPOCH_OFFSET_MS = 60 * 1000; // Impair minute sync
+        const CYCLE_DURATION_MS = 120 * 1000; // 2 min per matchday
 
         function getCurrentCycleInfo() {
             const nowMs = Date.now();
             const tzOffsetMs = new Date().getTimezoneOffset() * 60 * 1000;
             const localMs = nowMs - tzOffsetMs;
-
             const adjustedMs = localMs - EPOCH_OFFSET_MS;
             const cycleIndex = Math.floor(adjustedMs / CYCLE_DURATION_MS);
             const msIntoCycle = adjustedMs % CYCLE_DURATION_MS;
             const secondsRemaining = Math.ceil((CYCLE_DURATION_MS - msIntoCycle) / 1000);
-
             const nextStartLocalMs = ((cycleIndex + 1) * CYCLE_DURATION_MS) + EPOCH_OFFSET_MS + tzOffsetMs;
 
             return {
@@ -198,9 +197,7 @@
 
         function formatHHMM(timestampMs) {
             const d = new Date(timestampMs);
-            const hh = d.getHours().toString().padStart(2, '0');
-            const mm = d.getMinutes().toString().padStart(2, '0');
-            return `${hh}:${mm}`;
+            return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
         }
 
         function seededRandom(seed) {
@@ -208,75 +205,53 @@
             return x - Math.floor(x);
         }
 
-        // Kajy Cotes 1, X, 2 tena mitovy amin'ny Bet261 (ohatra: 1,18 | 7,40 | 12,43)
         function calculateBet261Odds(homeRating, awayRating, matchSeed) {
-            // Tombony kely ho an'ny Domicile (+0.55)
             let diff = (homeRating + 0.55) - awayRating;
-
-            // Fampiasana logistic curve hamoahana probabilité marina
             let rawProb1 = 1 / (1 + Math.exp(-0.46 * diff));
             let rawProb2 = 1 / (1 + Math.exp(0.46 * diff));
+            let drawBase = Math.max(0.072, 0.285 * Math.exp(-0.075 * (diff * diff)));
 
-            // Probabilité Nul (X) ambony rehefa mitovitovy ny ekipa, midina rehefa misy elanelana be
-            let drawBase = 0.285 * Math.exp(-0.075 * (diff * diff));
-            drawBase = Math.max(0.072, drawBase);
-
-            // Ampifanarahina amin'ny 100%
             let totalRaw = rawProb1 + rawProb2 + drawBase;
             let p1 = rawProb1 / totalRaw;
             let pX = drawBase / totalRaw;
             let p2 = rawProb2 / totalRaw;
 
-            // Fiovaovana kely voajanahary tahaka ny ao amin'ny bookmaker (+/- 2%)
             let jitter = (seededRandom(matchSeed + 99) - 0.5) * 0.03;
             p1 = Math.max(0.06, Math.min(0.84, p1 + jitter));
             p2 = Math.max(0.06, Math.min(0.84, p2 - jitter));
             pX = Math.max(0.07, 1 - (p1 + p2));
 
-            // Overround / Marge Bet261 (~93.5% RTP)
             const rtp = 0.935;
-            let odd1 = Math.max(1.12, rtp / p1);
-            let oddX = Math.max(2.85, rtp / pX);
-            let odd2 = Math.max(1.15, rtp / p2);
-
             return {
-                c1: odd1.toFixed(2).replace('.', ','),
-                cX: oddX.toFixed(2).replace('.', ','),
-                c2: odd2.toFixed(2).replace('.', ','),
-                p1, pX, p2
+                c1: Math.max(1.12, rtp / p1).toFixed(2).replace('.', ','),
+                cX: Math.max(2.85, rtp / pX).toFixed(2).replace('.', ','),
+                c2: Math.max(1.15, rtp / p2).toFixed(2).replace('.', ',')
             };
         }
 
-        // Kajy baolina maty TSY MIHOATRA NY 6 (Total <= 6)
+        // --- STRATEGY & MAX 6 BUTS ALGORITHM ---
         function simulateMatchGoalsCapped(homeRating, awayRating, seed) {
             let diff = (homeRating + 0.5) - awayRating;
-
-            // Expected goals (xG) voalanjalanja mba ho realistika
             let xgHome = Math.max(0.25, Math.min(2.6, 1.35 + (diff * 0.22)));
             let xgAway = Math.max(0.20, Math.min(2.3, 1.05 - (diff * 0.18)));
 
             let hGoals = 0;
             let aGoals = 0;
 
-            // Manisa baolina (max 4 isaky ny ekipa aloha)
             for (let i = 0; i < 4; i++) {
                 if (seededRandom(seed + i * 13.7) < (xgHome / 4.2)) hGoals++;
                 if (seededRandom(seed + i * 29.3) < (xgAway / 4.2)) aGoals++;
             }
 
-            // FANAMAFISANA: Tsy mihoatra ny 6 mihitsy ny fitambaran'ny baolina (hGoals + aGoals <= 6)
+            // Tsy mihoatra ny 6 ny fitambaran'ny baolina (Max 6 buts)
             while ((hGoals + aGoals) > 6) {
-                if (hGoals >= aGoals && hGoals > 0) {
-                    hGoals--;
-                } else if (aGoals > 0) {
-                    aGoals--;
-                }
+                if (hGoals >= aGoals && hGoals > 0) hGoals--;
+                else if (aGoals > 0) aGoals--;
             }
 
             return { homeGoals: hGoals, awayGoals: aGoals };
         }
 
-        // Mamorona ny fandaharam-potoana manontolo ho an'ny Season iray
         function buildSeasonData(leagueIdx, seasonNumber) {
             const leagueMeta = baseTeamsData[leagueIdx];
             const teams = leagueMeta.teams.map(t => ({
@@ -292,20 +267,12 @@
                 for (let i = 0; i < numTeams / 2; i++) {
                     let home = rotation[i];
                     let away = rotation[numTeams - 1 - i];
-                    if (j % 2 === 1) {
-                        let temp = home; home = away; away = temp;
-                    }
+                    if (j % 2 === 1) { let temp = home; home = away; away = temp; }
 
                     let matchSeed = (seasonNumber * 10000) + (leagueIdx * 5000) + (j * 100) + i;
                     let odds = calculateBet261Odds(home.rating, away.rating, matchSeed);
-
-                    // Kajy Score Exact (Vinavina - Max 6 buts)
                     let pred = simulateMatchGoalsCapped(home.rating, away.rating, matchSeed + 10);
-
-                    // Kajy Résultat tena izy (Max 6 buts)
-                    let actual = seededRandom(matchSeed + 50) < 0.42
-                        ? pred
-                        : simulateMatchGoalsCapped(home.rating, away.rating, matchSeed + 77);
+                    let actual = seededRandom(matchSeed + 50) < 0.42 ? pred : simulateMatchGoalsCapped(home.rating, away.rating, matchSeed + 77);
 
                     dayMatches.push({
                         home: home.name,
@@ -322,13 +289,7 @@
                     });
                 }
 
-                // Afangaro kely ny filaharan'ny lalao ao anatin'ny journée iray mba hitovy amin'ny Bet261
-                dayMatches.sort((a, b) => {
-                    let sA = seededRandom(seasonNumber * 100 + j + a.home.length);
-                    let sB = seededRandom(seasonNumber * 100 + j + b.home.length);
-                    return sA - sB;
-                });
-
+                dayMatches.sort((a, b) => seededRandom(seasonNumber * 100 + j + a.home.length) - seededRandom(seasonNumber * 100 + j + b.home.length));
                 schedule.push(dayMatches);
                 let last = rotation.pop();
                 rotation.splice(1, 0, last);
@@ -340,10 +301,8 @@
         function getLiveLeagueState(leagueIdx, cycleIndex) {
             const leagueMeta = baseTeamsData[leagueIdx];
             const maxJ = leagueMeta.maxJournees;
-
             const seasonNumber = Math.floor(cycleIndex / maxJ);
             const currentJournee = (cycleIndex % maxJ) + 1;
-
             const seasonData = buildSeasonData(leagueIdx, seasonNumber);
 
             for (let j = 0; j < currentJournee - 1; j++) {
@@ -370,73 +329,38 @@
             };
         }
 
-        // --- UI STATE & RENDERING ---
+        // --- UI & RENDERING ---
         let activeLeagueIndex = 0;
         let activeTab = 'pronostics';
         let lastRenderedCycle = -1;
 
         function switchLeague(index) {
             activeLeagueIndex = index;
-            const btn0 = document.getElementById('btn-league-0');
-            const btn1 = document.getElementById('btn-league-1');
-            const sub0 = document.getElementById('sub-league-0');
-            const sub1 = document.getElementById('sub-league-1');
-
-            if (index === 0) {
-                btn0.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md";
-                sub0.className = "text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-mono font-bold text-slate-950";
-                btn1.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]";
-                sub1.className = "text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono text-slate-300";
-            } else {
-                btn1.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md";
-                sub1.className = "text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-mono font-bold text-slate-950";
-                btn0.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]";
-                sub0.className = "text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono text-slate-300";
-            }
+            document.getElementById('btn-league-0').className = index === 0 ? "p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md" : "p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]";
+            document.getElementById('btn-league-1').className = index === 1 ? "p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md" : "p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]";
             renderAll(true);
         }
 
         function switchTab(tab) {
             activeTab = tab;
             ['pronostics', 'resultats', 'classement'].forEach(t => {
-                const tabEl = document.getElementById(`tab-${t}`);
-                const viewEl = document.getElementById(`view-${t}`);
-                if (t === tab) {
-                    tabEl.className = "flex-1 py-3 text-center text-emerald-400 border-b-2 border-emerald-400 bg-emerald-500/5 transition font-extrabold";
-                    viewEl.classList.remove('hidden');
-                } else {
-                    tabEl.className = "flex-1 py-3 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition font-extrabold";
-                    viewEl.classList.add('hidden');
-                }
+                document.getElementById(`tab-${t}`).className = t === tab ? "flex-1 py-3 text-center text-emerald-400 border-b-2 border-emerald-400 bg-emerald-500/5 transition font-extrabold" : "flex-1 py-3 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition font-extrabold";
+                document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tab);
             });
             renderAll(true);
         }
 
         function renderTimeSlots(nextStartMs) {
             const bar = document.getElementById('time-slots-bar');
-            const activeSlotStr = formatHHMM(nextStartMs);
-            document.getElementById('active-slot-label').innerText = `Manomboka ${activeSlotStr}`;
+            document.getElementById('active-slot-label').innerText = `Manomboka ${formatHHMM(nextStartMs)}`;
 
-            let slotsHtml = `
-                <div class="bg-white text-[#52B755] font-black text-[10px] px-2 py-1 rounded shadow-sm flex-shrink-0">
-                    NEW
-                </div>
-            `;
-
+            let slotsHtml = `<div class="bg-white text-[#52B755] font-black text-[10px] px-2 py-1 rounded shadow-sm flex-shrink-0">NEW</div>`;
             for (let i = 0; i < 5; i++) {
                 let slotTime = formatHHMM(nextStartMs + (i * CYCLE_DURATION_MS));
                 if (i === 0) {
-                    slotsHtml += `
-                        <div class="bg-[#E11D48] text-white font-extrabold text-xs px-3 py-1 rounded-md shadow-md flex-shrink-0 border border-white/20">
-                            ${slotTime}
-                        </div>
-                    `;
+                    slotsHtml += `<div class="bg-[#E11D48] text-white font-extrabold text-xs px-3 py-1 rounded-md shadow-md flex-shrink-0 border border-white/20">${slotTime}</div>`;
                 } else {
-                    slotsHtml += `
-                        <div class="text-white/90 font-bold text-xs px-2.5 py-1 border-l border-white/25 flex-shrink-0">
-                            ${slotTime}
-                        </div>
-                    `;
+                    slotsHtml += `<div class="text-white/90 font-bold text-xs px-2.5 py-1 border-l border-white/25 flex-shrink-0">${slotTime}</div>`;
                 }
             }
             bar.innerHTML = slotsHtml;
@@ -444,28 +368,12 @@
 
         function renderAll(force = false) {
             const cycleInfo = getCurrentCycleInfo();
-            const now = new Date();
-
-            document.getElementById('real-clock').innerText = now.toTimeString().split(' ')[0];
+            document.getElementById('real-clock').innerText = new Date().toTimeString().split(' ')[0];
 
             let rem = cycleInfo.secondsRemaining;
-            let m = Math.floor(rem / 60).toString().padStart(2, '0');
-            let s = (rem % 60).toString().padStart(2, '0');
-            document.getElementById('timer-text').innerText = `${m}:${s}`;
+            document.getElementById('timer-text').innerText = `${Math.floor(rem / 60).toString().padStart(2, '0')}:${(rem % 60).toString().padStart(2, '0')}`;
 
-            const timerBadge = document.getElementById('timer-badge');
-            const timerDot = document.getElementById('timer-dot');
-            if (rem <= 15) {
-                timerBadge.className = "flex items-center space-x-1.5 bg-red-500/15 border border-red-500/50 px-3 py-1 rounded-lg text-red-400 font-mono font-bold text-sm shadow-inner";
-                timerDot.className = "w-2 h-2 rounded-full bg-red-400 animate-ping";
-            } else {
-                timerBadge.className = "flex items-center space-x-1.5 bg-emerald-500/15 border border-emerald-500/50 px-3 py-1 rounded-lg text-emerald-400 font-mono font-bold text-sm shadow-inner";
-                timerDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
-            }
-
-            if (!force && cycleInfo.cycleIndex === lastRenderedCycle) {
-                return;
-            }
+            if (!force && cycleInfo.cycleIndex === lastRenderedCycle) return;
             lastRenderedCycle = cycleInfo.cycleIndex;
 
             renderTimeSlots(cycleInfo.nextStartMs);
@@ -479,151 +387,60 @@
             document.getElementById('active-league-name').innerText = activeLeague.name.toUpperCase();
             document.getElementById('journee-badge').innerText = `JOURNÉE ${activeLeague.currentJournee} / ${activeLeague.maxJournees}`;
 
-            // 1. PRONOSTICS & COTES (1 X 2)
-            const matchesContainer = document.getElementById('matches-container');
-            const currentMatches = activeLeague.schedule[activeLeague.currentJournee - 1] || [];
-
-            matchesContainer.innerHTML = currentMatches.map(m => {
-                let totalButs = m.predHome + m.predAway;
-                let overUnderText = totalButs > 2 ? `Over 2.5 (${totalButs})` : `Under 2.5 (${totalButs})`;
-
-                return `
+            // 1. PRONOSTICS
+            document.getElementById('matches-container').innerHTML = (activeLeague.schedule[activeLeague.currentJournee - 1] || []).map(m => `
                 <div class="bg-[#162032] rounded-xl border border-white/10 overflow-hidden shadow-md">
                     <div class="p-3 flex items-center justify-between gap-2">
                         <div class="flex-1 space-y-2 min-w-0">
-                            <div class="flex items-center space-x-2">
-                                <span class="w-3 h-3 rounded-full flex-shrink-0 shadow-sm border border-white/20" style="background-color: ${m.homeColor}"></span>
-                                <span class="text-white font-bold text-sm truncate">${m.home}</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span class="w-3 h-3 rounded-full flex-shrink-0 shadow-sm border border-white/20" style="background-color: ${m.awayColor}"></span>
-                                <span class="text-white font-bold text-sm truncate">${m.away}</span>
-                            </div>
+                            <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full border border-white/20" style="background-color: ${m.homeColor}"></span><span class="text-white font-bold text-sm truncate">${m.home}</span></div>
+                            <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full border border-white/20" style="background-color: ${m.awayColor}"></span><span class="text-white font-bold text-sm truncate">${m.away}</span></div>
                         </div>
-
                         <div class="w-[168px] grid grid-cols-3 gap-1.5 flex-shrink-0">
-                            <div class="bg-[#52B755] text-white font-extrabold text-xs py-3 rounded-md text-center shadow-sm">
-                                ${m.cote1}
-                            </div>
-                            <div class="bg-[#52B755] text-white font-extrabold text-xs py-3 rounded-md text-center shadow-sm">
-                                ${m.coteX}
-                            </div>
-                            <div class="bg-[#52B755] text-white font-extrabold text-xs py-3 rounded-md text-center shadow-sm">
-                                ${m.cote2}
-                            </div>
+                            <div class="bg-[#52B755] text-white font-extrabold text-xs py-3 rounded-md text-center">${m.cote1}</div>
+                            <div class="bg-[#52B755] text-white font-extrabold text-xs py-3 rounded-md text-center">${m.coteX}</div>
+                            <div class="bg-[#52B755] text-white font-extrabold text-xs py-3 rounded-md text-center">${m.cote2}</div>
                         </div>
                     </div>
-
                     <div class="bg-[#0F172A]/80 px-3 py-2 border-t border-white/5 flex justify-between items-center text-xs">
-                        <div class="flex items-center space-x-1.5">
-                            <span class="text-slate-400">Score Exact:</span>
-                            <span class="bg-blue-500/20 border border-blue-500/40 text-blue-300 font-extrabold px-2 py-0.5 rounded">${m.predHome} - ${m.predAway}</span>
-                        </div>
-                        <div class="flex items-center space-x-1.5">
-                            <span class="text-slate-400">Total Buts:</span>
-                            <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-extrabold px-2 py-0.5 rounded">${overUnderText}</span>
-                        </div>
+                        <span class="text-slate-400">Score Exact: <b class="text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/40">${m.predHome} - ${m.predAway}</b></span>
+                        <span class="text-slate-400">Total Buts: <b class="text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/40">${(m.predHome+m.predAway)>2?'Over 2.5 ('+(m.predHome+m.predAway)+')':'Under 2.5 ('+(m.predHome+m.predAway)+')'}</b></span>
                     </div>
                 </div>
-                `;
-            }).join('');
+            `).join('');
 
             // 2. RÉSULTATS
-            const rDiv = document.getElementById('view-resultats');
             let prevJ = activeLeague.currentJournee - 1;
-            let prevMatches = [];
-            let labelJ = prevJ;
-
-            if (prevJ >= 1) {
-                prevMatches = activeLeague.schedule[prevJ - 1];
-            } else {
-                const prevSeason = buildSeasonData(activeLeagueIndex, Math.floor(cycleInfo.cycleIndex / activeLeague.maxJournees) - 1);
-                labelJ = activeLeague.maxJournees;
-                prevMatches = prevSeason.schedule[labelJ - 1];
-            }
-
-            let prevTimeStr = formatHHMM(cycleInfo.nextStartMs - CYCLE_DURATION_MS);
-            rDiv.innerHTML = `
-                <div class="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-center font-extrabold text-xs py-2 rounded-lg mb-2">
-                    VALIN-DALAO - JOURNÉE ${labelJ} (Lalao tamin'ny ${prevTimeStr})
-                </div>` + prevMatches.map(m => {
-                let isExact = (m.predHome === m.actualHome && m.predAway === m.actualAway);
-                return `
+            let prevMatches = prevJ >= 1 ? activeLeague.schedule[prevJ - 1] : buildSeasonData(activeLeagueIndex, Math.floor(cycleInfo.cycleIndex / activeLeague.maxJournees) - 1).schedule[activeLeague.maxJournees - 1];
+            document.getElementById('view-resultats').innerHTML = `<div class="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-center font-extrabold text-xs py-2 rounded-lg mb-2">VALIN-DALAO - JOURNÉE ${prevJ >= 1 ? prevJ : activeLeague.maxJournees}</div>` + prevMatches.map(m => `
                 <div class="bg-[#162032] p-3 rounded-xl border border-white/10 shadow-sm">
                     <div class="flex justify-between items-center">
-                        <div class="flex-1 flex items-center space-x-2 min-w-0">
-                            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${m.homeColor}"></span>
-                            <span class="font-bold text-sm text-white truncate">${m.home}</span>
-                        </div>
-                        <div class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-lg font-black text-sm mx-2">
-                            ${m.actualHome} - ${m.actualAway}
-                        </div>
-                        <div class="flex-1 flex items-center justify-end space-x-2 min-w-0">
-                            <span class="font-bold text-sm text-white truncate">${m.away}</span>
-                            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${m.awayColor}"></span>
-                        </div>
-                    </div>
-                    <div class="mt-2 pt-2 border-t border-white/5 flex justify-between items-center text-[11px]">
-                        <span class="text-slate-400">Vinavina: <b class="text-slate-200">${m.predHome} - ${m.predAway}</b> ${isExact ? '✅' : ''}</span>
-                        <span class="text-slate-400">Cotes: <b class="text-slate-300">${m.cote1} | ${m.coteX} | ${m.cote2}</b></span>
-                        <span class="text-amber-400 font-bold">Total: ${m.actualHome + m.actualAway} buts</span>
+                        <div class="flex-1 flex items-center space-x-2 min-w-0"><span class="w-2.5 h-2.5 rounded-full" style="background-color: ${m.homeColor}"></span><span class="font-bold text-sm text-white truncate">${m.home}</span></div>
+                        <div class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-lg font-black text-sm mx-2">${m.actualHome} - ${m.actualAway}</div>
+                        <div class="flex-1 flex items-center justify-end space-x-2 min-w-0"><span class="font-bold text-sm text-white truncate">${m.away}</span><span class="w-2.5 h-2.5 rounded-full" style="background-color: ${m.awayColor}"></span></div>
                     </div>
                 </div>
-                `;
-            }).join('');
+            `).join('');
 
             // 3. CLASSEMENT
-            const cDiv = document.getElementById('view-classement');
-            let sortedTeams = [...activeLeague.teams].sort((a, b) => {
-                let ptsA = (a.won * 3) + a.drawn;
-                let ptsB = (b.won * 3) + b.drawn;
-                if (ptsB !== ptsA) return ptsB - ptsA;
-                let diffA = a.gf - a.ga;
-                let diffB = b.gf - b.ga;
-                if (diffB !== diffA) return diffB - diffA;
-                return b.gf - a.gf;
-            });
-
-            cDiv.innerHTML = `
+            let sortedTeams = [...activeLeague.teams].sort((a, b) => ((b.won*3)+b.drawn) - ((a.won*3)+a.drawn) || (b.gf-b.ga) - (a.gf-a.ga) || b.gf - a.gf);
+            document.getElementById('view-classement').innerHTML = `
                 <div class="bg-[#162032] rounded-xl border border-white/10 overflow-hidden shadow-md">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-black/40 text-slate-400 uppercase text-[11px] border-b border-white/10">
-                                <tr>
-                                    <th class="py-2.5 px-2.5 text-center w-8">#</th>
-                                    <th class="py-2.5 px-2">Ekipa</th>
-                                    <th class="py-2.5 px-2 text-center">MJ</th>
-                                    <th class="py-2.5 px-2 text-center">G</th>
-                                    <th class="py-2.5 px-2 text-center">N</th>
-                                    <th class="py-2.5 px-2 text-center">P</th>
-                                    <th class="py-2.5 px-2 text-center">DB</th>
-                                    <th class="py-2.5 px-3 text-center text-emerald-400 font-black">PTS</th>
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-black/40 text-slate-400 uppercase text-[11px] border-b border-white/10">
+                            <tr><th class="py-2.5 px-2.5 text-center">#</th><th class="py-2.5 px-2">Ekipa</th><th class="py-2.5 px-2 text-center">MJ</th><th class="py-2.5 px-2 text-center">DB</th><th class="py-2.5 px-3 text-center text-emerald-400 font-black">PTS</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            ${sortedTeams.map((t, idx) => `
+                                <tr class="hover:bg-white/5">
+                                    <td class="py-2.5 px-2.5 text-center font-bold ${idx<4?'text-emerald-400':(idx>=sortedTeams.length-3?'text-red-400':'text-slate-400')}">${idx+1}</td>
+                                    <td class="py-2.5 px-2 font-bold text-white flex items-center space-x-2"><span class="w-2.5 h-2.5 rounded-full" style="background-color: ${t.color}"></span><span class="truncate">${t.name}</span></td>
+                                    <td class="py-2.5 px-2 text-center text-slate-300">${t.played}</td>
+                                    <td class="py-2.5 px-2 text-center text-slate-300 font-mono">${(t.gf-t.ga)>'+0':(t.gf-t.ga)}</td>
+                                    <td class="py-2.5 px-3 text-center font-black text-emerald-400 text-sm">${(t.won*3)+t.drawn}</td>
                                 </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                ${sortedTeams.map((t, idx) => {
-                                    let pts = (t.won * 3) + t.drawn;
-                                    let diff = t.gf - t.ga;
-                                    let rankClass = idx < 4 ? 'text-emerald-400 font-black' : (idx >= sortedTeams.length - 3 ? 'text-red-400 font-bold' : 'text-slate-400 font-bold');
-                                    return `
-                                    <tr class="hover:bg-white/5 transition">
-                                        <td class="py-2.5 px-2.5 text-center ${rankClass}">${idx + 1}</td>
-                                        <td class="py-2.5 px-2 font-bold text-white flex items-center space-x-2">
-                                            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${t.color}"></span>
-                                            <span class="truncate">${t.name}</span>
-                                        </td>
-                                        <td class="py-2.5 px-2 text-center text-slate-300">${t.played}</td>
-                                        <td class="py-2.5 px-2 text-center text-slate-400">${t.won}</td>
-                                        <td class="py-2.5 px-2 text-center text-slate-400">${t.drawn}</td>
-                                        <td class="py-2.5 px-2 text-center text-slate-400">${t.lost}</td>
-                                        <td class="py-2.5 px-2 text-center text-slate-300 font-mono">${diff > 0 ? '+' + diff : diff}</td>
-                                        <td class="py-2.5 px-3 text-center font-black text-emerald-400 text-sm">${pts}</td>
-                                    </tr>
-                                    `;
-                                }).join('')}
-                            </tbody>
-                        </table>
-                    </div>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
             `;
         }
