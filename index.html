@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class VirtualFootballApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bet261 Virtual Predict',
+      title: 'Bet261 Virtual Pro',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF0F172A),
@@ -27,6 +28,185 @@ class VirtualFootballApp extends StatelessWidget {
   }
 }
 
+// --- MODELS (RAFITRA DATA) ---
+
+class TeamStats {
+  final String name;
+  final int strength; // 1 ka hatramin'ny 10
+  int played = 0;
+  int won = 0;
+  int drawn = 0;
+  int lost = 0;
+  int goalsFor = 0;
+  int goalsAgainst = 0;
+
+  TeamStats({required this.name, required this.strength});
+
+  int get points => (won * 3) + drawn;
+  int get goalDiff => goalsFor - goalsAgainst;
+
+  void reset() {
+    played = 0;
+    won = 0;
+    drawn = 0;
+    lost = 0;
+    goalsFor = 0;
+    goalsAgainst = 0;
+  }
+}
+
+class VirtualMatch {
+  final String homeTeam;
+  final String awayTeam;
+  final int predHomeGoals;
+  final int predAwayGoals;
+  int? actualHomeGoals;
+  int? actualAwayGoals;
+
+  VirtualMatch({
+    required this.homeTeam,
+    required this.awayTeam,
+    required this.predHomeGoals,
+    required this.predAwayGoals,
+    this.actualHomeGoals,
+    this.actualAwayGoals,
+  });
+
+  String get predictedScore => '$predHomeGoals - $predAwayGoals';
+  int get predictedTotalGoals => predHomeGoals + predAwayGoals;
+  String get predictedOverUnder =>
+      predictedTotalGoals > 2 ? 'Over 2.5 ($predictedTotalGoals)' : 'Under 2.5 ($predictedTotalGoals)';
+
+  String get actualScore =>
+      actualHomeGoals != null ? '$actualHomeGoals - $actualAwayGoals' : '- : -';
+  int get actualTotalGoals => (actualHomeGoals ?? 0) + (actualAwayGoals ?? 0);
+}
+
+class LeagueEngine {
+  final String name;
+  final int maxJournees;
+  int currentJournee = 1;
+  final List<TeamStats> teams;
+  final Random _random = Random();
+
+  late List<List<VirtualMatch>> schedule;
+
+  LeagueEngine({
+    required this.name,
+    required this.maxJournees,
+    required this.teams,
+  }) {
+    _generateSeasonSchedule();
+  }
+
+  void _generateSeasonSchedule() {
+    schedule = [];
+    List<TeamStats> rotation = List.from(teams);
+    int numTeams = rotation.length;
+
+    for (int j = 0; j < maxJournees; j++) {
+      List<VirtualMatch> dayMatches = [];
+      for (int i = 0; i < numTeams ~/ 2; i++) {
+        TeamStats home = rotation[i];
+        TeamStats away = rotation[numTeams - 1 - i];
+
+        if (j % 2 == 1) {
+          final temp = home;
+          home = away;
+          away = temp;
+        }
+
+        int pHome = _simulateGoals(home.strength, away.strength, isHome: true);
+        int pAway = _simulateGoals(away.strength, home.strength, isHome: false);
+
+        dayMatches.add(VirtualMatch(
+          homeTeam: home.name,
+          awayTeam: away.name,
+          predHomeGoals: pHome,
+          predAwayGoals: pAway,
+        ));
+      }
+      schedule.add(dayMatches);
+
+      TeamStats last = rotation.removeLast();
+      rotation.insert(1, last);
+    }
+  }
+
+  int _simulateGoals(int attackStrength, int defenseStrength, {required bool isHome}) {
+    double baseChance = (attackStrength - (defenseStrength * 0.4)) / 3.0;
+    if (isHome) baseChance += 0.35;
+    if (baseChance < 0.3) baseChance = 0.3;
+
+    int goals = 0;
+    for (int i = 0; i < 5; i++) {
+      if (_random.nextDouble() < (baseChance / 4.2)) {
+        goals++;
+      }
+    }
+    return goals;
+  }
+
+  void playCurrentJourneeAndAdvance() {
+    List<VirtualMatch> currentMatches = schedule[currentJournee - 1];
+
+    for (var match in currentMatches) {
+      TeamStats homeStats = teams.firstWhere((t) => t.name == match.homeTeam);
+      TeamStats awayStats = teams.firstWhere((t) => t.name == match.awayTeam);
+
+      int hGoals = _random.nextDouble() < 0.45
+          ? match.predHomeGoals
+          : _simulateGoals(homeStats.strength, awayStats.strength, isHome: true);
+      int aGoals = _random.nextDouble() < 0.45
+          ? match.predAwayGoals
+          : _simulateGoals(awayStats.strength, homeStats.strength, isHome: false);
+
+      match.actualHomeGoals = hGoals;
+      match.actualAwayGoals = aGoals;
+
+      homeStats.played++;
+      awayStats.played++;
+      homeStats.goalsFor += hGoals;
+      homeStats.goalsAgainst += aGoals;
+      awayStats.goalsFor += aGoals;
+      awayStats.goalsAgainst += hGoals;
+
+      if (hGoals > aGoals) {
+        homeStats.won++;
+        awayStats.lost++;
+      } else if (hGoals < aGoals) {
+        awayStats.won++;
+        homeStats.lost++;
+      } else {
+        homeStats.drawn++;
+        awayStats.drawn++;
+      }
+    }
+
+    if (currentJournee < maxJournees) {
+      currentJournee++;
+    } else {
+      currentJournee = 1;
+      for (var t in teams) {
+        t.reset();
+      }
+      _generateSeasonSchedule();
+    }
+  }
+
+  List<TeamStats> getSortedStandings() {
+    List<TeamStats> sorted = List.from(teams);
+    sorted.sort((a, b) {
+      if (b.points != a.points) return b.points.compareTo(a.points);
+      if (b.goalDiff != a.goalDiff) return b.goalDiff.compareTo(a.goalDiff);
+      return b.goalsFor.compareTo(a.goalsFor);
+    });
+    return sorted;
+  }
+}
+
+// --- INTERFACE UTILISATEUR (UI) ---
+
 class VirtualDashboardScreen extends StatefulWidget {
   const VirtualDashboardScreen({super.key});
 
@@ -37,23 +217,79 @@ class VirtualDashboardScreen extends StatefulWidget {
 class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  
-  // Fifidianana fifaninanana: 0 = English League, 1 = Coupe d'Afrique
-  int _selectedLeagueIndex = 0;
+  late LeagueEngine _englishLeague;
+  late LeagueEngine _coupeAfrique;
 
-  // Fanaraha-maso ny Journée
-  int _englishJournee = 1;
-  int _canJournee = 1;
-
-  // Timer 2 minitra (120 segondra)
-  int _secondsRemaining = 120;
+  int _selectedLeagueIndex = 0; // 0 = English, 1 = CAN
+  int _secondsRemaining = 120; // 2 minitra
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _initLeagues();
     _startAutoTimer();
+  }
+
+  void _initLeagues() {
+    _englishLeague = LeagueEngine(
+      name: 'English League',
+      maxJournees: 38,
+      teams: [
+        TeamStats(name: 'Manchester City', strength: 10),
+        TeamStats(name: 'Arsenal', strength: 9),
+        TeamStats(name: 'Liverpool', strength: 9),
+        TeamStats(name: 'Chelsea', strength: 8),
+        TeamStats(name: 'Tottenham', strength: 8),
+        TeamStats(name: 'Newcastle', strength: 8),
+        TeamStats(name: 'Aston Villa', strength: 7),
+        TeamStats(name: 'Manchester United', strength: 7),
+        TeamStats(name: 'Brighton', strength: 7),
+        TeamStats(name: 'West Ham', strength: 6),
+        TeamStats(name: 'Brentford', strength: 6),
+        TeamStats(name: 'Crystal Palace', strength: 6),
+        TeamStats(name: 'Fulham', strength: 6),
+        TeamStats(name: 'Wolverhampton', strength: 5),
+        TeamStats(name: 'Bournemouth', strength: 5),
+        TeamStats(name: 'Everton', strength: 5),
+        TeamStats(name: 'Nottingham Forest', strength: 5),
+        TeamStats(name: 'Leicester City', strength: 4),
+        TeamStats(name: 'Ipswich Town', strength: 4),
+        TeamStats(name: 'Southampton', strength: 4),
+      ],
+    );
+
+    _coupeAfrique = LeagueEngine(
+      name: "Coupe d'Afrique",
+      maxJournees: 46,
+      teams: [
+        TeamStats(name: 'Maroc', strength: 10),
+        TeamStats(name: 'Sénégal', strength: 9),
+        TeamStats(name: "Côte d'Ivoire", strength: 9),
+        TeamStats(name: 'Égypte', strength: 9),
+        TeamStats(name: 'Nigeria', strength: 9),
+        TeamStats(name: 'Algérie', strength: 8),
+        TeamStats(name: 'Cameroun', strength: 8),
+        TeamStats(name: 'Tunisie', strength: 8),
+        TeamStats(name: 'Mali', strength: 8),
+        TeamStats(name: 'Afrique du Sud', strength: 7),
+        TeamStats(name: 'RD Congo', strength: 7),
+        TeamStats(name: 'Ghana', strength: 7),
+        TeamStats(name: 'Burkina Faso', strength: 7),
+        TeamStats(name: 'Guinée', strength: 6),
+        TeamStats(name: 'Cap-Vert', strength: 6),
+        TeamStats(name: 'Gabon', strength: 6),
+        TeamStats(name: 'Zambie', strength: 6),
+        TeamStats(name: 'Guinée Équatoriale', strength: 6),
+        TeamStats(name: 'Angola', strength: 5),
+        TeamStats(name: 'Bénin', strength: 5),
+        TeamStats(name: 'Madagascar', strength: 5),
+        TeamStats(name: 'Ouganda', strength: 5),
+        TeamStats(name: 'Mauritanie', strength: 4),
+        TeamStats(name: 'Mozambique', strength: 4),
+      ],
+    );
   }
 
   void _startAutoTimer() {
@@ -62,26 +298,16 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
         if (_secondsRemaining > 0) {
           _secondsRemaining--;
         } else {
-          // Rehefa tapitra ny 2 minitra dia miova ny Journée ary miverina 120s
-          _secondsRemaining = 120;
-          _advanceJournee();
+          _triggerNextRound();
         }
       });
     });
   }
 
-  void _advanceJournee() {
-    if (_englishJournee < 38) {
-      _englishJournee++;
-    } else {
-      _englishJournee = 1; // Miverina Journée 1 rehefa feno 38
-    }
-
-    if (_canJournee < 46) {
-      _canJournee++;
-    } else {
-      _canJournee = 1; // Miverina Journée 1 rehefa feno 46
-    }
+  void _triggerNextRound() {
+    _secondsRemaining = 120;
+    _englishLeague.playCurrentJourneeAndAdvance();
+    _coupeAfrique.playCurrentJourneeAndAdvance();
   }
 
   String _formatTime(int totalSeconds) {
@@ -99,9 +325,8 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isEnglish = _selectedLeagueIndex == 0;
-    int currentJournee = isEnglish ? _englishJournee : _canJournee;
-    int maxJournee = isEnglish ? 38 : 46;
+    LeagueEngine activeLeague =
+        _selectedLeagueIndex == 0 ? _englishLeague : _coupeAfrique;
 
     return Scaffold(
       appBar: AppBar(
@@ -111,15 +336,23 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
             SizedBox(width: 8),
             Text(
               'VIRTUAL PRO 261',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
           ],
         ),
         actions: [
-          // Timer Badge
+          IconButton(
+            tooltip: 'Mandroso avy hatrany (Test)',
+            icon: const Icon(Icons.fast_forward, color: Colors.amber),
+            onPressed: () {
+              setState(() {
+                _triggerNextRound();
+              });
+            },
+          ),
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: _secondsRemaining <= 15
                   ? Colors.redAccent.withOpacity(0.2)
@@ -135,7 +368,7 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
               children: [
                 Icon(
                   Icons.timer,
-                  size: 16,
+                  size: 15,
                   color: _secondsRemaining <= 15
                       ? Colors.redAccent
                       : const Color(0xFF10B981),
@@ -157,16 +390,15 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
       ),
       body: Column(
         children: [
-          // 1. Fifidianana fifaninanana (League Switcher)
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
                 Expanded(
                   child: _buildLeagueButton(
                     title: 'English League',
-                    subtitle: 'J1 - J38',
-                    isSelected: isEnglish,
+                    subtitle: 'J${_englishLeague.currentJournee} / 38',
+                    isSelected: _selectedLeagueIndex == 0,
                     onTap: () => setState(() => _selectedLeagueIndex = 0),
                   ),
                 ),
@@ -174,49 +406,47 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
                 Expanded(
                   child: _buildLeagueButton(
                     title: "Coupe d'Afrique",
-                    subtitle: 'J1 - J46',
-                    isSelected: !isEnglish,
+                    subtitle: 'J${_coupeAfrique.currentJournee} / 46',
+                    isSelected: _selectedLeagueIndex == 1,
                     onTap: () => setState(() => _selectedLeagueIndex = 1),
                   ),
                 ),
               ],
             ),
           ),
-
-          // 2. Fampisehoana ny Journée mandeha ankehitriny
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             color: const Color(0xFF1E293B),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  isEnglish ? 'ENGLISH LEAGUE' : "COUPE D'AFRIQUE",
+                  activeLeague.name.toUpperCase(),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white70,
+                    fontSize: 13,
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                   decoration: BoxDecoration(
                     color: Colors.amber.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
-                    'JOURNÉE $currentJournee / $maxJournee',
+                    'JOURNÉE ${activeLeague.currentJournee} / ${activeLeague.maxJournees}',
                     style: const TextStyle(
                       color: Colors.amber,
                       fontWeight: FontWeight.bold,
+                      fontSize: 13,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
-          // 3. Tabs (Pronostics, Résultats, Classement)
           Container(
             color: const Color(0xFF1E293B),
             child: TabBar(
@@ -231,15 +461,13 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
               ],
             ),
           ),
-
-          // 4. Votoatin'ny pejy tsirairay
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: [
-                _buildPronosticsView(isEnglish, currentJournee),
-                _buildResultatsView(isEnglish, currentJournee),
-                _buildClassementView(isEnglish),
+                _buildPronosticsView(activeLeague),
+                _buildResultatsView(activeLeague),
+                _buildClassementView(activeLeague),
               ],
             ),
           ),
@@ -257,7 +485,7 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFF10B981) : const Color(0xFF1E293B),
           borderRadius: BorderRadius.circular(10),
@@ -279,6 +507,7 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
               subtitle,
               style: TextStyle(
                 fontSize: 12,
+                fontWeight: FontWeight.w600,
                 color: isSelected ? Colors.black87 : Colors.white54,
               ),
             ),
@@ -288,60 +517,52 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
     );
   }
 
-  // Fizarana 1: Pronostics (Score Exact & Total Buts)
-  Widget _buildPronosticsView(bool isEnglish, int journee) {
-    final matches = isEnglish
-        ? [
-            {'home': 'Manchester Blue', 'away': 'London Reds', 'score': '2 - 1', 'total': 'Over 2.5 (3)'},
-            {'home': 'Liverpool Reds', 'away': 'London Blues', 'score': '1 - 1', 'total': 'Under 2.5 (2)'},
-            {'home': 'Tottenham White', 'away': 'Newcastle Black', 'score': '3 - 0', 'total': 'Over 2.5 (3)'},
-          ]
-        : [
-            {'home': 'Madagascar', 'away': 'Sénégal', 'score': '1 - 2', 'total': 'Over 2.5 (3)'},
-            {'home': 'Maroc', 'away': 'Côte d\'Ivoire', 'score': '2 - 0', 'total': 'Under 2.5 (2)'},
-            {'home': 'Égypte', 'away': 'Cameroun', 'score': '0 - 0', 'total': 'Under 1.5 (0)'},
-          ];
+  Widget _buildPronosticsView(LeagueEngine league) {
+    final matches = league.schedule[league.currentJournee - 1];
 
     return ListView.builder(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       itemCount: matches.length,
       itemBuilder: (context, index) {
         final match = matches[index];
         return Card(
-          margin: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.only(bottom: 8),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(12),
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
-                        match['home']!,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                        match.homeTeam,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text('VS', style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.white10,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Text('VS', style: TextStyle(color: Colors.amber, fontSize: 11, fontWeight: FontWeight.bold)),
                     ),
                     Expanded(
                       child: Text(
-                        match['away']!,
+                        match.awayTeam,
                         textAlign: TextAlign.right,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ),
                   ],
                 ),
-                const Divider(height: 20, color: Colors.white12),
+                const Divider(height: 16, color: Colors.white12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildPredictionChip('Score Exact', match['score']!, Colors.blueAccent),
-                    _buildPredictionChip('Total Buts', match['total']!, const Color(0xFF10B981)),
+                    _buildChip('Score Exact', match.predictedScore, Colors.lightBlueAccent),
+                    _buildChip('Total Buts', match.predictedOverUnder, const Color(0xFF10B981)),
                   ],
                 ),
               ],
@@ -352,64 +573,159 @@ class _VirtualDashboardScreenState extends State<VirtualDashboardScreen>
     );
   }
 
-  Widget _buildPredictionChip(String label, String value, Color color) {
+  Widget _buildResultatsView(LeagueEngine league) {
+    int prevJournee = league.currentJournee - 1;
+    if (prevJournee < 1) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            'Mbola eo amin\'ny Journée 1 isika izao.\nAndraso tapitra ny 2 minitra (na tsindrio ny bokotra >> eo ambony) mba hahitana ny valiny!',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white70, fontSize: 14),
+          ),
+        ),
+      );
+    }
+
+    final completedMatches = league.schedule[prevJournee - 1];
+
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(8),
+          color: Colors.white.withOpacity(0.05),
+          child: Text(
+            'VALIN-DALAO - JOURNÉE $prevJournee',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber, fontSize: 13),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: completedMatches.length,
+            itemBuilder: (context, index) {
+              final match = completedMatches[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(match.homeTeam, style: const TextStyle(fontWeight: FontWeight.w600)),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF10B981).withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xFF10B981)),
+                            ),
+                            child: Text(
+                              match.actualScore,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Color(0xFF10B981),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              match.awayTeam,
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Vinavina: ${match.predictedScore}',
+                            style: const TextStyle(fontSize: 11, color: Colors.white54),
+                          ),
+                          Text(
+                            'Total Buts: ${match.actualTotalGoals}',
+                            style: const TextStyle(fontSize: 11, color: Colors.amber),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildClassementView(LeagueEngine league) {
+    final standings = league.getSortedStandings();
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          columnSpacing: 16,
+          headingRowColor: WidgetStateProperty.all(const Color(0xFF1E293B)),
+          columns: const [
+            DataColumn(label: Text('#', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('Ekipa', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('MJ', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('G', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('N', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('P', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('DB', style: TextStyle(fontWeight: FontWeight.bold))),
+            DataColumn(label: Text('PTS', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF10B981)))),
+          ],
+          rows: List.generate(standings.length, (index) {
+            final team = standings[index];
+            Color rankColor = Colors.white;
+            if (index < 4) rankColor = const Color(0xFF10B981);
+            if (index >= standings.length - 3) rankColor = Colors.redAccent;
+
+            return DataRow(
+              cells: [
+                DataCell(Text('${index + 1}', style: TextStyle(color: rankColor, fontWeight: FontWeight.bold))),
+                DataCell(Text(team.name, style: const TextStyle(fontWeight: FontWeight.w600))),
+                DataCell(Text('${team.played}')),
+                DataCell(Text('${team.won}')),
+                DataCell(Text('${team.drawn}')),
+                DataCell(Text('${team.lost}')),
+                DataCell(Text(team.goalDiff > 0 ? '+${team.goalDiff}' : '${team.goalDiff}')),
+                DataCell(Text('${team.points}', style: const TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.bold))),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChip(String label, String value, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withOpacity(0.12),
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withOpacity(0.5)),
+        border: Border.all(color: color.withOpacity(0.4)),
       ),
       child: Row(
         children: [
-          Text('$label: ', style: const TextStyle(fontSize: 12, color: Colors.white70)),
-          Text(value, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: color)),
+          Text('$label: ', style: const TextStyle(fontSize: 11, color: Colors.white70)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color)),
         ],
-      ),
-    );
-  }
-
-  // Fizarana 2: Résultats
-  Widget _buildResultatsView(bool isEnglish, int journee) {
-    int prevJournee = journee > 1 ? journee - 1 : (isEnglish ? 38 : 46);
-    return Center(
-      child: Text(
-        'Valin-dalao ho an\'ny Journée $prevJournee\n(Ampidirina eto ny lojika manova ny valiny ho azy)',
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.white70, fontSize: 15),
-      ),
-    );
-  }
-
-  // Fizarana 3: Classement
-  Widget _buildClassementView(bool isEnglish) {
-    final teams = isEnglish
-        ? ['Manchester Blue', 'Liverpool Reds', 'London Reds', 'London Blues']
-        : ['Sénégal', 'Maroc', 'Madagascar', 'Égypte'];
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: DataTable(
-        columnSpacing: 20,
-        headingRowColor: WidgetStateProperty.all(const Color(0xFF1E293B)),
-        columns: const [
-          DataColumn(label: Text('#')),
-          DataColumn(label: Text('Ekipa')),
-          DataColumn(label: Text('MJ')),
-          DataColumn(label: Text('BP:BC')),
-          DataColumn(label: Text('PTS')),
-        ],
-        rows: List.generate(teams.length, (index) {
-          return DataRow(
-            cells: [
-              DataCell(Text('${index + 1}')),
-              DataCell(Text(teams[index], style: const TextStyle(fontWeight: FontWeight.bold))),
-              const DataCell(Text('1')),
-              const DataCell(Text('2:0')),
-              DataCell(Text('${3 - index}', style: const TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.bold))),
-            ],
-          );
-        }),
       ),
     );
   }
