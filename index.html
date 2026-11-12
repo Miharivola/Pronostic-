@@ -6,89 +6,135 @@
     <title>Bet261 Virtual Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0F172A; color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif; }
+        body {
+            background-color: #0B1120;
+            color: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col select-none">
 
-    <!-- HEADER -->
-    <header class="bg-[#1E293B] px-4 py-3 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-2">
-            <span class="text-emerald-400 text-xl font-bold">⚽ VIRTUAL PRO 261</span>
+    <!-- HEADER PROFESSIONNEL -->
+    <header class="bg-[#162032] px-4 py-3 flex justify-between items-center border-b border-white/10 sticky top-0 z-50 shadow-lg">
+        <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-black font-black text-lg shadow">
+                V
+            </div>
+            <div>
+                <h1 class="text-white font-extrabold text-base tracking-tight leading-none">VIRTUAL <span class="text-emerald-400">261</span></h1>
+                <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Pro Analytics & Odds</span>
+            </div>
         </div>
         <div class="flex items-center space-x-2">
-            <!-- Fast Forward Test Button -->
-            <button onclick="triggerNextRound()" title="Mandeha avy hatrany (Test)" class="bg-amber-500/20 text-amber-400 border border-amber-500 px-2 py-1 rounded text-xs font-bold hover:bg-amber-500/30">
-                ⏩ Test
+            <!-- Bokotra Test -->
+            <button onclick="triggerNextRound()" title="Mandroso avy hatrany" class="bg-amber-500/15 active:bg-amber-500/30 text-amber-400 border border-amber-500/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                <span>⏩</span>
+                <span class="hidden sm:inline">Test</span>
             </button>
             <!-- Timer Badge -->
-            <div id="timer-badge" class="flex items-center space-x-1 bg-emerald-500/20 border border-emerald-500 px-3 py-1 rounded-full text-emerald-400 font-bold text-sm">
-                <span>⏱️</span>
+            <div id="timer-badge" class="flex items-center space-x-1.5 bg-emerald-500/15 border border-emerald-500/50 px-3 py-1.5 rounded-lg text-emerald-400 font-mono font-bold text-sm shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" id="timer-dot"></span>
                 <span id="timer-text">02:00</span>
             </div>
         </div>
     </header>
 
-    <!-- LEAGUE SWITCHER -->
-    <div class="p-3 grid grid-cols-2 gap-3 bg-[#0F172A]">
-        <button onclick="switchLeague(0)" id="btn-league-0" class="p-3 rounded-xl font-bold text-center transition border border-emerald-500 bg-emerald-500 text-black">
-            <div>English League</div>
-            <div id="sub-league-0" class="text-xs font-semibold mt-1 opacity-80">J1 / 38</div>
+    <!-- FIFIDIANANA FIFANINANANA -->
+    <div class="p-3 grid grid-cols-2 gap-2.5 bg-[#0F172A] border-b border-white/5">
+        <button onclick="switchLeague(0)" id="btn-league-0" class="p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md">
+            <div class="flex justify-between items-center">
+                <span class="text-sm font-extrabold">English League</span>
+                <span class="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-mono" id="sub-league-0">J1/38</span>
+            </div>
+            <div class="text-[11px] font-medium opacity-80 mt-0.5">20 Ekipa • 2 min</div>
         </button>
-        <button onclick="switchLeague(1)" id="btn-league-1" class="p-3 rounded-xl font-bold text-center transition border border-white/10 bg-[#1E293B] text-white">
-            <div>Coupe d'Afrique</div>
-            <div id="sub-league-1" class="text-xs font-semibold mt-1 opacity-50">J1 / 46</div>
+
+        <button onclick="switchLeague(1)" id="btn-league-1" class="p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]">
+            <div class="flex justify-between items-center">
+                <span class="text-sm font-extrabold">Coupe d'Afrique</span>
+                <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono text-slate-300" id="sub-league-1">J1/46</span>
+            </div>
+            <div class="text-[11px] font-medium text-slate-400 mt-0.5">24 Ekipa • 2 min</div>
         </button>
     </div>
 
-    <!-- CURRENT JOURNEE BANNER -->
-    <div class="bg-[#1E293B] px-4 py-2 flex justify-between items-center border-y border-white/5 text-xs font-bold">
-        <span id="active-league-name" class="text-white/70 uppercase tracking-wider">English League</span>
-        <span id="journee-badge" class="bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded">JOURNÉE 1 / 38</span>
+    <!-- BARRE JOURNEE & TABS -->
+    <div class="bg-[#162032] sticky top-[57px] z-40 shadow-md">
+        <div class="px-4 py-2 flex justify-between items-center border-b border-white/5 text-xs">
+            <span id="active-league-name" class="text-slate-300 font-bold uppercase tracking-wider">ENGLISH LEAGUE</span>
+            <span id="journee-badge" class="bg-amber-500/20 border border-amber-500/30 text-amber-400 px-2.5 py-0.5 rounded-md font-extrabold tracking-wide">JOURNÉE 1 / 38</span>
+        </div>
+
+        <div class="flex text-xs font-extrabold tracking-wide">
+            <button onclick="switchTab('pronostics')" id="tab-pronostics" class="flex-1 py-3 text-center text-emerald-400 border-b-2 border-emerald-400 bg-emerald-500/5 transition">
+                COTES & PRONOSTICS
+            </button>
+            <button onclick="switchTab('resultats')" id="tab-resultats" class="flex-1 py-3 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition">
+                RÉSULTATS
+            </button>
+            <button onclick="switchTab('classement')" id="tab-classement" class="flex-1 py-3 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition">
+                CLASSEMENT
+            </button>
+        </div>
     </div>
 
-    <!-- TABS -->
-    <div class="flex bg-[#1E293B] border-b border-white/10 text-xs font-bold">
-        <button onclick="switchTab('pronostics')" id="tab-pronostics" class="flex-1 py-3 text-center text-emerald-400 border-b-2 border-emerald-400">PRONOSTICS</button>
-        <button onclick="switchTab('resultats')" id="tab-resultats" class="flex-1 py-3 text-center text-white/60">RÉSULTATS</button>
-        <button onclick="switchTab('classement')" id="tab-classement" class="flex-1 py-3 text-center text-white/60">CLASSEMENT</button>
-    </div>
+    <!-- VOTOATINY (CONTENT) -->
+    <main class="flex-1 p-3 max-w-2xl mx-auto w-full pb-12">
+        <!-- Fizarana 1: Pronostics & Cotes 1 X 2 -->
+        <div id="view-pronostics">
+            <!-- Lohateny 1 X 2 mitovy amin'ny Bet261 -->
+            <div class="flex items-center px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                <div class="flex-1">Lalao (Matchs)</div>
+                <div class="w-[168px] grid grid-cols-3 gap-1.5 text-center">
+                    <span>1</span>
+                    <span>X</span>
+                    <span>2</span>
+                </div>
+            </div>
+            <div id="matches-container" class="space-y-2.5"></div>
+        </div>
 
-    <!-- CONTENT AREA -->
-    <main class="flex-1 p-3 overflow-y-auto max-w-2xl mx-auto w-full">
-        <div id="view-pronostics" class="space-y-3"></div>
-        <div id="view-resultats" class="space-y-3 hidden"></div>
-        <div id="view-classement" class="hidden overflow-x-auto"></div>
+        <!-- Fizarana 2: Résultats -->
+        <div id="view-resultats" class="space-y-2.5 hidden"></div>
+
+        <!-- Fizarana 3: Classement -->
+        <div id="view-classement" class="hidden"></div>
     </main>
 
     <script>
-        // DATA & LOGIC
+        // --- DATA & EKIPA (Mitovy amin'ny Bet261) ---
         const leagues = [
             {
                 name: "English League",
                 maxJournees: 38,
                 currentJournee: 1,
                 teams: [
-                    { name: "Manchester City", strength: 10, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Arsenal", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Liverpool", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Chelsea", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Tottenham", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Newcastle", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Aston Villa", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Manchester United", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Brighton", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "West Ham", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Brentford", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Crystal Palace", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Fulham", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Wolverhampton", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Bournemouth", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Everton", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Nottingham Forest", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Leicester City", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Ipswich Town", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Southampton", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 }
+                    { name: "Manchester Blue", color: "#38BDF8", strength: 10, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "London Reds", color: "#EF4444", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Liverpool", color: "#DC2626", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "London Blues", color: "#2563EB", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Spurs", color: "#F8FAFC", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Newcastle", color: "#94A3B8", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "A. Villa", color: "#9F1239", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Manchester Red", color: "#B91C1C", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Brighton", color: "#0284C7", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "West Ham", color: "#881337", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Brentford", color: "#E11D48", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "C. Palace", color: "#1D4ED8", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Fulham", color: "#E2E8F0", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Wolverhampton", color: "#F59E0B", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Bournemouth", color: "#991B1B", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Everton", color: "#1E40AF", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "N. Forest", color: "#DC2626", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Leeds", color: "#FACC15", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Burnley", color: "#701A75", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Sunderland", color: "#EF4444", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 }
                 ],
                 schedule: []
             },
@@ -97,30 +143,30 @@
                 maxJournees: 46,
                 currentJournee: 1,
                 teams: [
-                    { name: "Maroc", strength: 10, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Sénégal", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Côte d'Ivoire", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Égypte", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Nigeria", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Algérie", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Cameroun", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Tunisie", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Mali", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Afrique du Sud", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "RD Congo", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Ghana", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Burkina Faso", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Guinée", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Cap-Vert", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Gabon", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Zambie", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Guinée Équatoriale", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Angola", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Bénin", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Madagascar", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Ouganda", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Mauritanie", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
-                    { name: "Mozambique", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 }
+                    { name: "Maroc", color: "#DC2626", strength: 10, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Sénégal", color: "#16A34A", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Côte d'Ivoire", color: "#F97316", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Égypte", color: "#B91C1C", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Nigeria", color: "#15803D", strength: 9, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Algérie", color: "#22C55E", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Cameroun", color: "#166534", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Tunisie", color: "#EF4444", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Mali", color: "#EAB308", strength: 8, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Afrique du Sud", color: "#CA8A04", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "RD Congo", color: "#2563EB", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Ghana", color: "#FACC15", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Burkina Faso", color: "#DC2626", strength: 7, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Guinée", color: "#E11D48", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Cap-Vert", color: "#1D4ED8", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Gabon", color: "#10B981", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Zambie", color: "#15803D", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Guinée Équat.", color: "#EF4444", strength: 6, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Angola", color: "#991B1B", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Bénin", color: "#F59E0B", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Madagascar", color: "#16A34A", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Ouganda", color: "#EAB308", strength: 5, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Mauritanie", color: "#166534", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+                    { name: "Mozambique", color: "#DC2626", strength: 4, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 }
                 ],
                 schedule: []
             }
@@ -129,6 +175,39 @@
         let activeLeagueIndex = 0;
         let activeTab = 'pronostics';
         let secondsRemaining = 120;
+
+        // Kajy Cotes 1, X, 2 mifototra amin'ny tanjaky ny ekipa roa
+        function calculateOdds(homeStrength, awayStrength) {
+            // Tombony kely ho an'ny mpampiantrano (Domicile +0.6)
+            let hPower = homeStrength + 0.6;
+            let aPower = awayStrength;
+            let diff = hPower - aPower;
+
+            // Probabilité fototra
+            let prob1 = 0.42 + (diff * 0.065);
+            let prob2 = 0.30 - (diff * 0.055);
+            
+            // Ferana mba tsy ho kely loatra na lehibe loatra
+            prob1 = Math.max(0.08, Math.min(0.84, prob1));
+            prob2 = Math.max(0.06, Math.min(0.78, prob2));
+            
+            let probX = 1.0 - (prob1 + prob2);
+            if (probX < 0.10) {
+                probX = 0.12;
+                let total = prob1 + prob2 + probX;
+                prob1 /= total;
+                prob2 /= total;
+                probX /= total;
+            }
+
+            // Marge bookmaker (93% payout) mba hitovy amin'ny cotes Bet261 (ohatra: 1.47, 4.44, 6.47)
+            let margin = 0.93;
+            let c1 = (margin / prob1).toFixed(2).replace('.', ',');
+            let cX = (margin / probX).toFixed(2).replace('.', ',');
+            let c2 = (margin / prob2).toFixed(2).replace('.', ',');
+
+            return { c1, cX, c2 };
+        }
 
         function generateSchedule(league) {
             league.schedule = [];
@@ -140,14 +219,24 @@
                 for (let i = 0; i < numTeams / 2; i++) {
                     let home = rotation[i];
                     let away = rotation[numTeams - 1 - i];
-                    if (j % 2 === 1) { let temp = home; home = away; away = temp; }
+                    if (j % 2 === 1) {
+                        let temp = home;
+                        home = away;
+                        away = temp;
+                    }
 
+                    let odds = calculateOdds(home.strength, away.strength);
                     let pHome = simulateGoals(home.strength, away.strength, true);
                     let pAway = simulateGoals(away.strength, home.strength, false);
 
                     dayMatches.push({
                         home: home.name,
+                        homeColor: home.color,
                         away: away.name,
+                        awayColor: away.color,
+                        cote1: odds.c1,
+                        coteX: odds.cX,
+                        cote2: odds.c2,
                         predHome: pHome,
                         predAway: pAway,
                         actualHome: null,
@@ -197,7 +286,9 @@
                     league.currentJournee++;
                 } else {
                     league.currentJournee = 1;
-                    league.teams.forEach(t => { t.played=0; t.won=0; t.drawn=0; t.lost=0; t.gf=0; t.ga=0; });
+                    league.teams.forEach(t => {
+                        t.played = 0; t.won = 0; t.drawn = 0; t.lost = 0; t.gf = 0; t.ga = 0;
+                    });
                     generateSchedule(league);
                 }
             });
@@ -205,7 +296,7 @@
             render();
         }
 
-        // Timer
+        // Timer mandeha isaky ny 1 segondra
         setInterval(() => {
             if (secondsRemaining > 0) {
                 secondsRemaining--;
@@ -222,73 +313,165 @@
         function updateTimerDisplay() {
             let m = Math.floor(secondsRemaining / 60).toString().padStart(2, '0');
             let s = (secondsRemaining % 60).toString().padStart(2, '0');
-            document.getElementById('timer-text').innerText = `${m}:${s}`;
+            const timerText = document.getElementById('timer-text');
+            const timerBadge = document.getElementById('timer-badge');
+            const timerDot = document.getElementById('timer-dot');
+
+            timerText.innerText = `${m}:${s}`;
+
+            if (secondsRemaining <= 15) {
+                timerBadge.className = "flex items-center space-x-1.5 bg-red-500/15 border border-red-500/50 px-3 py-1.5 rounded-lg text-red-400 font-mono font-bold text-sm shadow-inner";
+                timerDot.className = "w-2 h-2 rounded-full bg-red-400 animate-ping";
+            } else {
+                timerBadge.className = "flex items-center space-x-1.5 bg-emerald-500/15 border border-emerald-500/50 px-3 py-1.5 rounded-lg text-emerald-400 font-mono font-bold text-sm shadow-inner";
+                timerDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+            }
         }
 
         function switchLeague(index) {
             activeLeagueIndex = index;
-            document.getElementById('btn-league-0').className = index === 0 ? "p-3 rounded-xl font-bold text-center transition border border-emerald-500 bg-emerald-500 text-black" : "p-3 rounded-xl font-bold text-center transition border border-white/10 bg-[#1E293B] text-white";
-            document.getElementById('btn-league-1').className = index === 1 ? "p-3 rounded-xl font-bold text-center transition border border-emerald-500 bg-emerald-500 text-black" : "p-3 rounded-xl font-bold text-center transition border border-white/10 bg-[#1E293B] text-white";
+            const btn0 = document.getElementById('btn-league-0');
+            const btn1 = document.getElementById('btn-league-1');
+            const sub0 = document.getElementById('sub-league-0');
+            const sub1 = document.getElementById('sub-league-1');
+
+            if (index === 0) {
+                btn0.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md";
+                sub0.className = "text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-mono text-slate-950";
+                btn1.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]";
+                sub1.className = "text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono text-slate-300";
+            } else {
+                btn1.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-emerald-500 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 shadow-md";
+                sub1.className = "text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-mono text-slate-950";
+                btn0.className = "p-2.5 rounded-xl font-bold text-left transition-all border border-white/10 bg-[#162032] text-white hover:bg-[#1E293B]";
+                sub0.className = "text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono text-slate-300";
+            }
             render();
         }
 
         function switchTab(tab) {
             activeTab = tab;
             ['pronostics', 'resultats', 'classement'].forEach(t => {
-                document.getElementById(`tab-${t}`).className = t === tab ? "flex-1 py-3 text-center text-emerald-400 border-b-2 border-emerald-400 font-bold" : "flex-1 py-3 text-center text-white/60 font-bold";
-                document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tab);
+                const tabEl = document.getElementById(`tab-${t}`);
+                const viewEl = document.getElementById(`view-${t}`);
+                if (t === tab) {
+                    tabEl.className = "flex-1 py-3 text-center text-emerald-400 border-b-2 border-emerald-400 bg-emerald-500/5 transition font-extrabold";
+                    viewEl.classList.remove('hidden');
+                } else {
+                    tabEl.className = "flex-1 py-3 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition font-extrabold";
+                    viewEl.classList.add('hidden');
+                }
             });
             render();
         }
 
         function render() {
             let league = leagues[activeLeagueIndex];
-            document.getElementById('active-league-name').innerText = league.name;
+            document.getElementById('active-league-name').innerText = league.name.toUpperCase();
             document.getElementById('journee-badge').innerText = `JOURNÉE ${league.currentJournee} / ${league.maxJournees}`;
-            document.getElementById(`sub-league-0`).innerText = `J${leagues[0].currentJournee} / 38`;
-            document.getElementById(`sub-league-1`).innerText = `J${leagues[1].currentJournee} / 46`;
+            document.getElementById('sub-league-0').innerText = `J${leagues[0].currentJournee}/38`;
+            document.getElementById('sub-league-1').innerText = `J${leagues[1].currentJournee}/46`;
 
-            // Pronostics View
-            let pDiv = document.getElementById('view-pronostics');
+            // 1. PRONOSTICS & COTES (1 X 2)
+            let matchesContainer = document.getElementById('matches-container');
             let currentMatches = league.schedule[league.currentJournee - 1] || [];
-            pDiv.innerHTML = currentMatches.map(m => `
-                <div class="bg-[#1E293B] p-3 rounded-xl border border-white/5 shadow">
-                    <div class="flex justify-between items-center text-sm font-bold">
-                        <span class="flex-1">${m.home}</span>
-                        <span class="text-amber-400 px-2 text-xs bg-white/5 py-1 rounded">VS</span>
-                        <span class="flex-1 text-right">${m.away}</span>
+
+            matchesContainer.innerHTML = currentMatches.map(m => {
+                let totalButs = m.predHome + m.predAway;
+                let overUnderText = totalButs > 2 ? `Over 2.5 (${totalButs})` : `Under 2.5 (${totalButs})`;
+
+                return `
+                <div class="bg-[#162032] rounded-xl border border-white/10 overflow-hidden shadow-md">
+                    <!-- Tapany ambony: Ekipa 2 + Bokotra Maitso 1 X 2 (Mitovy amin'ny Bet261) -->
+                    <div class="p-3 flex items-center justify-between gap-2">
+                        <!-- Anaran'ny ekipa roa -->
+                        <div class="flex-1 space-y-2 min-w-0">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3 h-3 rounded-full flex-shrink-0 shadow-sm border border-white/20" style="background-color: ${m.homeColor}"></span>
+                                <span class="text-white font-bold text-sm truncate">${m.home}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3 h-3 rounded-full flex-shrink-0 shadow-sm border border-white/20" style="background-color: ${m.awayColor}"></span>
+                                <span class="text-white font-bold text-sm truncate">${m.away}</span>
+                            </div>
+                        </div>
+
+                        <!-- Bokotra Cotes 1 / X / 2 -->
+                        <div class="w-[168px] grid grid-cols-3 gap-1.5 flex-shrink-0">
+                            <div class="bg-[#52B755] hover:bg-[#46A349] text-white font-extrabold text-xs py-3 rounded-md text-center shadow-sm flex flex-col justify-center">
+                                <span>${m.cote1}</span>
+                            </div>
+                            <div class="bg-[#52B755] hover:bg-[#46A349] text-white font-extrabold text-xs py-3 rounded-md text-center shadow-sm flex flex-col justify-center">
+                                <span>${m.coteX}</span>
+                            </div>
+                            <div class="bg-[#52B755] hover:bg-[#46A349] text-white font-extrabold text-xs py-3 rounded-md text-center shadow-sm flex flex-col justify-center">
+                                <span>${m.cote2}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="border-t border-white/5 my-2"></div>
-                    <div class="flex justify-between text-xs">
-                        <span class="bg-blue-500/10 border border-blue-500/30 text-blue-300 px-2 py-1 rounded">Score Exact: <b>${m.predHome} - ${m.predAway}</b></span>
-                        <span class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-2 py-1 rounded">Total Buts: <b>${(m.predHome+m.predAway)>2?'Over 2.5 ('+(m.predHome+m.predAway)+')':'Under 2.5 ('+(m.predHome+m.predAway)+')'}</b></span>
+
+                    <!-- Tapany ambany: Kajy Score Exact sy Total Buts -->
+                    <div class="bg-[#0F172A]/80 px-3 py-2 border-t border-white/5 flex justify-between items-center text-xs">
+                        <div class="flex items-center space-x-1.5">
+                            <span class="text-slate-400">Score Exact:</span>
+                            <span class="bg-blue-500/20 border border-blue-500/40 text-blue-300 font-extrabold px-2 py-0.5 rounded">${m.predHome} - ${m.predAway}</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="text-slate-400">Total Buts:</span>
+                            <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-extrabold px-2 py-0.5 rounded">${overUnderText}</span>
+                        </div>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
 
-            // Resultats View
+            // 2. RÉSULTATS
             let rDiv = document.getElementById('view-resultats');
             let prevJ = league.currentJournee - 1;
             if (prevJ < 1) {
-                rDiv.innerHTML = `<div class="text-center text-white/60 py-10 text-sm">Mbola eo amin'ny Journée 1 izao.<br>Andraso ny timer na tsindrio ny bokotra <b>⏩ Test</b> eo ambony!</div>`;
+                rDiv.innerHTML = `
+                <div class="bg-[#162032] border border-white/10 rounded-xl p-8 text-center">
+                    <div class="text-3xl mb-2">⏱️</div>
+                    <div class="text-white font-bold text-sm mb-1">Mbola eo amin'ny Journée 1 isika izao</div>
+                    <p class="text-slate-400 text-xs">Andraso ny timer 2 minitra na tsindrio ny bokotra <span class="text-amber-400 font-bold">⏩ Test</span> eo ambony mba hahitana ny valiny!</p>
+                </div>`;
             } else {
                 let prevMatches = league.schedule[prevJ - 1];
-                rDiv.innerHTML = `<div class="text-center text-amber-400 font-bold text-xs mb-2">VALIN-DALAO - JOURNÉE ${prevJ}</div>` + prevMatches.map(m => `
-                    <div class="bg-[#1E293B] p-3 rounded-xl border border-white/5">
+                rDiv.innerHTML = `
+                <div class="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-center font-extrabold text-xs py-2 rounded-lg mb-2">
+                    VALIN-DALAO - JOURNÉE ${prevJ}
+                </div>` + prevMatches.map(m => {
+                    let isExact = (m.predHome === m.actualHome && m.predAway === m.actualAway);
+                    return `
+                    <div class="bg-[#162032] p-3 rounded-xl border border-white/10 shadow-sm">
                         <div class="flex justify-between items-center">
-                            <span class="flex-1 font-semibold text-sm">${m.home}</span>
-                            <span class="bg-emerald-500/20 border border-emerald-500 text-emerald-400 px-3 py-1 rounded font-bold text-sm">${m.actualHome} - ${m.actualAway}</span>
-                            <span class="flex-1 text-right font-semibold text-sm">${m.away}</span>
+                            <div class="flex-1 flex items-center space-x-2 min-w-0">
+                                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${m.homeColor}"></span>
+                                <span class="font-bold text-sm text-white truncate">${m.home}</span>
+                            </div>
+                            <div class="px-3 py-1 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-lg font-black text-sm mx-2">
+                                ${m.actualHome} - ${m.actualAway}
+                            </div>
+                            <div class="flex-1 flex items-center justify-end space-x-2 min-w-0">
+                                <span class="font-bold text-sm text-white truncate">${m.away}</span>
+                                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${m.awayColor}"></span>
+                            </div>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-white/5 flex justify-between items-center text-[11px]">
+                            <span class="text-slate-400">Vinavina: <b class="text-slate-200">${m.predHome} - ${m.predAway}</b> ${isExact ? '✅' : ''}</span>
+                            <span class="text-slate-400">Cotes: <b class="text-slate-300">${m.cote1} | ${m.coteX} | ${m.cote2}</b></span>
+                            <span class="text-amber-400 font-bold">Total: ${m.actualHome + m.actualAway} buts</span>
                         </div>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
-            // Classement View
+            // 3. CLASSEMENT
             let cDiv = document.getElementById('view-classement');
-            let sortedTeams = [...league.teams].sort((a,b) => {
-                let ptsA = (a.won*3) + a.drawn;
-                let ptsB = (b.won*3) + b.drawn;
+            let sortedTeams = [...league.teams].sort((a, b) => {
+                let ptsA = (a.won * 3) + a.drawn;
+                let ptsB = (b.won * 3) + b.drawn;
                 if (ptsB !== ptsA) return ptsB - ptsA;
                 let diffA = a.gf - a.ga;
                 let diffB = b.gf - b.ga;
@@ -297,32 +480,50 @@
             });
 
             cDiv.innerHTML = `
-                <table class="w-full text-left text-xs bg-[#1E293B] rounded-xl overflow-hidden">
-                    <thead class="bg-black/30 text-white/70">
-                        <tr>
-                            <th class="p-2">#</th>
-                            <th class="p-2">Ekipa</th>
-                            <th class="p-2 text-center">MJ</th>
-                            <th class="p-2 text-center">DB</th>
-                            <th class="p-2 text-center text-emerald-400">PTS</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/5">
-                        ${sortedTeams.map((t, idx) => `
-                            <tr class="hover:bg-white/5">
-                                <td class="p-2 font-bold ${idx<4?'text-emerald-400':(idx>=sortedTeams.length-3?'text-red-400':'')}">${idx+1}</td>
-                                <td class="p-2 font-semibold">${t.name}</td>
-                                <td class="p-2 text-center text-white/70">${t.played}</td>
-                                <td class="p-2 text-center text-white/70">${(t.gf - t.ga) > 0 ? '+'+(t.gf - t.ga) : (t.gf - t.ga)}</td>
-                                <td class="p-2 text-center font-bold text-emerald-400">${(t.won*3) + t.drawn}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
+                <div class="bg-[#162032] rounded-xl border border-white/10 overflow-hidden shadow-md">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-black/40 text-slate-400 uppercase text-[11px] border-b border-white/10">
+                                <tr>
+                                    <th class="py-2.5 px-2.5 text-center w-8">#</th>
+                                    <th class="py-2.5 px-2">Ekipa</th>
+                                    <th class="py-2.5 px-2 text-center">MJ</th>
+                                    <th class="py-2.5 px-2 text-center">G</th>
+                                    <th class="py-2.5 px-2 text-center">N</th>
+                                    <th class="py-2.5 px-2 text-center">P</th>
+                                    <th class="py-2.5 px-2 text-center">DB</th>
+                                    <th class="py-2.5 px-3 text-center text-emerald-400 font-black">PTS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5">
+                                ${sortedTeams.map((t, idx) => {
+                                    let pts = (t.won * 3) + t.drawn;
+                                    let diff = t.gf - t.ga;
+                                    let rankClass = idx < 4 ? 'text-emerald-400 font-black' : (idx >= sortedTeams.length - 3 ? 'text-red-400 font-bold' : 'text-slate-400 font-bold');
+                                    return `
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="py-2.5 px-2.5 text-center ${rankClass}">${idx + 1}</td>
+                                        <td class="py-2.5 px-2 font-bold text-white flex items-center space-x-2">
+                                            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${t.color}"></span>
+                                            <span class="truncate">${t.name}</span>
+                                        </td>
+                                        <td class="py-2.5 px-2 text-center text-slate-300">${t.played}</td>
+                                        <td class="py-2.5 px-2 text-center text-slate-400">${t.won}</td>
+                                        <td class="py-2.5 px-2 text-center text-slate-400">${t.drawn}</td>
+                                        <td class="py-2.5 px-2 text-center text-slate-400">${t.lost}</td>
+                                        <td class="py-2.5 px-2 text-center text-slate-300 font-mono">${diff > 0 ? '+' + diff : diff}</td>
+                                        <td class="py-2.5 px-3 text-center font-black text-emerald-400 text-sm">${pts}</td>
+                                    </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `;
         }
 
-        // Init
+        // Fanombohana voalohany
         generateSchedule(leagues[0]);
         generateSchedule(leagues[1]);
         render();
