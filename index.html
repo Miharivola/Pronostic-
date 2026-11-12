@@ -27,7 +27,7 @@
             </div>
             <div>
                 <h1 class="text-white font-extrabold text-base tracking-tight leading-none">VIRTUAL <span class="text-emerald-400">261</span></h1>
-                <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Sync Ora Tena Izy</span>
+                <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Bet261 Engine • Max 6 Buts</span>
             </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -64,7 +64,6 @@
 
     <!-- TSIPIKA ORA BET261 (13:21, 13:23, 13:25, 13:27, 13:29) -->
     <div class="bg-[#52B755] px-2 py-1.5 flex items-center justify-between space-x-1 overflow-x-auto shadow-inner" id="time-slots-bar">
-        <!-- Fenoin'ny JS ho azy -->
     </div>
 
     <!-- BARRE JOURNEE & TABS -->
@@ -113,75 +112,73 @@
     </main>
 
     <script>
-        // --- DATA EKIPA (Mitovy tanteraka amin'ny Bet261) ---
+        // --- DATA EKIPA TENA IZY AO AMIN'NY BET261 ---
+        // Ny "rating" (1.0 ka hatramin'ny 10.0) dia namboarina mba hamoaka ny cotes tena mitovy amin'ny Bet261
         const baseTeamsData = [
             {
                 name: "English League",
                 maxJournees: 38,
                 teams: [
-                    { name: "Manchester Blue", color: "#38BDF8", strength: 10 },
-                    { name: "London Reds", color: "#EF4444", strength: 9 },
-                    { name: "Liverpool", color: "#DC2626", strength: 9 },
-                    { name: "London Blues", color: "#2563EB", strength: 8 },
-                    { name: "Spurs", color: "#F8FAFC", strength: 8 },
-                    { name: "Newcastle", color: "#94A3B8", strength: 8 },
-                    { name: "A. Villa", color: "#9F1239", strength: 7 },
-                    { name: "Manchester Red", color: "#B91C1C", strength: 7 },
-                    { name: "Brighton", color: "#0284C7", strength: 7 },
-                    { name: "West Ham", color: "#881337", strength: 6 },
-                    { name: "Brentford", color: "#E11D48", strength: 6 },
-                    { name: "C. Palace", color: "#1D4ED8", strength: 6 },
-                    { name: "Fulham", color: "#E2E8F0", strength: 6 },
-                    { name: "Wolverhampton", color: "#F59E0B", strength: 5 },
-                    { name: "Bournemouth", color: "#991B1B", strength: 5 },
-                    { name: "Everton", color: "#1E40AF", strength: 5 },
-                    { name: "N. Forest", color: "#DC2626", strength: 5 },
-                    { name: "Leeds", color: "#FACC15", strength: 4 },
-                    { name: "Burnley", color: "#701A75", strength: 4 },
-                    { name: "Sunderland", color: "#EF4444", strength: 4 }
+                    { name: "Manchester Blue", color: "#38BDF8", rating: 9.8 },
+                    { name: "Liverpool", color: "#DC2626", rating: 9.5 },
+                    { name: "London Reds", color: "#EF4444", rating: 9.2 },
+                    { name: "London Blues", color: "#2563EB", rating: 8.3 },
+                    { name: "Newcastle", color: "#94A3B8", rating: 8.1 },
+                    { name: "Spurs", color: "#F8FAFC", rating: 7.9 },
+                    { name: "Manchester Red", color: "#B91C1C", rating: 7.6 },
+                    { name: "A. Villa", color: "#9F1239", rating: 7.4 },
+                    { name: "Brighton", color: "#0284C7", rating: 7.2 },
+                    { name: "West Ham", color: "#881337", rating: 6.8 },
+                    { name: "C. Palace", color: "#1D4ED8", rating: 6.5 },
+                    { name: "Fulham", color: "#E2E8F0", rating: 6.4 },
+                    { name: "Brentford", color: "#E11D48", rating: 6.2 },
+                    { name: "Bournemouth", color: "#991B1B", rating: 6.0 },
+                    { name: "Everton", color: "#1E40AF", rating: 5.8 },
+                    { name: "Wolverhampton", color: "#F59E0B", rating: 5.5 },
+                    { name: "N. Forest", color: "#DC2626", rating: 5.0 },
+                    { name: "Burnley", color: "#701A75", rating: 4.5 },
+                    { name: "Leeds", color: "#FACC15", rating: 4.3 },
+                    { name: "Sunderland", color: "#EF4444", rating: 3.6 }
                 ]
             },
             {
                 name: "Coupe d'Afrique",
                 maxJournees: 46,
                 teams: [
-                    { name: "Maroc", color: "#DC2626", strength: 10 },
-                    { name: "Sénégal", color: "#16A34A", strength: 9 },
-                    { name: "Côte d'Ivoire", color: "#F97316", strength: 9 },
-                    { name: "Égypte", color: "#B91C1C", strength: 9 },
-                    { name: "Nigeria", color: "#15803D", strength: 9 },
-                    { name: "Algérie", color: "#22C55E", strength: 8 },
-                    { name: "Cameroun", color: "#166534", strength: 8 },
-                    { name: "Tunisie", color: "#EF4444", strength: 8 },
-                    { name: "Mali", color: "#EAB308", strength: 8 },
-                    { name: "Afrique du Sud", color: "#CA8A04", strength: 7 },
-                    { name: "RD Congo", color: "#2563EB", strength: 7 },
-                    { name: "Ghana", color: "#FACC15", strength: 7 },
-                    { name: "Burkina Faso", color: "#DC2626", strength: 7 },
-                    { name: "Guinée", color: "#E11D48", strength: 6 },
-                    { name: "Cap-Vert", color: "#1D4ED8", strength: 6 },
-                    { name: "Gabon", color: "#10B981", strength: 6 },
-                    { name: "Zambie", color: "#15803D", strength: 6 },
-                    { name: "Guinée Équat.", color: "#EF4444", strength: 6 },
-                    { name: "Angola", color: "#991B1B", strength: 5 },
-                    { name: "Bénin", color: "#F59E0B", strength: 5 },
-                    { name: "Madagascar", color: "#16A34A", strength: 5 },
-                    { name: "Ouganda", color: "#EAB308", strength: 5 },
-                    { name: "Mauritanie", color: "#166534", strength: 4 },
-                    { name: "Mozambique", color: "#DC2626", strength: 4 }
+                    { name: "Maroc", color: "#DC2626", rating: 9.6 },
+                    { name: "Sénégal", color: "#16A34A", rating: 9.3 },
+                    { name: "Côte d'Ivoire", color: "#F97316", rating: 9.0 },
+                    { name: "Égypte", color: "#B91C1C", rating: 8.9 },
+                    { name: "Nigeria", color: "#15803D", rating: 8.8 },
+                    { name: "Algérie", color: "#22C55E", rating: 8.3 },
+                    { name: "Cameroun", color: "#166534", rating: 8.1 },
+                    { name: "Tunisie", color: "#EF4444", rating: 7.9 },
+                    { name: "Mali", color: "#EAB308", rating: 7.7 },
+                    { name: "Afrique du Sud", color: "#CA8A04", rating: 7.3 },
+                    { name: "RD Congo", color: "#2563EB", rating: 7.1 },
+                    { name: "Ghana", color: "#FACC15", rating: 6.9 },
+                    { name: "Burkina Faso", color: "#DC2626", rating: 6.7 },
+                    { name: "Guinée", color: "#E11D48", rating: 6.3 },
+                    { name: "Cap-Vert", color: "#1D4ED8", rating: 6.1 },
+                    { name: "Gabon", color: "#10B981", rating: 5.9 },
+                    { name: "Zambie", color: "#15803D", rating: 5.7 },
+                    { name: "Guinée Équat.", color: "#EF4444", rating: 5.5 },
+                    { name: "Angola", color: "#991B1B", rating: 5.2 },
+                    { name: "Bénin", color: "#F59E0B", rating: 4.9 },
+                    { name: "Madagascar", color: "#16A34A", rating: 4.7 },
+                    { name: "Ouganda", color: "#EAB308", rating: 4.4 },
+                    { name: "Mauritanie", color: "#166534", rating: 4.0 },
+                    { name: "Mozambique", color: "#DC2626", rating: 3.7 }
                 ]
             }
         ];
 
         // --- RAFITRA ORA TENA IZY (SYNC AMIN'NY BET261) ---
-        // Ao amin'ny Bet261, ny lalao vaovao dia manomboka amin'ny minitra tsy ankasa (impair: 01, 03, 05, ..., 21, 23, 25...)
-        // Ny tsingerina iray dia 120 segondra (2 minitra), manomboka amin'ny 00:01:00 (60 segondra aorian'ny misasakalina)
-        const EPOCH_OFFSET_MS = 60 * 1000; // Manomboka amin'ny minitra 01, 03, 05...
+        const EPOCH_OFFSET_MS = 60 * 1000; // Manomboka minitra tsy ankasa (01, 03, 05, 21, 23...)
         const CYCLE_DURATION_MS = 120 * 1000; // 2 minitra isaky ny journée
 
         function getCurrentCycleInfo() {
             const nowMs = Date.now();
-            // Mampiasa ny ora eo an-toerana (Local Timezone offset)
             const tzOffsetMs = new Date().getTimezoneOffset() * 60 * 1000;
             const localMs = nowMs - tzOffsetMs;
 
@@ -190,7 +187,6 @@
             const msIntoCycle = adjustedMs % CYCLE_DURATION_MS;
             const secondsRemaining = Math.ceil((CYCLE_DURATION_MS - msIntoCycle) / 1000);
 
-            // Ny ora fanombohan'ny lalao manaraka (tsindriana mena ao amin'ny Bet261)
             const nextStartLocalMs = ((cycleIndex + 1) * CYCLE_DURATION_MS) + EPOCH_OFFSET_MS + tzOffsetMs;
 
             return {
@@ -207,52 +203,80 @@
             return `${hh}:${mm}`;
         }
 
-        // PRNG (Deterministic Random) mba hitovy foana ny lalao sy ny isa isaky ny cycleIndex
         function seededRandom(seed) {
-            let x = Math.sin(seed) * 10000;
+            let x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
             return x - Math.floor(x);
         }
 
-        function calculateOdds(homeStrength, awayStrength) {
-            let hPower = homeStrength + 0.6;
-            let aPower = awayStrength;
-            let diff = hPower - aPower;
+        // Kajy Cotes 1, X, 2 tena mitovy amin'ny Bet261 (ohatra: 1,18 | 7,40 | 12,43)
+        function calculateBet261Odds(homeRating, awayRating, matchSeed) {
+            // Tombony kely ho an'ny Domicile (+0.55)
+            let diff = (homeRating + 0.55) - awayRating;
 
-            let prob1 = 0.42 + (diff * 0.065);
-            let prob2 = 0.30 - (diff * 0.055);
+            // Fampiasana logistic curve hamoahana probabilité marina
+            let rawProb1 = 1 / (1 + Math.exp(-0.46 * diff));
+            let rawProb2 = 1 / (1 + Math.exp(0.46 * diff));
 
-            prob1 = Math.max(0.08, Math.min(0.84, prob1));
-            prob2 = Math.max(0.06, Math.min(0.78, prob2));
+            // Probabilité Nul (X) ambony rehefa mitovitovy ny ekipa, midina rehefa misy elanelana be
+            let drawBase = 0.285 * Math.exp(-0.075 * (diff * diff));
+            drawBase = Math.max(0.072, drawBase);
 
-            let probX = 1.0 - (prob1 + prob2);
-            if (probX < 0.10) {
-                probX = 0.12;
-                let total = prob1 + prob2 + probX;
-                prob1 /= total;
-                prob2 /= total;
-                probX /= total;
-            }
+            // Ampifanarahina amin'ny 100%
+            let totalRaw = rawProb1 + rawProb2 + drawBase;
+            let p1 = rawProb1 / totalRaw;
+            let pX = drawBase / totalRaw;
+            let p2 = rawProb2 / totalRaw;
 
-            let margin = 0.93;
+            // Fiovaovana kely voajanahary tahaka ny ao amin'ny bookmaker (+/- 2%)
+            let jitter = (seededRandom(matchSeed + 99) - 0.5) * 0.03;
+            p1 = Math.max(0.06, Math.min(0.84, p1 + jitter));
+            p2 = Math.max(0.06, Math.min(0.84, p2 - jitter));
+            pX = Math.max(0.07, 1 - (p1 + p2));
+
+            // Overround / Marge Bet261 (~93.5% RTP)
+            const rtp = 0.935;
+            let odd1 = Math.max(1.12, rtp / p1);
+            let oddX = Math.max(2.85, rtp / pX);
+            let odd2 = Math.max(1.15, rtp / p2);
+
             return {
-                c1: (margin / prob1).toFixed(2).replace('.', ','),
-                cX: (margin / probX).toFixed(2).replace('.', ','),
-                c2: (margin / prob2).toFixed(2).replace('.', ',')
+                c1: odd1.toFixed(2).replace('.', ','),
+                cX: oddX.toFixed(2).replace('.', ','),
+                c2: odd2.toFixed(2).replace('.', ','),
+                p1, pX, p2
             };
         }
 
-        function simulateGoalsSeeded(att, def, isHome, seed) {
-            let chance = (att - (def * 0.4)) / 3.0;
-            if (isHome) chance += 0.35;
-            if (chance < 0.3) chance = 0.3;
-            let goals = 0;
-            for (let i = 0; i < 5; i++) {
-                if (seededRandom(seed + i * 17.3) < (chance / 4.2)) goals++;
+        // Kajy baolina maty TSY MIHOATRA NY 6 (Total <= 6)
+        function simulateMatchGoalsCapped(homeRating, awayRating, seed) {
+            let diff = (homeRating + 0.5) - awayRating;
+
+            // Expected goals (xG) voalanjalanja mba ho realistika
+            let xgHome = Math.max(0.25, Math.min(2.6, 1.35 + (diff * 0.22)));
+            let xgAway = Math.max(0.20, Math.min(2.3, 1.05 - (diff * 0.18)));
+
+            let hGoals = 0;
+            let aGoals = 0;
+
+            // Manisa baolina (max 4 isaky ny ekipa aloha)
+            for (let i = 0; i < 4; i++) {
+                if (seededRandom(seed + i * 13.7) < (xgHome / 4.2)) hGoals++;
+                if (seededRandom(seed + i * 29.3) < (xgAway / 4.2)) aGoals++;
             }
-            return goals;
+
+            // FANAMAFISANA: Tsy mihoatra ny 6 mihitsy ny fitambaran'ny baolina (hGoals + aGoals <= 6)
+            while ((hGoals + aGoals) > 6) {
+                if (hGoals >= aGoals && hGoals > 0) {
+                    hGoals--;
+                } else if (aGoals > 0) {
+                    aGoals--;
+                }
+            }
+
+            return { homeGoals: hGoals, awayGoals: aGoals };
         }
 
-        // Mamorona ny taom-pilalaovana manontolo ho an'ny Season iray (Deterministic)
+        // Mamorona ny fandaharam-potoana manontolo ho an'ny Season iray
         function buildSeasonData(leagueIdx, seasonNumber) {
             const leagueMeta = baseTeamsData[leagueIdx];
             const teams = leagueMeta.teams.map(t => ({
@@ -273,12 +297,15 @@
                     }
 
                     let matchSeed = (seasonNumber * 10000) + (leagueIdx * 5000) + (j * 100) + i;
-                    let odds = calculateOdds(home.strength, away.strength);
-                    let pHome = simulateGoalsSeeded(home.strength, away.strength, true, matchSeed + 1);
-                    let pAway = simulateGoalsSeeded(away.strength, home.strength, false, matchSeed + 2);
+                    let odds = calculateBet261Odds(home.rating, away.rating, matchSeed);
 
-                    let aHome = seededRandom(matchSeed + 3) < 0.45 ? pHome : simulateGoalsSeeded(home.strength, away.strength, true, matchSeed + 4);
-                    let aAway = seededRandom(matchSeed + 5) < 0.45 ? pAway : simulateGoalsSeeded(away.strength, home.strength, false, matchSeed + 6);
+                    // Kajy Score Exact (Vinavina - Max 6 buts)
+                    let pred = simulateMatchGoalsCapped(home.rating, away.rating, matchSeed + 10);
+
+                    // Kajy Résultat tena izy (Max 6 buts)
+                    let actual = seededRandom(matchSeed + 50) < 0.42
+                        ? pred
+                        : simulateMatchGoalsCapped(home.rating, away.rating, matchSeed + 77);
 
                     dayMatches.push({
                         home: home.name,
@@ -288,12 +315,20 @@
                         cote1: odds.c1,
                         coteX: odds.cX,
                         cote2: odds.c2,
-                        predHome: pHome,
-                        predAway: pAway,
-                        actualHome: aHome,
-                        actualAway: aAway
+                        predHome: pred.homeGoals,
+                        predAway: pred.awayGoals,
+                        actualHome: actual.homeGoals,
+                        actualAway: actual.awayGoals
                     });
                 }
+
+                // Afangaro kely ny filaharan'ny lalao ao anatin'ny journée iray mba hitovy amin'ny Bet261
+                dayMatches.sort((a, b) => {
+                    let sA = seededRandom(seasonNumber * 100 + j + a.home.length);
+                    let sB = seededRandom(seasonNumber * 100 + j + b.home.length);
+                    return sA - sB;
+                });
+
                 schedule.push(dayMatches);
                 let last = rotation.pop();
                 rotation.splice(1, 0, last);
@@ -302,18 +337,15 @@
             return { teams, schedule };
         }
 
-        // Maka ny toerana marina misy ny lalao amin'izao segondra izao
         function getLiveLeagueState(leagueIdx, cycleIndex) {
             const leagueMeta = baseTeamsData[leagueIdx];
             const maxJ = leagueMeta.maxJournees;
 
-            // Kajy ny saison sy ny journée ankehitriny (1 ka hatramin'ny maxJ)
             const seasonNumber = Math.floor(cycleIndex / maxJ);
             const currentJournee = (cycleIndex % maxJ) + 1;
 
             const seasonData = buildSeasonData(leagueIdx, seasonNumber);
 
-            // Manisa ny classement ho an'ireo journée rehetra efa vita (1 hatramin'ny currentJournee - 1)
             for (let j = 0; j < currentJournee - 1; j++) {
                 seasonData.schedule[j].forEach(m => {
                     let hTeam = seasonData.teams.find(t => t.name === m.home);
@@ -394,7 +426,6 @@
             for (let i = 0; i < 5; i++) {
                 let slotTime = formatHHMM(nextStartMs + (i * CYCLE_DURATION_MS));
                 if (i === 0) {
-                    // Ora ankehitriny (Mena mitovy amin'ny Bet261)
                     slotsHtml += `
                         <div class="bg-[#E11D48] text-white font-extrabold text-xs px-3 py-1 rounded-md shadow-md flex-shrink-0 border border-white/20">
                             ${slotTime}
@@ -415,7 +446,6 @@
             const cycleInfo = getCurrentCycleInfo();
             const now = new Date();
 
-            // Fanavaozana ny famantaranandro sy ny countdown isaky ny 1s
             document.getElementById('real-clock').innerText = now.toTimeString().split(' ')[0];
 
             let rem = cycleInfo.secondsRemaining;
@@ -433,13 +463,11 @@
                 timerDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
             }
 
-            // Raha tsy niova ny cycleIndex ary tsy nisy fanerena (click), dia tsy averina sary ny lisitra
             if (!force && cycleInfo.cycleIndex === lastRenderedCycle) {
                 return;
             }
             lastRenderedCycle = cycleInfo.cycleIndex;
 
-            // Fanavaozana ny tsipika ora (13:21, 13:23, 13:25...)
             renderTimeSlots(cycleInfo.nextStartMs);
 
             const engState = getLiveLeagueState(0, cycleInfo.cycleIndex);
@@ -500,7 +528,7 @@
                 `;
             }).join('');
 
-            // 2. RÉSULTATS (Valin'ny Journée teo aloha)
+            // 2. RÉSULTATS
             const rDiv = document.getElementById('view-resultats');
             let prevJ = activeLeague.currentJournee - 1;
             let prevMatches = [];
@@ -509,7 +537,6 @@
             if (prevJ >= 1) {
                 prevMatches = activeLeague.schedule[prevJ - 1];
             } else {
-                // Raha eo amin'ny J1 isika izao, dia ny J farany tamin'ny saison teo aloha no aseho
                 const prevSeason = buildSeasonData(activeLeagueIndex, Math.floor(cycleInfo.cycleIndex / activeLeague.maxJournees) - 1);
                 labelJ = activeLeague.maxJournees;
                 prevMatches = prevSeason.schedule[labelJ - 1];
@@ -601,7 +628,6 @@
             `;
         }
 
-        // Mandeha isaky ny 1 segondra mba hifanaraka tsara amin'ny ora tena izy
         setInterval(() => renderAll(false), 1000);
         renderAll(true);
     </script>
